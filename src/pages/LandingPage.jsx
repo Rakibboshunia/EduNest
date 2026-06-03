@@ -197,9 +197,9 @@ export default function LandingPage() {
         </div>
       </header>
 
-      <main className="flex-1 pt-20">
+      <main className="flex-1 pt-16 md:pt-24">
         {/* Hero Section */}
-        <section className="w-full py-20 md:py-24 lg:py-32 relative flex items-center justify-center overflow-hidden">
+        <section className="w-full py-14 md:py-24 lg:py-32 relative flex items-center justify-center overflow-hidden">
           {/* Grid Background */}
           <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)]"></div>
           
@@ -252,7 +252,7 @@ export default function LandingPage() {
               </motion.div>
               
               {/* Main Headline */}
-              <motion.h1 variants={fadeIn} className="text-5xl md:text-7xl lg:text-[5.5rem] font-bold tracking-tighter leading-[1.05] drop-shadow-2xl">
+              <motion.h1 variants={fadeIn} className="text-4xl sm:text-5xl md:text-6xl lg:text-[5rem] font-bold tracking-tighter leading-[1.1] drop-shadow-2xl">
                 The Modern OS for <br className="hidden md:block" />
                 <span className="bg-clip-text text-transparent bg-gradient-to-r from-[var(--brand-primary)] via-slate-800 dark:via-white to-[var(--brand-secondary)] animate-gradient-x">
                   Educational Excellence
@@ -276,10 +276,10 @@ export default function LandingPage() {
                 </Button>
               </motion.div>
               
-              <motion.div variants={fadeIn} className="pt-12 flex items-center justify-center gap-8 text-sm text-slate-500 font-medium">
+              <motion.div variants={fadeIn} className="pt-10 flex flex-wrap items-center justify-center gap-4 sm:gap-8 text-sm text-slate-500 font-medium">
                 <div className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4 text-[var(--brand-secondary)]" /> No credit card required</div>
                 <div className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4 text-[var(--brand-secondary)]" /> 14-day free trial</div>
-                <div className="flex items-center gap-2 hidden sm:flex"><CheckCircle2 className="h-4 w-4 text-[var(--brand-secondary)]" /> Cancel anytime</div>
+                <div className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4 text-[var(--brand-secondary)]" /> Cancel anytime</div>
               </motion.div>
             </motion.div>
           </div>
@@ -289,9 +289,9 @@ export default function LandingPage() {
         <section className="pt-12 md:pt-16 pb-8 border-b border-slate-200 dark:border-white/5 bg-slate-50 dark:bg-[#030712] relative z-10">
           <div className="container px-4 text-center">
             <p className="text-sm font-semibold text-slate-500 uppercase tracking-widest mb-10">Trusted by innovative institutions worldwide</p>
-            <div className="flex flex-wrap justify-center items-center gap-12 lg:gap-20 opacity-40 hover:opacity-100 grayscale hover:grayscale-0 transition-all duration-700">
+            <div className="flex flex-wrap justify-center items-center gap-6 sm:gap-10 lg:gap-16 opacity-40 hover:opacity-100 grayscale hover:grayscale-0 transition-all duration-700">
               {['Stanford', 'Harvard', 'MIT', 'Oxford', 'Cambridge'].map((uni, i) => (
-                <div key={i} className="text-2xl font-black tracking-tighter text-white/80">{uni}</div>
+                <div key={i} className="text-xl sm:text-2xl font-black tracking-tighter text-slate-900 dark:text-white/80">{uni}</div>
               ))}
             </div>
           </div>
@@ -389,7 +389,7 @@ export default function LandingPage() {
         <section id="features" className="w-full py-16 md:py-24 bg-white dark:bg-[#050505] relative overflow-hidden">
           <div className="absolute top-0 right-0 w-96 h-96 bg-[var(--brand-secondary)]/10 blur-[120px] rounded-full -z-10"></div>
           <div className="absolute bottom-0 left-0 w-96 h-96 bg-[var(--brand-primary)]/10 blur-[120px] rounded-full -z-10"></div>
-          <div className="container px-4 md:px-6 mx-auto relative z-10 pt-20 md:pt-0">
+          <div className="container px-4 md:px-6 mx-auto relative z-10">
             <div className="text-center mb-20 max-w-3xl mx-auto">
               <h2 className="text-[var(--brand-primary)] font-semibold tracking-wide uppercase text-sm mb-3">Core Features</h2>
               <h3 className="text-3xl font-bold tracking-tight sm:text-5xl mb-6 text-slate-900 dark:text-white">Everything you need to <span className="text-slate-500 dark:text-slate-400">scale your institution</span></h3>
@@ -438,11 +438,11 @@ export default function LandingPage() {
             
             <Tabs defaultValue="academics" className="w-full max-w-5xl mx-auto">
               <div className="flex justify-center overflow-x-auto pb-4 mb-8">
-                <TabsList className="bg-white dark:bg-[#111] border border-slate-200 dark:border-white/10 p-1 h-auto rounded-full">
-                  <TabsTrigger value="academics" className="rounded-full px-6 py-2.5 data-[state=active]:bg-[var(--brand-primary)] data-[state=active]:text-white">Academics</TabsTrigger>
-                  <TabsTrigger value="admin" className="rounded-full px-6 py-2.5 data-[state=active]:bg-[var(--brand-primary)] data-[state=active]:text-white">Administration</TabsTrigger>
-                  <TabsTrigger value="finance" className="rounded-full px-6 py-2.5 data-[state=active]:bg-[var(--brand-primary)] data-[state=active]:text-white">Finance</TabsTrigger>
-                  <TabsTrigger value="communication" className="rounded-full px-6 py-2.5 data-[state=active]:bg-[var(--brand-primary)] data-[state=active]:text-white">Communication</TabsTrigger>
+                <TabsList className="bg-white dark:bg-[#111] border border-slate-200 dark:border-white/10 p-1 h-auto rounded-full flex-shrink-0">
+                  <TabsTrigger value="academics" className="rounded-full px-3 sm:px-6 py-2 text-xs sm:text-sm data-[state=active]:bg-[var(--brand-primary)] data-[state=active]:text-white">Academics</TabsTrigger>
+                  <TabsTrigger value="admin" className="rounded-full px-3 sm:px-6 py-2 text-xs sm:text-sm data-[state=active]:bg-[var(--brand-primary)] data-[state=active]:text-white">Admin</TabsTrigger>
+                  <TabsTrigger value="finance" className="rounded-full px-3 sm:px-6 py-2 text-xs sm:text-sm data-[state=active]:bg-[var(--brand-primary)] data-[state=active]:text-white">Finance</TabsTrigger>
+                  <TabsTrigger value="communication" className="rounded-full px-3 sm:px-6 py-2 text-xs sm:text-sm data-[state=active]:bg-[var(--brand-primary)] data-[state=active]:text-white">Comms</TabsTrigger>
                 </TabsList>
               </div>
 
@@ -576,7 +576,7 @@ export default function LandingPage() {
                 { value: "24/7", label: "Expert Support" },
               ].map((stat, i) => (
                 <div key={i} className="space-y-2">
-                  <h4 className="text-4xl md:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-b from-slate-900 to-slate-600 dark:from-white dark:to-white/50">{stat.value}</h4>
+                  <h4 className="text-3xl sm:text-4xl md:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-b from-slate-900 to-slate-600 dark:from-white dark:to-white/50">{stat.value}</h4>
                   <p className="text-sm font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wider">{stat.label}</p>
                 </div>
               ))}
@@ -751,9 +751,9 @@ export default function LandingPage() {
         {/* FAQ Section */}
         <section id="faq" className="w-full py-16 md:py-24 bg-white dark:bg-[#0a0a0a]">
           <div className="container px-4 md:px-6 mx-auto max-w-4xl">
-            <div className="text-center mb-16">
-              <h2 className="text-3xl font-bold tracking-tight sm:text-5xl mb-6 text-slate-900 dark:text-white">Frequently Asked Questions</h2>
-              <p className="text-slate-500 dark:text-slate-400 text-lg">Got questions? We've got answers. If you don't see your question here, reach out to our support team.</p>
+            <div className="text-center mb-12 max-w-4xl mx-auto">
+              <h2 className="text-2xl sm:text-3xl font-bold tracking-tight sm:text-5xl mb-6 text-slate-900 dark:text-white">Frequently Asked Questions</h2>
+              <p className="text-slate-500 dark:text-slate-400 text-base sm:text-lg">Got questions? We've got answers. If you don't see your question here, reach out to our support team.</p>
             </div>
             
             <Accordion type="single" collapsible className="w-full text-slate-600 dark:text-slate-300 space-y-4">
