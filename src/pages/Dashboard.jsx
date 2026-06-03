@@ -90,10 +90,10 @@ export default function Dashboard() {
     >
       {/* ── Hero Header ── */}
       <motion.div variants={item}>
-        <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-[#0f3b73] via-[#1a4f96] to-[#36833b] p-6 md:p-8 shadow-xl shadow-[#0f3b73]/20">
+        <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-[var(--brand-primary)] via-[#1a4f96] to-[var(--brand-secondary)] p-6 md:p-8 shadow-xl shadow-[var(--brand-primary)]/20">
           {/* Background decorations */}
           <div className="absolute top-0 right-0 w-96 h-96 bg-white/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3 pointer-events-none" />
-          <div className="absolute bottom-0 left-1/3 w-64 h-64 bg-[#36833b]/30 rounded-full blur-3xl translate-y-1/2 pointer-events-none" />
+          <div className="absolute bottom-0 left-1/3 w-64 h-64 bg-[var(--brand-secondary)]/30 rounded-full blur-3xl translate-y-1/2 pointer-events-none" />
           
           <div className="relative flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
             <div>
@@ -115,7 +115,7 @@ export default function Dashboard() {
               <Button 
                 size="sm"
                 onClick={() => toast.promise(new Promise(r => setTimeout(r, 1500)), { loading: 'Generating...', success: 'Report Generated!', error: 'Failed' })}
-                className="bg-white text-[#0f3b73] hover:bg-white/90 font-semibold rounded-xl shadow-lg"
+                className="bg-white text-[var(--brand-primary)] hover:bg-white/90 font-semibold rounded-xl shadow-lg"
               >
                 Generate Report
               </Button>
@@ -142,8 +142,8 @@ export default function Dashboard() {
       {/* ── Stat Cards ── */}
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
         {[
-          { title: "Total Students", value: "2,543", icon: GraduationCap, trend: "+12.5%", positive: true, color: "from-[#0f3b73] to-[#1e40af]", trendText: "vs last month" },
-          { title: "Active Teachers", value: "145", icon: Users, trend: "+2.1%", positive: true, color: "from-[#36833b] to-[#4ade80]", trendText: "vs last month" },
+          { title: "Total Students", value: "2,543", icon: GraduationCap, trend: "+12.5%", positive: true, color: "from-[var(--brand-primary)] to-[var(--brand-primary-light)]", trendText: "vs last month" },
+          { title: "Active Teachers", value: "145", icon: Users, trend: "+2.1%", positive: true, color: "from-[var(--brand-secondary)] to-[#4ade80]", trendText: "vs last month" },
           { title: "Monthly Revenue", value: "$45,231", icon: CreditCard, trend: "+15.3%", positive: true, color: "from-purple-600 to-indigo-500", trendText: "vs last month" },
           { title: "Avg Attendance", value: "94.2%", icon: TrendingUp, trend: "-1.2%", positive: false, color: "from-amber-500 to-orange-500", trendText: "vs last month" },
         ].map((stat, i) => (
@@ -164,8 +164,8 @@ export default function Dashboard() {
                 <CardDescription className="text-xs mt-0.5">Student metrics over the last 6 months.</CardDescription>
               </div>
               <div className="flex items-center gap-4 text-xs text-slate-500">
-                <span className="flex items-center gap-1.5"><span className="h-2.5 w-2.5 rounded-full bg-[#0f3b73] inline-block" />Attendance</span>
-                <span className="flex items-center gap-1.5"><span className="h-2.5 w-2.5 rounded-full bg-[#36833b] inline-block" />Performance</span>
+                <span className="flex items-center gap-1.5"><span className="h-2.5 w-2.5 rounded-full bg-[var(--brand-primary)] inline-block" />Attendance</span>
+                <span className="flex items-center gap-1.5"><span className="h-2.5 w-2.5 rounded-full bg-[var(--brand-secondary)] inline-block" />Performance</span>
               </div>
             </CardHeader>
             <CardContent className="px-2 sm:px-6 pb-4">
@@ -174,12 +174,12 @@ export default function Dashboard() {
                   <AreaChart data={performanceData} margin={{ top: 5, right: 10, left: -20, bottom: 0 }}>
                     <defs>
                       <linearGradient id="colorAttendance" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="5%" stopColor="#0f3b73" stopOpacity={0.3}/>
-                        <stop offset="95%" stopColor="#0f3b73" stopOpacity={0}/>
+                        <stop offset="5%" stopColor="var(--brand-primary)" stopOpacity={0.3}/>
+                        <stop offset="95%" stopColor="var(--brand-primary)" stopOpacity={0}/>
                       </linearGradient>
                       <linearGradient id="colorPerformance" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="5%" stopColor="#36833b" stopOpacity={0.3}/>
-                        <stop offset="95%" stopColor="#36833b" stopOpacity={0}/>
+                        <stop offset="5%" stopColor="var(--brand-secondary)" stopOpacity={0.3}/>
+                        <stop offset="95%" stopColor="var(--brand-secondary)" stopOpacity={0}/>
                       </linearGradient>
                     </defs>
                     <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="hsl(var(--border))" opacity={0.4} />
@@ -188,8 +188,8 @@ export default function Dashboard() {
                     <Tooltip 
                       contentStyle={{ backgroundColor: 'hsl(var(--background))', borderColor: 'hsl(var(--border))', borderRadius: '12px', boxShadow: '0 20px 25px -5px rgb(0 0 0 / 0.1)', fontSize: '12px' }}
                     />
-                    <Area type="monotone" dataKey="attendance" name="Attendance %" stroke="#0f3b73" strokeWidth={2.5} fillOpacity={1} fill="url(#colorAttendance)" dot={false} activeDot={{ r: 5, fill: "#0f3b73" }} />
-                    <Area type="monotone" dataKey="performance" name="Avg Score %" stroke="#36833b" strokeWidth={2.5} fillOpacity={1} fill="url(#colorPerformance)" dot={false} activeDot={{ r: 5, fill: "#36833b" }} />
+                    <Area type="monotone" dataKey="attendance" name="Attendance %" stroke="var(--brand-primary)" strokeWidth={2.5} fillOpacity={1} fill="url(#colorAttendance)" dot={false} activeDot={{ r: 5, fill: "var(--brand-primary)" }} />
+                    <Area type="monotone" dataKey="performance" name="Avg Score %" stroke="var(--brand-secondary)" strokeWidth={2.5} fillOpacity={1} fill="url(#colorPerformance)" dot={false} activeDot={{ r: 5, fill: "var(--brand-secondary)" }} />
                   </AreaChart>
                 </ResponsiveContainer>
               </div>
@@ -215,12 +215,12 @@ export default function Dashboard() {
                   <div key={i} className="flex items-center gap-3 p-2.5 -mx-1 rounded-xl hover:bg-slate-50 dark:hover:bg-white/5 transition-colors cursor-pointer group">
                     <Avatar className="h-9 w-9 ring-1 ring-slate-200 dark:ring-white/10 shrink-0">
                       <AvatarImage src={`https://i.pravatar.cc/150?u=${student.name}`} />
-                      <AvatarFallback className="bg-gradient-to-br from-[#0f3b73] to-[#1e40af] text-white text-xs font-bold">
+                      <AvatarFallback className="bg-gradient-to-br from-[var(--brand-primary)] to-[var(--brand-primary-light)] text-white text-xs font-bold">
                         {student.name.split(' ').map(n => n[0]).join('')}
                       </AvatarFallback>
                     </Avatar>
                     <div className="flex-1 min-w-0">
-                      <p className="text-sm font-semibold text-slate-800 dark:text-slate-200 truncate group-hover:text-[#0f3b73] dark:group-hover:text-white transition-colors">{student.name}</p>
+                      <p className="text-sm font-semibold text-slate-800 dark:text-slate-200 truncate group-hover:text-[var(--brand-primary)] dark:group-hover:text-white transition-colors">{student.name}</p>
                       <p className="text-xs text-slate-400 truncate">{student.grade}</p>
                     </div>
                     <div className="text-right shrink-0">
@@ -234,7 +234,7 @@ export default function Dashboard() {
                   </div>
                 ))}
               </div>
-              <Button onClick={() => navigate("/students")} variant="outline" className="w-full mt-4 text-[#0f3b73] border-[#0f3b73]/20 hover:bg-[#0f3b73]/5 dark:text-white dark:border-white/10 rounded-xl text-xs font-semibold">
+              <Button onClick={() => navigate("/students")} variant="outline" className="w-full mt-4 text-[var(--brand-primary)] border-[var(--brand-primary)]/20 hover:bg-[var(--brand-primary)]/5 dark:text-white dark:border-white/10 rounded-xl text-xs font-semibold">
                 View All Students <ArrowRight className="ml-2 h-3.5 w-3.5" />
               </Button>
             </CardContent>
@@ -252,7 +252,7 @@ export default function Dashboard() {
                 <CardTitle className="text-base font-semibold text-slate-800 dark:text-white">Fee Collection</CardTitle>
                 <CardDescription className="text-xs mt-0.5">Daily revenue collected this week.</CardDescription>
               </div>
-              <Badge variant="outline" className="text-xs border-[#36833b]/30 text-[#36833b] dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-500/10">This Week</Badge>
+              <Badge variant="outline" className="text-xs border-[var(--brand-secondary)]/30 text-[var(--brand-secondary)] dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-500/10">This Week</Badge>
             </CardHeader>
             <CardContent className="px-2 sm:px-6 pb-4">
               <div className="h-[220px] w-full">
@@ -267,7 +267,7 @@ export default function Dashboard() {
                     />
                     <Bar dataKey="amount" name="Revenue ($)" radius={[6, 6, 0, 0]}>
                       {revenueData.map((entry, index) => (
-                        <Cell key={`cell-${index}`} fill={index === 4 ? '#36833b' : '#0f3b73'} opacity={index === 4 ? 1 : 0.7} />
+                        <Cell key={`cell-${index}`} fill={index === 4 ? 'var(--brand-secondary)' : 'var(--brand-primary)'} opacity={index === 4 ? 1 : 0.7} />
                       ))}
                     </Bar>
                   </BarChart>
@@ -285,8 +285,8 @@ export default function Dashboard() {
             </CardHeader>
             <CardContent className="grid grid-cols-2 gap-3 pb-4">
               {[
-                { icon: Users, label: "Add Student", color: "text-[#0f3b73]", bg: "bg-[#0f3b73]/10 group-hover:bg-[#0f3b73]/20", link: "/students" },
-                { icon: BookOpen, label: "New Exam", color: "text-[#36833b]", bg: "bg-[#36833b]/10 group-hover:bg-[#36833b]/20", link: "/exams" },
+                { icon: Users, label: "Add Student", color: "text-[var(--brand-primary)]", bg: "bg-[var(--brand-primary)]/10 group-hover:bg-[var(--brand-primary)]/20", link: "/students" },
+                { icon: BookOpen, label: "New Exam", color: "text-[var(--brand-secondary)]", bg: "bg-[var(--brand-secondary)]/10 group-hover:bg-[var(--brand-secondary)]/20", link: "/exams" },
                 { icon: CreditCard, label: "Collect Fee", color: "text-purple-600", bg: "bg-purple-600/10 group-hover:bg-purple-600/20", link: "/fees" },
                 { icon: Bell, label: "Notice", color: "text-orange-600", bg: "bg-orange-600/10 group-hover:bg-orange-600/20", link: "/notices" },
               ].map((action, i) => (
@@ -313,7 +313,7 @@ export default function Dashboard() {
               <div className="space-y-3">
                 {[
                   { label: "Fee payment received", sub: "Olivia Martin · $1,999", icon: CheckCircle2, color: "text-emerald-500", bg: "bg-emerald-100 dark:bg-emerald-500/15" },
-                  { label: "New student enrolled", sub: "Jackson Lee · Grade 9", icon: GraduationCap, color: "text-[#0f3b73] dark:text-[#60a5fa]", bg: "bg-[#0f3b73]/10 dark:bg-[#0f3b73]/20" },
+                  { label: "New student enrolled", sub: "Jackson Lee · Grade 9", icon: GraduationCap, color: "text-[var(--brand-primary)] dark:text-[#60a5fa]", bg: "bg-[var(--brand-primary)]/10 dark:bg-[var(--brand-primary)]/20" },
                   { label: "Exam scheduled", sub: "Mid-term · Oct 28", icon: BookOpen, color: "text-purple-600", bg: "bg-purple-100 dark:bg-purple-500/15" },
                 ].map((act, i) => (
                   <div key={i} className="flex items-center gap-3">

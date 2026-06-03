@@ -55,7 +55,7 @@ export function Navbar() {
           <Input
             type="search"
             placeholder="Search students, teachers, fees..."
-            className="w-full pl-9 h-9 bg-slate-50 dark:bg-white/5 border-slate-200 dark:border-white/10 rounded-full text-sm placeholder:text-slate-400 focus-visible:ring-[#0f3b73]/30 focus-visible:border-[#0f3b73]/50 transition-all"
+            className="w-full pl-9 h-9 bg-slate-50 dark:bg-white/5 border-slate-200 dark:border-white/10 rounded-full text-sm placeholder:text-slate-400 focus-visible:ring-[var(--brand-primary)]/30 focus-visible:border-[var(--brand-primary)]/50 transition-all"
           />
           <kbd className="absolute right-3 top-1/2 -translate-y-1/2 hidden sm:flex h-5 items-center gap-1 rounded border border-slate-200 dark:border-white/10 bg-slate-100 dark:bg-white/5 px-1.5 text-[10px] font-medium text-slate-400">
             ⌘K
@@ -66,7 +66,7 @@ export function Navbar() {
       {/* Right Actions */}
       <div className="flex items-center gap-2">
         {/* AI Assist Badge */}
-        <Button variant="ghost" size="sm" className="hidden lg:flex items-center gap-1.5 text-xs text-slate-500 dark:text-slate-400 hover:text-[#0f3b73] dark:hover:text-white hover:bg-[#0f3b73]/5 rounded-full px-3">
+        <Button variant="ghost" size="sm" className="hidden lg:flex items-center gap-1.5 text-xs text-slate-500 dark:text-slate-400 hover:text-[var(--brand-primary)] dark:hover:text-white hover:bg-[var(--brand-primary)]/5 rounded-full px-3">
           <Sparkles className="h-3.5 w-3.5 text-amber-500" />
           AI Insights
         </Button>
@@ -77,7 +77,7 @@ export function Navbar() {
             <Button variant="ghost" size="icon" className="relative h-9 w-9 rounded-full text-slate-500 hover:text-slate-800 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/5">
               <Bell className="h-4.5 w-4.5" style={{ height: '1.1rem', width: '1.1rem' }} />
               {unreadCount > 0 && (
-                <span className="absolute top-1.5 right-1.5 flex h-4 w-4 items-center justify-center rounded-full bg-gradient-to-br from-[#0f3b73] to-[#36833b] text-[9px] font-bold text-white shadow-sm">
+                <span className="absolute top-1.5 right-1.5 flex h-4 w-4 items-center justify-center rounded-full bg-gradient-to-br from-[var(--brand-primary)] to-[var(--brand-secondary)] text-[9px] font-bold text-white shadow-sm">
                   {unreadCount}
                 </span>
               )}
@@ -86,12 +86,12 @@ export function Navbar() {
           <DropdownMenuContent align="end" className="w-80 p-0 rounded-2xl shadow-2xl border border-slate-100 dark:border-white/10 dark:bg-[#1e293b] overflow-hidden">
             <div className="flex items-center justify-between px-4 py-3 border-b border-slate-100 dark:border-white/10">
               <p className="text-sm font-semibold text-slate-800 dark:text-white">Notifications</p>
-              <span className="text-xs text-[#0f3b73] dark:text-[#60a5fa] font-medium cursor-pointer hover:underline">Mark all read</span>
+              <span className="text-xs text-[var(--brand-primary)] dark:text-[#60a5fa] font-medium cursor-pointer hover:underline">Mark all read</span>
             </div>
             <div className="divide-y divide-slate-50 dark:divide-white/5">
               {mockNotifications.map((notif) => (
-                <div key={notif.id} className={`flex gap-3 px-4 py-3 hover:bg-slate-50 dark:hover:bg-white/5 cursor-pointer transition-colors ${notif.unread ? 'bg-[#0f3b73]/3' : ''}`}>
-                  <div className={`h-2 w-2 rounded-full mt-1.5 shrink-0 ${notif.unread ? 'bg-[#0f3b73]' : 'bg-transparent'}`} />
+                <div key={notif.id} className={`flex gap-3 px-4 py-3 hover:bg-slate-50 dark:hover:bg-white/5 cursor-pointer transition-colors ${notif.unread ? 'bg-[var(--brand-primary)]/3' : ''}`}>
+                  <div className={`h-2 w-2 rounded-full mt-1.5 shrink-0 ${notif.unread ? 'bg-[var(--brand-primary)]' : 'bg-transparent'}`} />
                   <div className="flex-1 min-w-0">
                     <p className="text-sm font-medium text-slate-800 dark:text-slate-200">{notif.title}</p>
                     <p className="text-xs text-slate-500 mt-0.5 truncate">{notif.desc}</p>
@@ -101,7 +101,7 @@ export function Navbar() {
               ))}
             </div>
             <div className="px-4 py-3 border-t border-slate-100 dark:border-white/10 text-center">
-              <button className="text-xs text-[#0f3b73] dark:text-[#60a5fa] font-medium hover:underline">View all notifications</button>
+              <button className="text-xs text-[var(--brand-primary)] dark:text-[#60a5fa] font-medium hover:underline">View all notifications</button>
             </div>
           </DropdownMenuContent>
         </DropdownMenu>
@@ -110,9 +110,9 @@ export function Navbar() {
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="ghost" className="flex items-center gap-2 h-9 pl-2 pr-3 rounded-full hover:bg-slate-100 dark:hover:bg-white/5 transition-colors">
-              <Avatar className="h-7 w-7 ring-2 ring-[#0f3b73]/20">
+              <Avatar className="h-7 w-7 ring-2 ring-[var(--brand-primary)]/20">
                 <AvatarImage src={user?.avatar || `https://i.pravatar.cc/150?u=${user?.email}`} alt={user?.name} />
-                <AvatarFallback className="bg-gradient-to-br from-[#0f3b73] to-[#36833b] text-white text-xs font-bold">
+                <AvatarFallback className="bg-gradient-to-br from-[var(--brand-primary)] to-[var(--brand-secondary)] text-white text-xs font-bold">
                   {user?.name ? user.name.substring(0, 2).toUpperCase() : "EN"}
                 </AvatarFallback>
               </Avatar>
@@ -128,7 +128,7 @@ export function Navbar() {
               <div className="flex items-center gap-3">
                 <Avatar className="h-9 w-9">
                   <AvatarImage src={user?.avatar || `https://i.pravatar.cc/150?u=${user?.email}`} />
-                  <AvatarFallback className="bg-gradient-to-br from-[#0f3b73] to-[#36833b] text-white text-xs font-bold">
+                  <AvatarFallback className="bg-gradient-to-br from-[var(--brand-primary)] to-[var(--brand-secondary)] text-white text-xs font-bold">
                     {user?.name ? user.name.substring(0, 2).toUpperCase() : "EN"}
                   </AvatarFallback>
                 </Avatar>

@@ -49,7 +49,7 @@ export default function ResetPassword() {
   return (
     <div className="min-h-screen w-full flex items-center justify-center bg-[#0f172a] p-4 relative overflow-hidden selection:bg-[#1d4ed8]/30">
       {/* Background Elements */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-[#36833b]/10 rounded-full blur-[150px] z-0 pointer-events-none"></div>
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-[var(--brand-secondary)]/10 rounded-full blur-[150px] z-0 pointer-events-none"></div>
       
       <motion.div 
         initial={{ opacity: 0, scale: 0.95 }}
@@ -81,7 +81,7 @@ export default function ResetPassword() {
                             type={showPassword ? "text" : "password"} 
                             placeholder="••••••••" 
                             {...field} 
-                            className="bg-[#0f172a] border-white/10 text-white focus-visible:ring-[#36833b] pr-10"
+                            className="bg-[#0f172a] border-white/10 text-white focus-visible:ring-[var(--brand-secondary)] pr-10"
                           />
                           <button
                             type="button"
@@ -112,7 +112,7 @@ export default function ResetPassword() {
                             type={showConfirmPassword ? "text" : "password"} 
                             placeholder="••••••••" 
                             {...field} 
-                            className="bg-[#0f172a] border-white/10 text-white focus-visible:ring-[#36833b] pr-10"
+                            className="bg-[#0f172a] border-white/10 text-white focus-visible:ring-[var(--brand-secondary)] pr-10"
                           />
                           <button
                             type="button"
@@ -133,7 +133,7 @@ export default function ResetPassword() {
                 />
                 <Button 
                   type="submit" 
-                  className="w-full bg-[#0f3b73] hover:bg-[#1e40af] text-white rounded-xl h-11 transition-all mt-6" 
+                  className="w-full bg-[var(--brand-primary)] hover:bg-[var(--brand-primary-light)] text-white rounded-xl h-11 transition-all mt-6" 
                   disabled={isLoading}
                 >
                   {isLoading ? (
@@ -151,7 +151,7 @@ export default function ResetPassword() {
             animate={{ opacity: 1 }}
             className="flex flex-col items-center justify-center space-y-4 text-center py-6"
           >
-            <div className="h-20 w-20 rounded-full bg-[#36833b]/20 flex items-center justify-center text-[#4ade80] mb-4 border border-[#36833b]/30">
+            <div className="h-20 w-20 rounded-full bg-[var(--brand-secondary)]/20 flex items-center justify-center text-[#4ade80] mb-4 border border-[var(--brand-secondary)]/30">
               <CheckCircle2 className="h-10 w-10" />
             </div>
             <h2 className="text-2xl font-bold text-white">Password reset!</h2>
@@ -159,7 +159,7 @@ export default function ResetPassword() {
               Your password has been successfully reset. You can now log in with your new password.
             </p>
             <Button 
-              className="w-full bg-[#36833b] hover:bg-[#2e6e32] text-white rounded-xl h-11 mt-6" 
+              className="w-full bg-[var(--brand-secondary)] hover:bg-[#2e6e32] text-white rounded-xl h-11 mt-6" 
               onClick={() => navigate("/login")}
             >
               Go to login

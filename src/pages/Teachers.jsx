@@ -56,9 +56,9 @@ export default function Teachers() {
       className="space-y-6 pb-10"
     >
       {/* ── Hero Header ── */}
-      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-[#36833b] via-[#2d7a34] to-[#0f3b73] p-6 md:p-8 shadow-xl shadow-[#36833b]/20">
+      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-[var(--brand-secondary)] via-[#2d7a34] to-[var(--brand-primary)] p-6 md:p-8 shadow-xl shadow-[var(--brand-secondary)]/20">
         <div className="absolute top-0 right-0 w-80 h-80 bg-white/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3 pointer-events-none" />
-        <div className="absolute bottom-0 left-1/4 w-48 h-48 bg-[#0f3b73]/30 rounded-full blur-3xl translate-y-1/2 pointer-events-none" />
+        <div className="absolute bottom-0 left-1/4 w-48 h-48 bg-[var(--brand-primary)]/30 rounded-full blur-3xl translate-y-1/2 pointer-events-none" />
         <div className="relative flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
           <div>
             <div className="flex items-center gap-2 mb-1">
@@ -70,12 +70,12 @@ export default function Teachers() {
           </div>
           <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
-              <Button size="sm" className="bg-white text-[#36833b] hover:bg-white/90 font-semibold rounded-xl shadow-lg shrink-0">
+              <Button size="sm" className="bg-white text-[var(--brand-secondary)] hover:bg-white/90 font-semibold rounded-xl shadow-lg shrink-0">
                 <Plus className="mr-2 h-3.5 w-3.5" /> Add Teacher
               </Button>
             </DialogTrigger>
             <DialogContent className="sm:max-w-[440px] dark:bg-[#1e293b] border-none shadow-2xl rounded-2xl p-0 overflow-hidden">
-              <div className="bg-gradient-to-r from-[#36833b] to-[#2d7a34] p-6">
+              <div className="bg-gradient-to-r from-[var(--brand-secondary)] to-[#2d7a34] p-6">
                 <DialogTitle className="text-white text-xl font-bold">Add New Teacher</DialogTitle>
                 <DialogDescription className="text-white/60 text-sm mt-1">Enter the staff member's details.</DialogDescription>
               </div>
@@ -98,7 +98,7 @@ export default function Teachers() {
                     ))}
                     <div className="flex justify-end gap-2 pt-2">
                       <Button type="button" variant="outline" onClick={() => setOpen(false)} className="rounded-xl">Cancel</Button>
-                      <Button type="submit" className="bg-gradient-to-r from-[#36833b] to-[#0f3b73] text-white rounded-xl font-semibold shadow-md">Save Teacher</Button>
+                      <Button type="submit" className="bg-gradient-to-r from-[var(--brand-secondary)] to-[var(--brand-primary)] text-white rounded-xl font-semibold shadow-md">Save Teacher</Button>
                     </div>
                   </form>
                 </Form>
@@ -145,15 +145,15 @@ export default function Teachers() {
             <motion.div key={teacher.id} variants={cardVariant}>
               <Card className="group overflow-hidden border-none shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300 dark:bg-[#1e293b] relative">
                 {/* Color accent top bar */}
-                <div className="h-1 w-full bg-gradient-to-r from-[#0f3b73] to-[#36833b]" />
+                <div className="h-1 w-full bg-gradient-to-r from-[var(--brand-primary)] to-[var(--brand-secondary)]" />
                 {/* Glow blob */}
-                <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-[#0f3b73]/15 to-[#36833b]/15 blur-2xl rounded-full -mr-8 -mt-8 pointer-events-none group-hover:opacity-70 transition-opacity" />
+                <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-[var(--brand-primary)]/15 to-[var(--brand-secondary)]/15 blur-2xl rounded-full -mr-8 -mt-8 pointer-events-none group-hover:opacity-70 transition-opacity" />
 
                 <CardContent className="p-5 relative">
                   <div className="flex items-start justify-between mb-4">
                     <Avatar className="h-14 w-14 ring-2 ring-white dark:ring-[#1e293b] shadow-lg">
                       <AvatarImage src={`https://i.pravatar.cc/150?u=${teacher.name}`} />
-                      <AvatarFallback className="bg-gradient-to-br from-[#0f3b73] to-[#1e40af] text-white text-lg font-bold">
+                      <AvatarFallback className="bg-gradient-to-br from-[var(--brand-primary)] to-[var(--brand-primary-light)] text-white text-lg font-bold">
                         {teacher.name.split(' ').map(n => n[0]).join('')}
                       </AvatarFallback>
                     </Avatar>
@@ -172,7 +172,7 @@ export default function Teachers() {
                   </div>
 
                   <h3 className="text-base font-bold text-slate-800 dark:text-white mb-0.5 truncate">{teacher.name}</h3>
-                  <p className="text-sm font-semibold text-[#36833b] dark:text-[#4ade80] flex items-center gap-1.5 mb-4">
+                  <p className="text-sm font-semibold text-[var(--brand-secondary)] dark:text-[#4ade80] flex items-center gap-1.5 mb-4">
                     <BookOpen className="h-3.5 w-3.5" /> {teacher.subject}
                   </p>
 
@@ -190,11 +190,11 @@ export default function Teachers() {
 
                 <div className="px-5 py-3.5 bg-slate-50 dark:bg-black/20 border-t border-slate-100 dark:border-white/5 flex items-center justify-between">
                   <div>
-                    <span className="text-lg font-bold text-[#0f3b73] dark:text-white">{teacher.classes}</span>
+                    <span className="text-lg font-bold text-[var(--brand-primary)] dark:text-white">{teacher.classes}</span>
                     <span className="text-xs text-slate-400 ml-1.5">Active Classes</span>
                   </div>
                   <Link to={`/teachers/${teacher.id}`}>
-                    <Button variant="outline" size="sm" className="border-[#0f3b73]/20 text-[#0f3b73] dark:text-[#60a5fa] hover:bg-[#0f3b73]/5 rounded-full px-4 text-xs font-semibold h-8">
+                    <Button variant="outline" size="sm" className="border-[var(--brand-primary)]/20 text-[var(--brand-primary)] dark:text-[#60a5fa] hover:bg-[var(--brand-primary)]/5 rounded-full px-4 text-xs font-semibold h-8">
                       View Profile
                     </Button>
                   </Link>

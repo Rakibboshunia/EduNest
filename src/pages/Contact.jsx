@@ -1,0 +1,102 @@
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { ChevronLeft, GraduationCap, MapPin, Mail, Phone } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+
+export default function Contact() {
+  return (
+    <div className="min-h-screen bg-slate-50 dark:bg-[#030712] text-slate-900 dark:text-slate-50 selection:bg-[var(--brand-primary)]/50">
+      {/* Header */}
+      <header className="px-6 lg:px-8 h-16 md:h-20 flex items-center border-b border-slate-200 dark:border-white/10 bg-white/70 dark:bg-[#030712]/60 backdrop-blur-xl sticky top-0 z-50">
+        <Link to="/" className="flex items-center justify-center gap-2 group">
+          <div className="h-8 w-8 rounded-lg bg-gradient-to-br from-[var(--brand-primary)] to-[var(--brand-secondary)] flex items-center justify-center shadow-lg">
+            <GraduationCap className="h-5 w-5 text-white" />
+          </div>
+          <span className="font-bold text-xl tracking-tight text-slate-900 dark:text-white">EduNest</span>
+        </Link>
+        <div className="ml-auto">
+          <Button variant="ghost" asChild className="hover:bg-slate-200 dark:hover:bg-white/10">
+            <Link to="/"><ChevronLeft className="mr-2 h-4 w-4" /> Back to Home</Link>
+          </Button>
+        </div>
+      </header>
+
+      {/* Main Content */}
+      <main className="container mx-auto px-4 py-16 md:py-24 max-w-6xl">
+        <div className="grid md:grid-cols-2 gap-16 items-center">
+          <div>
+            <h1 className="text-4xl md:text-5xl font-bold mb-6 tracking-tight text-slate-900 dark:text-white">Get in touch</h1>
+            <p className="text-lg text-slate-500 dark:text-slate-400 mb-12">
+              Have questions about pricing, features, or integration? Our team is ready to help you transform your institution.
+            </p>
+            
+            <div className="space-y-8">
+              <div className="flex items-start gap-4">
+                <div className="h-12 w-12 rounded-xl bg-slate-200 dark:bg-white/5 flex items-center justify-center text-slate-700 dark:text-white flex-shrink-0">
+                  <Mail className="h-6 w-6" />
+                </div>
+                <div>
+                  <h3 className="font-semibold text-slate-900 dark:text-white mb-1">Email Us</h3>
+                  <p className="text-slate-500 dark:text-slate-400 mb-1">Our friendly team is here to help.</p>
+                  <a href="mailto:hello@edunest.com" className="text-[var(--brand-primary)] font-medium hover:underline">hello@edunest.com</a>
+                </div>
+              </div>
+              
+              <div className="flex items-start gap-4">
+                <div className="h-12 w-12 rounded-xl bg-slate-200 dark:bg-white/5 flex items-center justify-center text-slate-700 dark:text-white flex-shrink-0">
+                  <MapPin className="h-6 w-6" />
+                </div>
+                <div>
+                  <h3 className="font-semibold text-slate-900 dark:text-white mb-1">Visit Us</h3>
+                  <p className="text-slate-500 dark:text-slate-400 mb-1">Come say hello at our office HQ.</p>
+                  <p className="text-slate-700 dark:text-slate-300">123 Education Lane, Tech District<br/>San Francisco, CA 94105</p>
+                </div>
+              </div>
+              
+              <div className="flex items-start gap-4">
+                <div className="h-12 w-12 rounded-xl bg-slate-200 dark:bg-white/5 flex items-center justify-center text-slate-700 dark:text-white flex-shrink-0">
+                  <Phone className="h-6 w-6" />
+                </div>
+                <div>
+                  <h3 className="font-semibold text-slate-900 dark:text-white mb-1">Call Us</h3>
+                  <p className="text-slate-500 dark:text-slate-400 mb-1">Mon-Fri from 8am to 5pm.</p>
+                  <a href="tel:+15551234567" className="text-[var(--brand-primary)] font-medium hover:underline">+1 (555) 123-4567</a>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div className="bg-white dark:bg-[#0a0a0a] border border-slate-200 dark:border-white/10 p-8 rounded-3xl shadow-xl">
+            <h3 className="text-2xl font-bold mb-6 text-slate-900 dark:text-white">Send us a message</h3>
+            <form className="space-y-4" onSubmit={(e) => e.preventDefault()}>
+              <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <label className="text-sm font-medium text-slate-700 dark:text-slate-300">First Name</label>
+                  <input type="text" className="w-full bg-slate-50 dark:bg-[#111] border border-slate-200 dark:border-white/10 rounded-lg h-12 px-4 outline-none focus:border-[var(--brand-primary)] transition-colors" placeholder="John" />
+                </div>
+                <div className="space-y-2">
+                  <label className="text-sm font-medium text-slate-700 dark:text-slate-300">Last Name</label>
+                  <input type="text" className="w-full bg-slate-50 dark:bg-[#111] border border-slate-200 dark:border-white/10 rounded-lg h-12 px-4 outline-none focus:border-[var(--brand-primary)] transition-colors" placeholder="Doe" />
+                </div>
+              </div>
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-slate-700 dark:text-slate-300">Email</label>
+                <input type="email" className="w-full bg-slate-50 dark:bg-[#111] border border-slate-200 dark:border-white/10 rounded-lg h-12 px-4 outline-none focus:border-[var(--brand-primary)] transition-colors" placeholder="john@school.edu" />
+              </div>
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-slate-700 dark:text-slate-300">Message</label>
+                <textarea className="w-full bg-slate-50 dark:bg-[#111] border border-slate-200 dark:border-white/10 rounded-lg p-4 outline-none focus:border-[var(--brand-primary)] transition-colors h-32 resize-none" placeholder="How can we help?"></textarea>
+              </div>
+              <Button className="w-full h-12 rounded-lg bg-[var(--brand-primary)] hover:bg-[var(--brand-primary)]/90 text-white font-semibold mt-4">Send Message</Button>
+            </form>
+          </div>
+        </div>
+      </main>
+
+      {/* Simple Footer */}
+      <footer className="border-t border-slate-200 dark:border-white/10 py-8 text-center text-slate-500 dark:text-slate-400 text-sm">
+        <p>© 2026 EduNest Inc. All rights reserved.</p>
+      </footer>
+    </div>
+  );
+}

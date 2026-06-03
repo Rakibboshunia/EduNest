@@ -48,7 +48,7 @@ export default function Students() {
         <div className="flex items-center gap-3">
           <Avatar className="h-10 w-10 ring-2 ring-slate-100 dark:ring-white/10 shadow-sm">
             <AvatarImage src={`https://i.pravatar.cc/150?u=${row.original.name}`} />
-            <AvatarFallback className="bg-gradient-to-br from-[#0f3b73] to-[#1e40af] text-white text-sm font-bold">
+            <AvatarFallback className="bg-gradient-to-br from-[var(--brand-primary)] to-[var(--brand-primary-light)] text-white text-sm font-bold">
               {row.original.name.charAt(0)}
             </AvatarFallback>
           </Avatar>
@@ -74,7 +74,7 @@ export default function Students() {
       accessorKey: "grade",
       header: "Grade",
       cell: ({ row }) => (
-        <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-[#0f3b73]/10 text-[#0f3b73] dark:bg-[#0f3b73]/25 dark:text-[#60a5fa] border border-[#0f3b73]/15">
+        <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-[var(--brand-primary)]/10 text-[var(--brand-primary)] dark:bg-[var(--brand-primary)]/25 dark:text-[#60a5fa] border border-[var(--brand-primary)]/15">
           {row.getValue("grade")}
         </span>
       )
@@ -102,7 +102,7 @@ export default function Students() {
       cell: ({ row }) => (
         <div className="flex items-center justify-end gap-2">
           <Link to={`/students/${row.original.id}`}>
-            <Button variant="outline" size="sm" className="border-[#0f3b73]/20 text-[#0f3b73] dark:text-[#60a5fa] hover:bg-[#0f3b73]/5 dark:hover:bg-[#0f3b73]/10 rounded-full px-4 text-xs font-semibold h-8">
+            <Button variant="outline" size="sm" className="border-[var(--brand-primary)]/20 text-[var(--brand-primary)] dark:text-[#60a5fa] hover:bg-[var(--brand-primary)]/5 dark:hover:bg-[var(--brand-primary)]/10 rounded-full px-4 text-xs font-semibold h-8">
               View Profile
             </Button>
           </Link>
@@ -126,9 +126,9 @@ export default function Students() {
       className="space-y-6 pb-10"
     >
       {/* ── Hero Header ── */}
-      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-[#0f3b73] via-[#1a4f96] to-[#0f3b73] p-6 md:p-8 shadow-xl shadow-[#0f3b73]/20">
+      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-[var(--brand-primary)] via-[#1a4f96] to-[var(--brand-primary)] p-6 md:p-8 shadow-xl shadow-[var(--brand-primary)]/20">
         <div className="absolute top-0 right-0 w-80 h-80 bg-white/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3 pointer-events-none" />
-        <div className="absolute bottom-0 left-1/4 w-48 h-48 bg-[#36833b]/20 rounded-full blur-3xl translate-y-1/2 pointer-events-none" />
+        <div className="absolute bottom-0 left-1/4 w-48 h-48 bg-[var(--brand-secondary)]/20 rounded-full blur-3xl translate-y-1/2 pointer-events-none" />
         <div className="relative flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
           <div>
             <div className="flex items-center gap-2 mb-1">
@@ -149,12 +149,12 @@ export default function Students() {
             </Button>
             <Dialog open={open} onOpenChange={setOpen}>
               <DialogTrigger asChild>
-                <Button size="sm" className="bg-white text-[#0f3b73] hover:bg-white/90 font-semibold rounded-xl shadow-lg">
+                <Button size="sm" className="bg-white text-[var(--brand-primary)] hover:bg-white/90 font-semibold rounded-xl shadow-lg">
                   <Plus className="mr-2 h-3.5 w-3.5" /> Add Student
                 </Button>
               </DialogTrigger>
               <DialogContent className="sm:max-w-[440px] dark:bg-[#1e293b] border-none shadow-2xl rounded-2xl p-0 overflow-hidden">
-                <div className="bg-gradient-to-r from-[#0f3b73] to-[#1a5296] p-6">
+                <div className="bg-gradient-to-r from-[var(--brand-primary)] to-[#1a5296] p-6">
                   <DialogTitle className="text-white text-xl font-bold">Enroll New Student</DialogTitle>
                   <DialogDescription className="text-white/60 text-sm mt-1">Fill in the student's details below.</DialogDescription>
                 </div>
@@ -184,7 +184,7 @@ export default function Students() {
                       )} />
                       <div className="flex justify-end gap-2 pt-2">
                         <Button type="button" variant="outline" onClick={() => setOpen(false)} className="rounded-xl">Cancel</Button>
-                        <Button type="submit" className="bg-gradient-to-r from-[#0f3b73] to-[#36833b] text-white rounded-xl font-semibold shadow-md">Enroll Student</Button>
+                        <Button type="submit" className="bg-gradient-to-r from-[var(--brand-primary)] to-[var(--brand-secondary)] text-white rounded-xl font-semibold shadow-md">Enroll Student</Button>
                       </div>
                     </form>
                   </Form>

@@ -41,7 +41,7 @@ export default function Attendance() {
       className="space-y-6 pb-10"
     >
       {/* ── Hero Header ── */}
-      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-[#0f3b73] via-[#1a4f96] to-[#36833b] p-6 md:p-8 shadow-xl shadow-[#0f3b73]/20">
+      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-[var(--brand-primary)] via-[#1a4f96] to-[var(--brand-secondary)] p-6 md:p-8 shadow-xl shadow-[var(--brand-primary)]/20">
         <div className="absolute top-0 right-0 w-72 h-72 bg-white/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3 pointer-events-none" />
         <div className="relative flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
           <div>
@@ -62,7 +62,7 @@ export default function Attendance() {
             <Button
               size="sm"
               onClick={() => toast.promise(new Promise(r => setTimeout(r, 1000)), { loading: "Exporting...", success: "Exported!", error: "Error" })}
-              className="bg-white text-[#0f3b73] hover:bg-white/90 font-semibold rounded-xl shadow-md"
+              className="bg-white text-[var(--brand-primary)] hover:bg-white/90 font-semibold rounded-xl shadow-md"
             >
               <Download className="mr-2 h-3.5 w-3.5" /> Export
             </Button>
@@ -109,7 +109,7 @@ export default function Attendance() {
             <Button
               size="sm"
               onClick={() => toast.success("Attendance marked!")}
-              className="bg-gradient-to-r from-[#0f3b73] to-[#36833b] text-white rounded-xl shadow-md h-9 font-semibold"
+              className="bg-gradient-to-r from-[var(--brand-primary)] to-[var(--brand-secondary)] text-white rounded-xl shadow-md h-9 font-semibold"
             >
               <CheckCircle2 className="mr-2 h-3.5 w-3.5" /> Mark Attendance
             </Button>
@@ -139,7 +139,7 @@ export default function Attendance() {
                       <div className="flex items-center gap-3">
                         <Avatar className="h-9 w-9 ring-1 ring-slate-100 dark:ring-white/10">
                           <AvatarImage src={`https://i.pravatar.cc/150?u=${student.name}`} />
-                          <AvatarFallback className="bg-gradient-to-br from-[#0f3b73] to-[#1e40af] text-white text-xs font-bold">{student.name.charAt(0)}</AvatarFallback>
+                          <AvatarFallback className="bg-gradient-to-br from-[var(--brand-primary)] to-[var(--brand-primary-light)] text-white text-xs font-bold">{student.name.charAt(0)}</AvatarFallback>
                         </Avatar>
                         <span className="font-semibold text-slate-800 dark:text-slate-200">{student.name}</span>
                       </div>

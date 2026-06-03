@@ -39,7 +39,7 @@ const revenueByGrade = [
   { name: "High", value: 250000 },
 ];
 
-const COLORS = ["#0f3b73", "#36833b", "#60a5fa"];
+const COLORS = ["var(--brand-primary)", "var(--brand-secondary)", "#60a5fa"];
 
 const container = { hidden: { opacity: 0 }, show: { opacity: 1, transition: { staggerChildren: 0.1 } } };
 const item = { hidden: { opacity: 0, y: 16 }, show: { opacity: 1, y: 0, transition: { duration: 0.35 } } };
@@ -57,7 +57,7 @@ export default function Analytics() {
       className="space-y-6 pb-10"
     >
       {/* ── Hero Header ── */}
-      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-purple-900 via-[#0f3b73] to-[#36833b] p-6 md:p-8 shadow-xl shadow-purple-900/20">
+      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-purple-900 via-[var(--brand-primary)] to-[var(--brand-secondary)] p-6 md:p-8 shadow-xl shadow-purple-900/20">
         <div className="absolute top-0 right-0 w-96 h-96 bg-white/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3 pointer-events-none" />
         <div className="absolute bottom-0 left-1/4 w-64 h-64 bg-purple-500/10 rounded-full blur-3xl translate-y-1/2 pointer-events-none" />
         <div className="relative flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
@@ -76,7 +76,7 @@ export default function Analytics() {
                   key={p}
                   onClick={() => { setPeriod(p); toast(`Period: ${p}`); }}
                   className={`px-3 py-1.5 text-xs font-semibold transition-colors ${
-                    period === p ? "bg-white text-[#0f3b73]" : "text-white/70 hover:text-white hover:bg-white/10"
+                    period === p ? "bg-white text-[var(--brand-primary)]" : "text-white/70 hover:text-white hover:bg-white/10"
                   }`}
                 >
                   {p.replace("This ", "")}
@@ -133,15 +133,15 @@ export default function Analytics() {
                   <AreaChart data={enrollmentData} margin={{ top: 5, right: 10, left: -20, bottom: 0 }}>
                     <defs>
                       <linearGradient id="gradEnroll" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="5%" stopColor="#0f3b73" stopOpacity={0.3} />
-                        <stop offset="95%" stopColor="#0f3b73" stopOpacity={0} />
+                        <stop offset="5%" stopColor="var(--brand-primary)" stopOpacity={0.3} />
+                        <stop offset="95%" stopColor="var(--brand-primary)" stopOpacity={0} />
                       </linearGradient>
                     </defs>
                     <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="hsl(var(--border))" opacity={0.4} />
                     <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{ fill: "hsl(var(--muted-foreground))", fontSize: 11 }} dy={10} />
                     <YAxis axisLine={false} tickLine={false} tick={{ fill: "hsl(var(--muted-foreground))", fontSize: 11 }} dx={-10} />
                     <Tooltip contentStyle={{ backgroundColor: "hsl(var(--background))", borderColor: "hsl(var(--border))", borderRadius: "12px", fontSize: "12px" }} />
-                    <Area type="monotone" dataKey="students" name="Students" stroke="#0f3b73" strokeWidth={2.5} fillOpacity={1} fill="url(#gradEnroll)" dot={false} activeDot={{ r: 5, fill: "#0f3b73" }} />
+                    <Area type="monotone" dataKey="students" name="Students" stroke="var(--brand-primary)" strokeWidth={2.5} fillOpacity={1} fill="url(#gradEnroll)" dot={false} activeDot={{ r: 5, fill: "var(--brand-primary)" }} />
                   </AreaChart>
                 </ResponsiveContainer>
               </div>
@@ -210,7 +210,7 @@ export default function Analytics() {
                     />
                     <Bar dataKey="revenue" radius={[6, 6, 0, 0]}>
                       {monthlyRevenue.map((_, i) => (
-                        <Cell key={i} fill={i === monthlyRevenue.length - 1 ? "#36833b" : "#0f3b73"} opacity={i === monthlyRevenue.length - 1 ? 1 : 0.75} />
+                        <Cell key={i} fill={i === monthlyRevenue.length - 1 ? "var(--brand-secondary)" : "var(--brand-primary)"} opacity={i === monthlyRevenue.length - 1 ? 1 : 0.75} />
                       ))}
                     </Bar>
                   </BarChart>

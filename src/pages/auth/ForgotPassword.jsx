@@ -42,7 +42,7 @@ export default function ForgotPassword() {
   return (
     <div className="min-h-screen w-full flex items-center justify-center bg-[#0f172a] p-4 relative overflow-hidden selection:bg-[#1d4ed8]/30">
       {/* Background Elements */}
-      <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-[#0f3b73]/20 rounded-full blur-[120px] z-0 pointer-events-none"></div>
+      <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-[var(--brand-primary)]/20 rounded-full blur-[120px] z-0 pointer-events-none"></div>
       
       <motion.div 
         initial={{ opacity: 0, scale: 0.95 }}
@@ -72,7 +72,7 @@ export default function ForgotPassword() {
                         <Input 
                           placeholder="name@example.com" 
                           {...field} 
-                          className="bg-[#0f172a] border-white/10 text-white placeholder:text-slate-500 focus-visible:ring-[#36833b]"
+                          className="bg-[#0f172a] border-white/10 text-white placeholder:text-slate-500 focus-visible:ring-[var(--brand-secondary)]"
                         />
                       </FormControl>
                       <FormMessage className="text-red-400" />
@@ -82,7 +82,7 @@ export default function ForgotPassword() {
                 
                 <Button 
                   type="submit" 
-                  className="w-full bg-[#0f3b73] hover:bg-[#1e40af] text-white rounded-xl h-11 transition-all mt-6" 
+                  className="w-full bg-[var(--brand-primary)] hover:bg-[var(--brand-primary-light)] text-white rounded-xl h-11 transition-all mt-6" 
                   disabled={isLoading}
                 >
                   {isLoading ? (
@@ -100,7 +100,7 @@ export default function ForgotPassword() {
             animate={{ opacity: 1 }}
             className="flex flex-col items-center justify-center space-y-4 text-center py-6"
           >
-            <div className="h-20 w-20 rounded-full bg-[#36833b]/20 flex items-center justify-center text-[#4ade80] mb-4 border border-[#36833b]/30">
+            <div className="h-20 w-20 rounded-full bg-[var(--brand-secondary)]/20 flex items-center justify-center text-[#4ade80] mb-4 border border-[var(--brand-secondary)]/30">
               <MailCheck className="h-10 w-10" />
             </div>
             <h2 className="text-2xl font-bold text-white">Check your email</h2>

@@ -38,11 +38,11 @@ export default function Exams() {
     >
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-white dark:bg-[#0f172a] p-6 rounded-2xl border shadow-sm">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight text-[#0f3b73] dark:text-white">Exams & Results</h1>
+          <h1 className="text-3xl font-bold tracking-tight text-[var(--brand-primary)] dark:text-white">Exams & Results</h1>
           <p className="text-muted-foreground mt-1">Schedule examinations and publish student results.</p>
         </div>
         <div className="flex gap-3">
-          <Button onClick={() => toast.success("Exam scheduled successfully!")} className="bg-gradient-to-r from-[#0f3b73] to-[#36833b] hover:opacity-90 text-white border-0 shadow-md shadow-[#0f3b73]/20">
+          <Button onClick={() => toast.success("Exam scheduled successfully!")} className="bg-gradient-to-r from-[var(--brand-primary)] to-[var(--brand-secondary)] hover:opacity-90 text-white border-0 shadow-md shadow-[var(--brand-primary)]/20">
             <Plus className="mr-2 h-4 w-4" /> Schedule Exam
           </Button>
         </div>
@@ -51,7 +51,7 @@ export default function Exams() {
       <div className="grid gap-6 md:grid-cols-3">
         <div className="md:col-span-2 space-y-6">
           <div className="flex justify-between items-center">
-            <h2 className="text-xl font-bold text-[#0f3b73] dark:text-white">Upcoming Examinations</h2>
+            <h2 className="text-xl font-bold text-[var(--brand-primary)] dark:text-white">Upcoming Examinations</h2>
             <div className="relative w-64">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
               <Input placeholder="Search exams..." className="pl-9 dark:bg-[#1e293b] border-white/10" />
@@ -63,11 +63,11 @@ export default function Exams() {
               <Card key={i} className="border shadow-sm dark:bg-[#1e293b] group hover:shadow-md transition-shadow">
                 <CardContent className="p-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                   <div className="flex items-center gap-4">
-                    <div className="h-12 w-12 rounded-xl bg-[#0f3b73]/10 dark:bg-[#0f3b73]/30 flex items-center justify-center text-[#0f3b73] dark:text-[#60a5fa]">
+                    <div className="h-12 w-12 rounded-xl bg-[var(--brand-primary)]/10 dark:bg-[var(--brand-primary)]/30 flex items-center justify-center text-[var(--brand-primary)] dark:text-[#60a5fa]">
                       <FileText className="h-6 w-6" />
                     </div>
                     <div>
-                      <h3 className="font-bold text-[#0f3b73] dark:text-white text-lg">{exam.title}</h3>
+                      <h3 className="font-bold text-[var(--brand-primary)] dark:text-white text-lg">{exam.title}</h3>
                       <div className="flex items-center gap-4 mt-1 text-sm text-muted-foreground">
                         <span className="flex items-center gap-1"><Calendar className="h-3 w-3" /> {exam.date}</span>
                         <span className="flex items-center gap-1"><Clock className="h-3 w-3" /> {exam.time}</span>
@@ -79,7 +79,7 @@ export default function Exams() {
                       <span className="text-sm font-medium text-slate-700 dark:text-slate-300">{exam.grade}</span>
                       <span className="text-xs text-muted-foreground">{exam.type}</span>
                     </div>
-                    <Button onClick={() => toast("Exam details opened.")} variant="ghost" size="icon" className="text-slate-400 hover:text-[#0f3b73] dark:hover:text-white">
+                    <Button onClick={() => toast("Exam details opened.")} variant="ghost" size="icon" className="text-slate-400 hover:text-[var(--brand-primary)] dark:hover:text-white">
                       <MoreVertical className="h-4 w-4" />
                     </Button>
                   </div>
@@ -90,7 +90,7 @@ export default function Exams() {
         </div>
 
         <div className="space-y-6">
-          <h2 className="text-xl font-bold text-[#0f3b73] dark:text-white">Quick Actions</h2>
+          <h2 className="text-xl font-bold text-[var(--brand-primary)] dark:text-white">Quick Actions</h2>
           <Card className="border shadow-sm dark:bg-[#1e293b]">
             <CardContent className="p-4 flex flex-col gap-2">
               <Button onClick={() => toast.promise(new Promise(r => setTimeout(r, 1000)), { loading: 'Publishing...', success: 'Results Published!', error: 'Error' })} variant="outline" className="justify-start border-white/10 dark:text-white dark:bg-[#0f172a]">Publish Results</Button>
@@ -104,10 +104,10 @@ export default function Exams() {
       <Dialog open={showPreview} onOpenChange={setShowPreview}>
         <DialogContent className="sm:max-w-[700px] p-0 dark:bg-[#1e293b] border-none overflow-hidden h-[80vh] flex flex-col">
           <div className="p-4 bg-slate-50 dark:bg-black/20 border-b border-slate-100 dark:border-white/5 flex justify-between items-center shrink-0">
-            <h2 className="text-lg font-bold text-[#0f3b73] dark:text-white">Report Card Preview</h2>
+            <h2 className="text-lg font-bold text-[var(--brand-primary)] dark:text-white">Report Card Preview</h2>
             <div className="flex gap-2">
               <Button variant="outline" size="sm" onClick={() => setShowPreview(false)}>Cancel</Button>
-              <Button size="sm" onClick={() => { setShowPreview(false); toast.success("Batch print started!"); }} className="bg-[#0f3b73] hover:bg-[#1e40af] text-white">
+              <Button size="sm" onClick={() => { setShowPreview(false); toast.success("Batch print started!"); }} className="bg-[var(--brand-primary)] hover:bg-[var(--brand-primary-light)] text-white">
                 <Printer className="mr-2 h-4 w-4" /> Print All (124)
               </Button>
             </div>
@@ -118,9 +118,9 @@ export default function Exams() {
             <div className="bg-white dark:bg-[#1e293b] w-full max-w-xl p-8 shadow-sm rounded border border-slate-200 dark:border-white/10 relative">
               <div className="text-center mb-6">
                 <img src="/logo.png" alt="EduNest" className="h-16 w-auto mx-auto mb-2 drop-shadow-sm" />
-                <h1 className="text-2xl font-bold text-[#0f3b73] dark:text-white uppercase tracking-widest mt-2">EduNest Academy</h1>
+                <h1 className="text-2xl font-bold text-[var(--brand-primary)] dark:text-white uppercase tracking-widest mt-2">EduNest Academy</h1>
                 <p className="text-sm text-muted-foreground mt-1">End of Term Progress Report</p>
-                <div className="h-1 w-20 bg-gradient-to-r from-[#0f3b73] to-[#36833b] mx-auto mt-4"></div>
+                <div className="h-1 w-20 bg-gradient-to-r from-[var(--brand-primary)] to-[var(--brand-secondary)] mx-auto mt-4"></div>
               </div>
               
               <div className="flex justify-between items-end mb-6 pb-4 border-b border-slate-100 dark:border-white/10">
@@ -130,7 +130,7 @@ export default function Exams() {
                 </div>
                 <div className="text-right">
                   <p className="text-sm font-semibold text-slate-500 uppercase tracking-wider mb-1">Overall GPA</p>
-                  <p className="text-3xl font-bold text-[#0f3b73] dark:text-white">3.92</p>
+                  <p className="text-3xl font-bold text-[var(--brand-primary)] dark:text-white">3.92</p>
                 </div>
               </div>
               
@@ -143,9 +143,9 @@ export default function Exams() {
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-slate-100 dark:divide-white/5">
-                  <tr><td className="px-3 py-2 font-medium">Mathematics</td><td className="px-3 py-2 text-center">98</td><td className="px-3 py-2 text-right font-bold text-[#36833b]">A+</td></tr>
-                  <tr><td className="px-3 py-2 font-medium">Physics</td><td className="px-3 py-2 text-center">92</td><td className="px-3 py-2 text-right font-bold text-[#36833b]">A</td></tr>
-                  <tr><td className="px-3 py-2 font-medium">Literature</td><td className="px-3 py-2 text-center">89</td><td className="px-3 py-2 text-right font-bold text-[#36833b]">B+</td></tr>
+                  <tr><td className="px-3 py-2 font-medium">Mathematics</td><td className="px-3 py-2 text-center">98</td><td className="px-3 py-2 text-right font-bold text-[var(--brand-secondary)]">A+</td></tr>
+                  <tr><td className="px-3 py-2 font-medium">Physics</td><td className="px-3 py-2 text-center">92</td><td className="px-3 py-2 text-right font-bold text-[var(--brand-secondary)]">A</td></tr>
+                  <tr><td className="px-3 py-2 font-medium">Literature</td><td className="px-3 py-2 text-center">89</td><td className="px-3 py-2 text-right font-bold text-[var(--brand-secondary)]">B+</td></tr>
                 </tbody>
               </table>
 
@@ -158,7 +158,7 @@ export default function Exams() {
             <div className="bg-white/50 dark:bg-[#1e293b]/50 w-full max-w-xl p-8 shadow-sm rounded border border-slate-200/50 dark:border-white/5 relative opacity-50">
               <div className="text-center mb-6">
                 <img src="/logo.png" alt="EduNest" className="h-16 w-auto mx-auto mb-2 drop-shadow-sm opacity-70" />
-                <h1 className="text-2xl font-bold text-[#0f3b73] dark:text-white uppercase tracking-widest mt-2">EduNest Academy</h1>
+                <h1 className="text-2xl font-bold text-[var(--brand-primary)] dark:text-white uppercase tracking-widest mt-2">EduNest Academy</h1>
               </div>
             </div>
 

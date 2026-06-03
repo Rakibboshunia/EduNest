@@ -43,31 +43,31 @@ export default function TeacherProfile() {
       className="space-y-6 pb-8"
     >
       <div className="flex items-center gap-4">
-        <Button variant="ghost" size="icon" onClick={() => navigate("/teachers")} className="text-slate-500 hover:text-[#0f3b73] dark:hover:text-white">
+        <Button variant="ghost" size="icon" onClick={() => navigate("/teachers")} className="text-slate-500 hover:text-[var(--brand-primary)] dark:hover:text-white">
           <ArrowLeft className="h-5 w-5" />
         </Button>
-        <h1 className="text-2xl font-bold tracking-tight text-[#0f3b73] dark:text-white">Teacher Profile</h1>
+        <h1 className="text-2xl font-bold tracking-tight text-[var(--brand-primary)] dark:text-white">Teacher Profile</h1>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {/* Left Column - Main Profile Info */}
         <Card className="col-span-1 border-none shadow-lg dark:bg-[#1e293b] overflow-hidden relative">
-          <div className="h-32 bg-gradient-to-r from-[#0f3b73] to-[#36833b] w-full absolute top-0 left-0"></div>
+          <div className="h-32 bg-gradient-to-r from-[var(--brand-primary)] to-[var(--brand-secondary)] w-full absolute top-0 left-0"></div>
           <CardContent className="pt-16 pb-6 px-6 relative z-10 flex flex-col items-center text-center">
             <Avatar className="h-32 w-32 border-4 border-white dark:border-[#1e293b] shadow-xl mb-4">
               <AvatarImage src={`https://i.pravatar.cc/150?u=${teacher.name}`} />
-              <AvatarFallback className="bg-gradient-to-br from-[#0f3b73] to-[#1e40af] text-white text-4xl">
+              <AvatarFallback className="bg-gradient-to-br from-[var(--brand-primary)] to-[var(--brand-primary-light)] text-white text-4xl">
                 {teacher.name.charAt(0)}
               </AvatarFallback>
             </Avatar>
-            <h2 className="text-2xl font-bold text-[#0f3b73] dark:text-white">{teacher.name}</h2>
-            <p className="text-[#36833b] dark:text-[#4ade80] font-semibold text-sm mt-1 flex items-center justify-center gap-1.5">
+            <h2 className="text-2xl font-bold text-[var(--brand-primary)] dark:text-white">{teacher.name}</h2>
+            <p className="text-[var(--brand-secondary)] dark:text-[#4ade80] font-semibold text-sm mt-1 flex items-center justify-center gap-1.5">
               <BookOpen className="h-4 w-4" /> {teacher.subject} Department
             </p>
             
             <div className="flex gap-2 mt-6 w-full">
-              <Button onClick={() => toast.success("Message sent!")} className="flex-1 bg-[#0f3b73] hover:bg-[#1e40af] text-white"><Mail className="mr-2 h-4 w-4" /> Message</Button>
-              <Button onClick={() => toast.success("Meeting request sent!")} variant="outline" className="flex-1 border-[#0f3b73]/20 text-[#0f3b73] hover:bg-[#0f3b73]/5 dark:text-white dark:border-white/20"><Calendar className="mr-2 h-4 w-4" /> Meeting</Button>
+              <Button onClick={() => toast.success("Message sent!")} className="flex-1 bg-[var(--brand-primary)] hover:bg-[var(--brand-primary-light)] text-white"><Mail className="mr-2 h-4 w-4" /> Message</Button>
+              <Button onClick={() => toast.success("Meeting request sent!")} variant="outline" className="flex-1 border-[var(--brand-primary)]/20 text-[var(--brand-primary)] hover:bg-[var(--brand-primary)]/5 dark:text-white dark:border-white/20"><Calendar className="mr-2 h-4 w-4" /> Meeting</Button>
             </div>
 
             <div className="w-full mt-8 space-y-4 text-left">
@@ -92,13 +92,13 @@ export default function TeacherProfile() {
               title="Active Classes" 
               value={teacher.classes || "4"} 
               icon={BookOpen} 
-              color="from-[#0f3b73] to-[#1e40af]" 
+              color="from-[var(--brand-primary)] to-[var(--brand-primary-light)]" 
             />
             <StatCard 
               title="Total Students" 
               value="128" 
               icon={GraduationCap} 
-              color="from-[#36833b] to-[#4ade80]" 
+              color="from-[var(--brand-secondary)] to-[#4ade80]" 
             />
           </div>
 
@@ -113,14 +113,14 @@ export default function TeacherProfile() {
               
               <div className="pt-4 space-y-3">
                 <div className="flex gap-3">
-                  <Award className="h-5 w-5 text-[#36833b] shrink-0" />
+                  <Award className="h-5 w-5 text-[var(--brand-secondary)] shrink-0" />
                   <div>
                     <h4 className="font-semibold text-slate-800 dark:text-slate-200">Ph.D. in {teacher.subject}</h4>
                     <p className="text-xs text-muted-foreground">University of Education, 2015</p>
                   </div>
                 </div>
                 <div className="flex gap-3">
-                  <Award className="h-5 w-5 text-[#0f3b73] shrink-0" />
+                  <Award className="h-5 w-5 text-[var(--brand-primary)] shrink-0" />
                   <div>
                     <h4 className="font-semibold text-slate-800 dark:text-slate-200">Master's Degree</h4>
                     <p className="text-xs text-muted-foreground">State University, 2011</p>

@@ -32,7 +32,7 @@ const typeIcons = {
 
 const priorityConfig = {
   High: { pill: "bg-red-100 text-red-700 dark:bg-red-500/15 dark:text-red-400", bar: "bg-red-500" },
-  Normal: { pill: "bg-[#0f3b73]/10 text-[#0f3b73] dark:bg-[#0f3b73]/25 dark:text-[#60a5fa]", bar: "bg-[#0f3b73]" },
+  Normal: { pill: "bg-[var(--brand-primary)]/10 text-[var(--brand-primary)] dark:bg-[var(--brand-primary)]/25 dark:text-[#60a5fa]", bar: "bg-[var(--brand-primary)]" },
   Low: { pill: "bg-slate-100 text-slate-500 dark:bg-white/10 dark:text-slate-400", bar: "bg-slate-400" },
 };
 
@@ -66,7 +66,7 @@ export default function Notices() {
       className="space-y-6 pb-10"
     >
       {/* ── Hero Header ── */}
-      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-indigo-700 via-[#0f3b73] to-[#36833b] p-6 md:p-8 shadow-xl shadow-indigo-900/20">
+      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-indigo-700 via-[var(--brand-primary)] to-[var(--brand-secondary)] p-6 md:p-8 shadow-xl shadow-indigo-900/20">
         <div className="absolute top-0 right-0 w-72 h-72 bg-white/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3 pointer-events-none" />
         <div className="relative flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
           <div>
@@ -84,7 +84,7 @@ export default function Notices() {
               </Button>
             </DialogTrigger>
             <DialogContent className="sm:max-w-[440px] dark:bg-[#1e293b] border-none shadow-2xl rounded-2xl p-0 overflow-hidden">
-              <div className="bg-gradient-to-r from-indigo-700 to-[#0f3b73] p-6">
+              <div className="bg-gradient-to-r from-indigo-700 to-[var(--brand-primary)] p-6">
                 <DialogTitle className="text-white text-xl font-bold">Create Notice</DialogTitle>
                 <DialogDescription className="text-white/60 text-sm mt-1">Broadcast an announcement to the institution.</DialogDescription>
               </div>
@@ -127,7 +127,7 @@ export default function Notices() {
                     </div>
                     <div className="flex justify-end gap-2 pt-2">
                       <Button type="button" variant="outline" onClick={() => setOpen(false)} className="rounded-xl">Cancel</Button>
-                      <Button type="submit" className="bg-gradient-to-r from-indigo-700 to-[#0f3b73] text-white rounded-xl font-semibold shadow-md">
+                      <Button type="submit" className="bg-gradient-to-r from-indigo-700 to-[var(--brand-primary)] text-white rounded-xl font-semibold shadow-md">
                         <Send className="mr-2 h-3.5 w-3.5" /> Broadcast
                       </Button>
                     </div>
@@ -173,8 +173,8 @@ export default function Notices() {
                     <div className="flex items-center gap-4">
                       <div className={`h-12 w-12 rounded-xl flex items-center justify-center shrink-0 ${
                         notice.type === "Event"
-                          ? "bg-[#36833b]/10 text-[#36833b] dark:bg-[#36833b]/20"
-                          : "bg-[#0f3b73]/10 text-[#0f3b73] dark:bg-[#0f3b73]/20 dark:text-[#60a5fa]"
+                          ? "bg-[var(--brand-secondary)]/10 text-[var(--brand-secondary)] dark:bg-[var(--brand-secondary)]/20"
+                          : "bg-[var(--brand-primary)]/10 text-[var(--brand-primary)] dark:bg-[var(--brand-primary)]/20 dark:text-[#60a5fa]"
                       }`}>
                         <Icon className="h-5 w-5" />
                       </div>
@@ -195,7 +195,7 @@ export default function Notices() {
                       </div>
                     </div>
                     <div className="flex items-center gap-1 shrink-0">
-                      <Button onClick={() => toast.success("Notice resent!")} variant="ghost" size="icon" className="h-8 w-8 text-slate-300 hover:text-[#0f3b73] dark:hover:text-white rounded-full">
+                      <Button onClick={() => toast.success("Notice resent!")} variant="ghost" size="icon" className="h-8 w-8 text-slate-300 hover:text-[var(--brand-primary)] dark:hover:text-white rounded-full">
                         <Send className="h-3.5 w-3.5" />
                       </Button>
                       <Button onClick={() => toast.error("Notice deleted.")} variant="ghost" size="icon" className="h-8 w-8 text-slate-300 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-500/10 rounded-full">

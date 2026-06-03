@@ -10,12 +10,33 @@ export function ThemeProvider({ children }) {
     return "light";
   });
 
+  const [colorTheme, setColorTheme] = useState(() => {
+    if (typeof window !== 'undefined') {
+      const stored = localStorage.getItem("colorTheme");
+      if (stored) return JSON.parse(stored);
+    }
+    return { name: "Default Blue", from: "#0f3b73", to: "#1e40af", secondary: "#36833b" };
+  });
+
   useEffect(() => {
     const root = window.document.documentElement;
     root.classList.remove("light", "dark");
     root.classList.add(theme);
     localStorage.setItem("theme", theme);
   }, [theme]);
+
+  useEffect(() => {
+    const root = window.document.documentElement;
+    root.style.setProperty('--brand-primary', colorTheme.from);
+    root.style.setProperty('--brand-primary-light', colorTheme.to);
+    if (colorTheme.secondary) {
+      root.style.setProperty('--brand-secondary', colorTheme.secondary);
+    } else {
+      // Create a complementary secondary color or just use the light version
+      root.style.setProperty('--brand-secondary', colorTheme.to);
+    }
+    localStorage.setItem("colorTheme", JSON.stringify(colorTheme));
+  }, [colorTheme]);
 
   const toggleTheme = () => {
     setTheme(prev => prev === "light" ? "dark" : "light");
@@ -26,7 +47,7 @@ export function ThemeProvider({ children }) {
   };
 
   return (
-    <ThemeContext.Provider value={{ theme, toggleTheme, setDarkMode, isDark: theme === "dark" }}>
+    <ThemeContext.Provider value={{ theme, toggleTheme, setDarkMode, isDark: theme === "dark", colorTheme, setColorTheme }}>
       {children}
     </ThemeContext.Provider>
   );

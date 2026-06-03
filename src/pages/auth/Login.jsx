@@ -67,9 +67,9 @@ export default function Login() {
       {/* Left side - Branding (Hidden on mobile) */}
       <div className="relative hidden w-1/2 lg:flex flex-col justify-between p-12 overflow-hidden">
         {/* Background elements */}
-        <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-[#0f3b73]/80 to-[#0f172a] z-0"></div>
-        <div className="absolute -top-40 -left-40 w-96 h-96 bg-[#36833b]/20 rounded-full blur-[100px] z-0"></div>
-        <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-[#0f3b73]/40 rounded-full blur-[120px] z-0"></div>
+        <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-[var(--brand-primary)]/80 to-[#0f172a] z-0"></div>
+        <div className="absolute -top-40 -left-40 w-96 h-96 bg-[var(--brand-secondary)]/20 rounded-full blur-[100px] z-0"></div>
+        <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-[var(--brand-primary)]/40 rounded-full blur-[120px] z-0"></div>
         <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1?q=80&w=2070&auto=format&fit=crop')] bg-cover bg-center opacity-10 mix-blend-overlay z-0"></div>
         
         {/* Logo */}
@@ -141,7 +141,7 @@ export default function Login() {
                 }}
                 className={`flex-1 text-xs font-medium py-2 px-1 rounded-lg transition-all ${
                   activeRole === role.id 
-                    ? "bg-[#36833b] shadow-sm text-white" 
+                    ? "bg-[var(--brand-secondary)] shadow-sm text-white" 
                     : "text-slate-400 hover:text-white hover:bg-white/5"
                 }`}
               >
@@ -162,7 +162,7 @@ export default function Login() {
                       <Input 
                         placeholder="name@example.com" 
                         {...field} 
-                        className="bg-[#0f172a] border-white/10 text-white placeholder:text-slate-500 focus-visible:ring-[#36833b]"
+                        className="bg-[#0f172a] border-white/10 text-white placeholder:text-slate-500 focus-visible:ring-[var(--brand-secondary)]"
                       />
                     </FormControl>
                     <FormMessage className="text-red-400" />
@@ -189,7 +189,7 @@ export default function Login() {
                           type={showPassword ? "text" : "password"} 
                           placeholder="••••••••" 
                           {...field} 
-                          className="bg-[#0f172a] border-white/10 text-white focus-visible:ring-[#36833b] pr-10"
+                          className="bg-[#0f172a] border-white/10 text-white focus-visible:ring-[var(--brand-secondary)] pr-10"
                         />
                         <button
                           type="button"
@@ -211,7 +211,7 @@ export default function Login() {
               
               <Button 
                 type="submit" 
-                className="w-full bg-[#0f3b73] hover:bg-[#1e40af] text-white rounded-xl h-11 transition-all mt-4" 
+                className="w-full bg-[var(--brand-primary)] hover:bg-[var(--brand-primary-light)] text-white rounded-xl h-11 transition-all mt-4" 
                 disabled={isLoading}
               >
                 {isLoading ? (

@@ -24,6 +24,9 @@
     --input: 214.3 31.8% 91.4%;
     --ring: 221.2 83.2% 53.3%;
     --radius: 0.75rem;
+    --brand-primary: #0f3b73;
+    --brand-primary-light: #1e40af;
+    --brand-secondary: #36833b;
   }
 
   .dark {
@@ -64,7 +67,7 @@
   }
   ::selection {
     background: rgba(15, 59, 115, 0.15);
-    color: #0f3b73;
+    color: var(--brand-primary);
   }
   .dark ::selection {
     background: rgba(96, 165, 250, 0.2);

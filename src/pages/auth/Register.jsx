@@ -56,8 +56,8 @@ export default function Register() {
   return (
     <div className="min-h-screen w-full flex items-center justify-center bg-[#0f172a] p-4 relative overflow-hidden selection:bg-[#1d4ed8]/30">
       {/* Background Elements */}
-      <div className="absolute -top-40 -left-40 w-96 h-96 bg-[#0f3b73]/30 rounded-full blur-[100px] z-0"></div>
-      <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-[#36833b]/20 rounded-full blur-[120px] z-0"></div>
+      <div className="absolute -top-40 -left-40 w-96 h-96 bg-[var(--brand-primary)]/30 rounded-full blur-[100px] z-0"></div>
+      <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-[var(--brand-secondary)]/20 rounded-full blur-[120px] z-0"></div>
       
       <motion.div 
         initial={{ opacity: 0, y: 20 }}
@@ -83,7 +83,7 @@ export default function Register() {
                     <Input 
                       placeholder="John Doe" 
                       {...field} 
-                      className="bg-[#0f172a] border-white/10 text-white placeholder:text-slate-500 focus-visible:ring-[#36833b]"
+                      className="bg-[#0f172a] border-white/10 text-white placeholder:text-slate-500 focus-visible:ring-[var(--brand-secondary)]"
                     />
                   </FormControl>
                   <FormMessage className="text-red-400" />
@@ -100,7 +100,7 @@ export default function Register() {
                     <Input 
                       placeholder="name@example.com" 
                       {...field} 
-                      className="bg-[#0f172a] border-white/10 text-white placeholder:text-slate-500 focus-visible:ring-[#36833b]"
+                      className="bg-[#0f172a] border-white/10 text-white placeholder:text-slate-500 focus-visible:ring-[var(--brand-secondary)]"
                     />
                   </FormControl>
                   <FormMessage className="text-red-400" />
@@ -119,7 +119,7 @@ export default function Register() {
                         type={showPassword ? "text" : "password"} 
                         placeholder="••••••••" 
                         {...field} 
-                        className="bg-[#0f172a] border-white/10 text-white placeholder:text-slate-500 focus-visible:ring-[#36833b] pr-10"
+                        className="bg-[#0f172a] border-white/10 text-white placeholder:text-slate-500 focus-visible:ring-[var(--brand-secondary)] pr-10"
                       />
                       <button
                         type="button"
@@ -141,7 +141,7 @@ export default function Register() {
             
             <Button 
               type="submit" 
-              className="w-full bg-[#36833b] hover:bg-[#2e6e32] text-white rounded-xl h-11 transition-all mt-6" 
+              className="w-full bg-[var(--brand-secondary)] hover:bg-[#2e6e32] text-white rounded-xl h-11 transition-all mt-6" 
               disabled={isLoading}
             >
               {isLoading ? (

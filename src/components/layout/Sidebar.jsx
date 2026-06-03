@@ -73,8 +73,8 @@ export function Sidebar({ className, onClose }) {
         <Link to="/" onClick={onClose} className="flex items-center gap-2.5 hover:opacity-85 transition-opacity">
           <img src="/logo.png" alt="EduNest" className="h-11 w-auto drop-shadow-sm shrink-0" />
           <div>
-            <h2 className="text-lg font-extrabold tracking-tight leading-none text-[#0f3b73] dark:text-white">
-              Edu<span className="text-[#36833b]">Nest</span>
+            <h2 className="text-lg font-extrabold tracking-tight leading-none text-[var(--brand-primary)] dark:text-white">
+              Edu<span className="text-[var(--brand-secondary)]">Nest</span>
             </h2>
             <p className="text-[10px] text-slate-400 dark:text-slate-500 leading-none mt-0.5 tracking-wide">Admin Portal</p>
           </div>
@@ -99,17 +99,17 @@ export function Sidebar({ className, onClose }) {
                     className={cn(
                       "group relative flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-all duration-200",
                       active
-                        ? "bg-gradient-to-r from-[#0f3b73] to-[#1e5fa8] text-white shadow-md shadow-[#0f3b73]/25"
+                        ? "bg-gradient-to-r from-[var(--brand-primary)] to-[#1e5fa8] text-white shadow-md shadow-[var(--brand-primary)]/25"
                         : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/5"
                     )}
                   >
                     {/* Active glow */}
                     {active && (
-                      <span className="absolute inset-0 rounded-xl bg-gradient-to-r from-[#0f3b73]/20 to-transparent blur-sm -z-10" />
+                      <span className="absolute inset-0 rounded-xl bg-gradient-to-r from-[var(--brand-primary)]/20 to-transparent blur-sm -z-10" />
                     )}
                     <item.icon className={cn(
                       "h-4.5 w-4.5 shrink-0 transition-transform duration-200",
-                      active ? "text-white" : "text-slate-400 dark:text-slate-500 group-hover:text-[#0f3b73] dark:group-hover:text-white group-hover:scale-110"
+                      active ? "text-white" : "text-slate-400 dark:text-slate-500 group-hover:text-[var(--brand-primary)] dark:group-hover:text-white group-hover:scale-110"
                     )} style={{ height: '1.05rem', width: '1.05rem' }} />
                     <span className="flex-1">{item.title}</span>
                     {active && <ChevronRight className="h-3.5 w-3.5 text-white/60" />}
@@ -126,9 +126,9 @@ export function Sidebar({ className, onClose }) {
         <div className="flex items-center gap-3 p-2 rounded-xl hover:bg-slate-100 dark:hover:bg-white/5 transition-colors group cursor-pointer"
           onClick={() => navigate("/settings")}
         >
-          <Avatar className="h-9 w-9 ring-2 ring-[#0f3b73]/20 dark:ring-white/10">
+          <Avatar className="h-9 w-9 ring-2 ring-[var(--brand-primary)]/20 dark:ring-white/10">
             <AvatarImage src={user?.avatar || `https://i.pravatar.cc/150?u=${user?.email}`} alt={user?.name || "User"} />
-            <AvatarFallback className="bg-gradient-to-br from-[#0f3b73] to-[#36833b] text-white text-xs font-bold">
+            <AvatarFallback className="bg-gradient-to-br from-[var(--brand-primary)] to-[var(--brand-secondary)] text-white text-xs font-bold">
               {user?.name ? user.name.substring(0, 2).toUpperCase() : "EN"}
             </AvatarFallback>
           </Avatar>

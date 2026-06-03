@@ -43,7 +43,7 @@ export default function Fees() {
     {
       accessorKey: "id",
       header: "Invoice ID",
-      cell: ({ row }) => <span className="font-mono text-xs font-semibold text-[#0f3b73] dark:text-[#60a5fa] bg-[#0f3b73]/10 dark:bg-[#60a5fa]/10 px-2 py-1 rounded-md">{row.getValue("id")}</span>
+      cell: ({ row }) => <span className="font-mono text-xs font-semibold text-[var(--brand-primary)] dark:text-[#60a5fa] bg-[var(--brand-primary)]/10 dark:bg-[#60a5fa]/10 px-2 py-1 rounded-md">{row.getValue("id")}</span>
     },
     {
       accessorKey: "student",
@@ -52,7 +52,7 @@ export default function Fees() {
         <div className="flex items-center gap-3">
           <Avatar className="h-8 w-8 ring-1 ring-slate-200 dark:ring-white/10">
             <AvatarImage src={`https://i.pravatar.cc/150?u=${row.getValue("student")}`} />
-            <AvatarFallback className="bg-gradient-to-br from-[#0f3b73] to-[#1e40af] text-white text-xs font-bold">
+            <AvatarFallback className="bg-gradient-to-br from-[var(--brand-primary)] to-[var(--brand-primary-light)] text-white text-xs font-bold">
               {row.getValue("student").charAt(0)}
             </AvatarFallback>
           </Avatar>
@@ -95,7 +95,7 @@ export default function Fees() {
       header: () => <div className="text-right">Action</div>,
       cell: ({ row }) => (
         <div className="text-right">
-          <Button onClick={() => setSelectedInvoice(row.original)} variant="outline" size="sm" className="border-[#0f3b73]/20 text-[#0f3b73] hover:bg-[#0f3b73]/5 dark:text-[#60a5fa] dark:hover:bg-[#0f3b73]/20 rounded-full px-4 text-xs font-semibold h-8">
+          <Button onClick={() => setSelectedInvoice(row.original)} variant="outline" size="sm" className="border-[var(--brand-primary)]/20 text-[var(--brand-primary)] hover:bg-[var(--brand-primary)]/5 dark:text-[#60a5fa] dark:hover:bg-[var(--brand-primary)]/20 rounded-full px-4 text-xs font-semibold h-8">
             View Invoice
           </Button>
         </div>
@@ -111,9 +111,9 @@ export default function Fees() {
       className="space-y-6 pb-10"
     >
       {/* ── Hero Header ── */}
-      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-[#0f3b73] via-[#1a4f96] to-[#0f3b73] p-6 md:p-8 shadow-xl shadow-[#0f3b73]/20">
+      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-[var(--brand-primary)] via-[#1a4f96] to-[var(--brand-primary)] p-6 md:p-8 shadow-xl shadow-[var(--brand-primary)]/20">
         <div className="absolute top-0 right-0 w-80 h-80 bg-white/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3 pointer-events-none" />
-        <div className="absolute bottom-0 left-1/4 w-48 h-48 bg-[#36833b]/20 rounded-full blur-3xl translate-y-1/2 pointer-events-none" />
+        <div className="absolute bottom-0 left-1/4 w-48 h-48 bg-[var(--brand-secondary)]/20 rounded-full blur-3xl translate-y-1/2 pointer-events-none" />
         <div className="relative flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
           <div>
             <div className="flex items-center gap-2 mb-1">
@@ -134,12 +134,12 @@ export default function Fees() {
             </Button>
             <Dialog open={open} onOpenChange={setOpen}>
               <DialogTrigger asChild>
-                <Button size="sm" className="bg-white text-[#0f3b73] hover:bg-white/90 font-semibold rounded-xl shadow-lg">
+                <Button size="sm" className="bg-white text-[var(--brand-primary)] hover:bg-white/90 font-semibold rounded-xl shadow-lg">
                   <Plus className="mr-2 h-3.5 w-3.5" /> Collect Fee
                 </Button>
               </DialogTrigger>
               <DialogContent className="sm:max-w-[440px] dark:bg-[#1e293b] border-none shadow-2xl rounded-2xl p-0 overflow-hidden">
-                <div className="bg-gradient-to-r from-[#0f3b73] to-[#1a5296] p-6">
+                <div className="bg-gradient-to-r from-[var(--brand-primary)] to-[#1a5296] p-6">
                   <DialogTitle className="text-white text-xl font-bold">Collect Payment</DialogTitle>
                   <DialogDescription className="text-white/60 text-sm mt-1">Record a new fee payment.</DialogDescription>
                 </div>
@@ -176,7 +176,7 @@ export default function Fees() {
                       )} />
                       <div className="flex justify-end gap-2 pt-2">
                         <Button type="button" variant="outline" onClick={() => setOpen(false)} className="rounded-xl">Cancel</Button>
-                        <Button type="submit" className="bg-gradient-to-r from-[#0f3b73] to-[#36833b] text-white rounded-xl shadow-md font-semibold">Record Payment</Button>
+                        <Button type="submit" className="bg-gradient-to-r from-[var(--brand-primary)] to-[var(--brand-secondary)] text-white rounded-xl shadow-md font-semibold">Record Payment</Button>
                       </div>
                     </form>
                   </Form>
@@ -208,7 +208,7 @@ export default function Fees() {
       {/* ── Table ── */}
       <div className="bg-white dark:bg-[#1e293b] rounded-2xl shadow-lg border border-slate-100 dark:border-white/5 overflow-hidden">
         <div className="p-5 border-b border-slate-100 dark:border-white/5">
-          <h2 className="text-lg font-bold text-[#0f3b73] dark:text-white">Recent Transactions</h2>
+          <h2 className="text-lg font-bold text-[var(--brand-primary)] dark:text-white">Recent Transactions</h2>
         </div>
         <DataTable
           columns={columns}
@@ -225,7 +225,7 @@ export default function Fees() {
             <div className="flex flex-col gap-2">
               <div className="flex items-center gap-2">
                 <img src="/logo.png" alt="EduNest" className="h-8 w-auto object-contain" />
-                <span className="font-extrabold text-[#0f3b73] dark:text-white">Edu<span className="text-[#36833b]">Nest</span></span>
+                <span className="font-extrabold text-[var(--brand-primary)] dark:text-white">Edu<span className="text-[var(--brand-secondary)]">Nest</span></span>
               </div>
               <h2 className="text-2xl font-black tracking-tight text-slate-800 dark:text-white mt-1">INVOICE</h2>
               <p className="text-xs text-slate-500 font-mono bg-white dark:bg-black/20 px-2 py-0.5 rounded self-start border border-slate-200 dark:border-white/10">{selectedInvoice?.id}</p>
@@ -250,7 +250,7 @@ export default function Fees() {
           <div className="p-6 space-y-6">
             <div className="bg-slate-50 dark:bg-white/5 p-4 rounded-xl border border-slate-100 dark:border-white/5">
               <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Billed To</p>
-              <h3 className="text-lg font-bold text-[#0f3b73] dark:text-white">{selectedInvoice?.student}</h3>
+              <h3 className="text-lg font-bold text-[var(--brand-primary)] dark:text-white">{selectedInvoice?.student}</h3>
               <div className="flex gap-4 mt-2">
                 <div>
                   <p className="text-[10px] text-slate-400 uppercase">Student ID</p>
@@ -284,7 +284,7 @@ export default function Fees() {
                 <tfoot className="bg-slate-50 dark:bg-white/5">
                   <tr>
                     <td className="px-4 py-4 font-bold text-slate-500 text-right uppercase tracking-wider text-xs">Total Amount</td>
-                    <td className="px-4 py-4 font-black text-[#0f3b73] dark:text-white text-right text-xl">{selectedInvoice?.amount}</td>
+                    <td className="px-4 py-4 font-black text-[var(--brand-primary)] dark:text-white text-right text-xl">{selectedInvoice?.amount}</td>
                   </tr>
                 </tfoot>
               </table>
@@ -292,7 +292,7 @@ export default function Fees() {
 
             <div className="flex justify-end gap-3 pt-2">
               <Button variant="outline" className="rounded-xl border-slate-200 dark:border-white/10 dark:text-white hover:bg-slate-50 dark:hover:bg-white/5 font-semibold" onClick={() => setSelectedInvoice(null)}>Close</Button>
-              <Button onClick={() => toast.promise(new Promise(r => setTimeout(r, 1000)), { loading: 'Printing...', success: 'Sent to Printer!', error: 'Error' })} className="rounded-xl bg-gradient-to-r from-[#0f3b73] to-[#1a5296] hover:opacity-90 text-white font-semibold shadow-md">
+              <Button onClick={() => toast.promise(new Promise(r => setTimeout(r, 1000)), { loading: 'Printing...', success: 'Sent to Printer!', error: 'Error' })} className="rounded-xl bg-gradient-to-r from-[var(--brand-primary)] to-[#1a5296] hover:opacity-90 text-white font-semibold shadow-md">
                 <Printer className="mr-2 h-4 w-4" /> Print Invoice
               </Button>
             </div>

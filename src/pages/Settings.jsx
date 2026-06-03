@@ -48,7 +48,7 @@ const notifSettings = [
 
 export default function Settings() {
   const { user, updateUser, logout } = useAuth();
-  const { isDark, toggleTheme } = useTheme();
+  const { isDark, toggleTheme, colorTheme, setColorTheme } = useTheme();
   const [activeTab, setActiveTab] = useState("profile");
   const [notifs, setNotifs] = useState(notifSettings);
 
@@ -80,13 +80,13 @@ export default function Settings() {
       className="space-y-6 pb-10"
     >
       {/* ── Hero Header ── */}
-      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-slate-800 via-slate-700 to-[#0f3b73] p-6 md:p-8 shadow-xl">
+      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-slate-800 via-slate-700 to-[var(--brand-primary)] p-6 md:p-8 shadow-xl">
         <div className="absolute top-0 right-0 w-72 h-72 bg-white/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3 pointer-events-none" />
         <div className="relative flex items-center gap-5">
           <div className="relative">
             <Avatar className="h-16 w-16 ring-4 ring-white/20 shadow-xl">
               <AvatarImage src={`https://i.pravatar.cc/150?u=${user?.email}`} />
-              <AvatarFallback className="bg-gradient-to-br from-[#0f3b73] to-[#36833b] text-white text-2xl font-bold">
+              <AvatarFallback className="bg-gradient-to-br from-[var(--brand-primary)] to-[var(--brand-secondary)] text-white text-2xl font-bold">
                 {user?.name?.charAt(0) || "A"}
               </AvatarFallback>
             </Avatar>
@@ -116,7 +116,7 @@ export default function Settings() {
                   onClick={() => setActiveTab(tab.id)}
                   className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all ${
                     activeTab === tab.id
-                      ? "bg-gradient-to-r from-[#0f3b73] to-[#1a5296] text-white shadow-md shadow-[#0f3b73]/25"
+                      ? "bg-gradient-to-r from-[var(--brand-primary)] to-[#1a5296] text-white shadow-md shadow-[var(--brand-primary)]/25"
                       : "text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-white/5 hover:text-slate-900 dark:hover:text-white"
                   }`}
                 >
@@ -165,7 +165,7 @@ export default function Settings() {
                       <div className="space-y-2">
                         <label className="text-sm font-semibold text-slate-700 dark:text-slate-300">Role</label>
                         <div className="flex items-center gap-2 h-10 px-3 rounded-xl border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-black/20">
-                          <CheckCircle2 className="h-4 w-4 text-[#36833b]" />
+                          <CheckCircle2 className="h-4 w-4 text-[var(--brand-secondary)]" />
                           <span className="text-sm text-slate-500 capitalize">{user?.role || "Administrator"}</span>
                         </div>
                       </div>
@@ -177,7 +177,7 @@ export default function Settings() {
                         </FormItem>
                       )} />
                     </div>
-                    <Button type="submit" className="bg-gradient-to-r from-[#0f3b73] to-[#36833b] text-white rounded-xl shadow-md font-semibold">
+                    <Button type="submit" className="bg-gradient-to-r from-[var(--brand-primary)] to-[var(--brand-secondary)] text-white rounded-xl shadow-md font-semibold">
                       <Save className="mr-2 h-4 w-4" /> Save Changes
                     </Button>
                   </form>
@@ -205,7 +205,7 @@ export default function Settings() {
                         toast.success(`${n.label} ${!n.enabled ? "enabled" : "disabled"}`);
                       }}
                       className={`relative inline-flex h-6 w-11 shrink-0 rounded-full border-2 border-transparent transition-colors ${
-                        n.enabled ? "bg-[#0f3b73]" : "bg-slate-200 dark:bg-white/10"
+                        n.enabled ? "bg-[var(--brand-primary)]" : "bg-slate-200 dark:bg-white/10"
                       }`}
                     >
                       <span className={`pointer-events-none inline-block h-5 w-5 rounded-full bg-white shadow-md transform transition-transform ${n.enabled ? "translate-x-5" : "translate-x-0"}`} />
@@ -220,7 +220,7 @@ export default function Settings() {
             <Card className="border-none shadow-lg dark:bg-[#1e293b] dark:border dark:border-white/5">
               <CardHeader className="border-b border-slate-100 dark:border-white/5 pb-5">
                 <CardTitle className="text-lg text-slate-800 dark:text-white flex items-center gap-2">
-                  <Key className="h-5 w-5 text-[#0f3b73]" /> Security Settings
+                  <Key className="h-5 w-5 text-[var(--brand-primary)]" /> Security Settings
                 </CardTitle>
                 <CardDescription>Update your password to keep your account secure.</CardDescription>
               </CardHeader>
@@ -240,7 +240,7 @@ export default function Settings() {
                         </FormItem>
                       )} />
                     ))}
-                    <Button type="submit" className="bg-gradient-to-r from-[#0f3b73] to-[#1a5296] text-white rounded-xl shadow-md font-semibold mt-2">
+                    <Button type="submit" className="bg-gradient-to-r from-[var(--brand-primary)] to-[#1a5296] text-white rounded-xl shadow-md font-semibold mt-2">
                       <Shield className="mr-2 h-4 w-4" /> Update Password
                     </Button>
                   </form>
@@ -263,26 +263,26 @@ export default function Settings() {
                   </div>
                   <button
                     onClick={() => { toggleTheme(); toast.success(`Switched to ${!isDark ? "dark" : "light"} mode`); }}
-                    className={`relative inline-flex h-6 w-11 rounded-full border-2 border-transparent transition-colors ${isDark ? "bg-[#0f3b73]" : "bg-slate-200 dark:bg-white/10"}`}
+                    className={`relative inline-flex h-6 w-11 rounded-full border-2 border-transparent transition-colors ${isDark ? "bg-[var(--brand-primary)]" : "bg-slate-200 dark:bg-white/10"}`}
                   >
                     <span className={`pointer-events-none inline-block h-5 w-5 rounded-full bg-white shadow-md transform transition-transform ${isDark ? "translate-x-5" : "translate-x-0"}`} />
                   </button>
                 </div>
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
                   {[
-                    { name: "Default Blue", from: "#0f3b73", to: "#1e40af" },
-                    { name: "Forest Green", from: "#36833b", to: "#4ade80" },
-                    { name: "Purple", from: "#7c3aed", to: "#a855f7" },
-                    { name: "Rose", from: "#e11d48", to: "#fb7185" },
-                    { name: "Amber", from: "#d97706", to: "#fbbf24" },
-                    { name: "Cyan", from: "#0891b2", to: "#22d3ee" },
+                    { name: "Default Blue", from: "#0f3b73", to: "#1e40af", secondary: "#36833b" },
+                    { name: "Forest Green", from: "#166534", to: "#22c55e", secondary: "#14532d" },
+                    { name: "Purple", from: "#6b21a8", to: "#a855f7", secondary: "#581c87" },
+                    { name: "Rose", from: "#be123c", to: "#fb7185", secondary: "#9f1239" },
+                    { name: "Amber", from: "#b45309", to: "#fbbf24", secondary: "#92400e" },
+                    { name: "Cyan", from: "#0e7490", to: "#22d3ee", secondary: "#164e63" },
                   ].map((theme, i) => (
                     <button
                       key={i}
-                      onClick={() => toast.success(`${theme.name} theme applied!`)}
-                      className="flex items-center gap-2.5 p-3 rounded-xl border border-slate-200 dark:border-white/10 hover:border-slate-300 dark:hover:border-white/20 transition-colors group"
+                      onClick={() => { setColorTheme(theme); toast.success(`${theme.name} theme applied!`); }}
+                      className={`flex items-center gap-2.5 p-3 rounded-xl border ${colorTheme?.name === theme.name ? 'border-[var(--brand-primary)] bg-[var(--brand-primary)]/5 dark:bg-[var(--brand-primary)]/20' : 'border-slate-200 dark:border-white/10 hover:border-slate-300 dark:hover:border-white/20'} transition-colors group`}
                     >
-                      <div className={`h-5 w-5 rounded-full bg-gradient-to-br from-[${theme.from}] to-[${theme.to}]`}
+                      <div className="h-5 w-5 rounded-full"
                         style={{ background: `linear-gradient(135deg, ${theme.from}, ${theme.to})` }}
                       />
                       <span className="text-xs font-medium text-slate-600 dark:text-slate-300">{theme.name}</span>
@@ -297,7 +297,7 @@ export default function Settings() {
             <Card className="border-none shadow-lg dark:bg-[#1e293b] dark:border dark:border-white/5">
               <CardHeader className="border-b border-slate-100 dark:border-white/5 pb-5">
                 <CardTitle className="text-lg text-slate-800 dark:text-white flex items-center gap-2">
-                  <Languages className="h-5 w-5 text-[#0f3b73]" /> Language & Region
+                  <Languages className="h-5 w-5 text-[var(--brand-primary)]" /> Language & Region
                 </CardTitle>
                 <CardDescription>Set your preferred language and regional settings.</CardDescription>
               </CardHeader>
@@ -313,13 +313,13 @@ export default function Settings() {
                     </div>
                     <select
                       onChange={() => toast.success(`${setting.label} updated!`)}
-                      className="h-9 px-3 rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-[#0f172a] text-sm text-slate-700 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-[#0f3b73]/30"
+                      className="h-9 px-3 rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-[#0f172a] text-sm text-slate-700 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-[var(--brand-primary)]/30"
                     >
                       {setting.options.map(o => <option key={o}>{o}</option>)}
                     </select>
                   </div>
                 ))}
-                <Button onClick={() => toast.success("Regional settings saved!")} className="mt-4 bg-gradient-to-r from-[#0f3b73] to-[#36833b] text-white rounded-xl shadow-md font-semibold">
+                <Button onClick={() => toast.success("Regional settings saved!")} className="mt-4 bg-gradient-to-r from-[var(--brand-primary)] to-[var(--brand-secondary)] text-white rounded-xl shadow-md font-semibold">
                   <Save className="mr-2 h-4 w-4" /> Save Preferences
                 </Button>
               </CardContent>
