@@ -19,7 +19,9 @@ import {
   Video,
   MessageSquare,
   Database,
-  Cloud
+  Cloud,
+  Lock,
+  Globe
 } from "lucide-react";
 import { motion } from "framer-motion";
 import {
@@ -59,230 +61,149 @@ const staggerContainer = {
 export default function LandingPage() {
   return (
     <div className="flex flex-col min-h-screen bg-slate-50 dark:bg-[#030712] text-slate-900 dark:text-slate-50 selection:bg-[var(--brand-primary)]/50 overflow-x-hidden">
-      {/* Navigation */}
-      <header className="px-6 lg:px-8 h-16 md:h-20 flex items-center border border-slate-200/50 dark:border-white/10 backdrop-blur-xl fixed top-0 md:top-4 left-0 right-0 md:left-4 md:right-4 lg:left-1/2 lg:-translate-x-1/2 lg:w-[95%] max-w-7xl z-50 bg-white/70 dark:bg-[#030712]/60 md:rounded-2xl shadow-lg shadow-slate-200/20 dark:shadow-black/40 transition-all">
-        <Link to="/" className="flex items-center justify-center gap-2 group flex-shrink-0">
-          <img src="/logo.png" alt="EduNest Logo" className="h-10 w-auto bg-white p-1 rounded-lg" onError={(e) => {
-            e.target.style.display = 'none';
-            e.target.nextSibling.style.display = 'flex';
-          }} />
-          <div className="hidden h-10 w-10 rounded-xl bg-gradient-to-br from-[var(--brand-primary)] to-[var(--brand-secondary)] items-center justify-center shadow-lg group-hover:shadow-[var(--brand-primary)]/40 transition-all duration-300">
-            <GraduationCap className="h-6 w-6 text-white" />
-          </div>
-          <span className="font-bold text-2xl tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-slate-900 to-slate-600 dark:from-white dark:to-white/70">
-            EduNest
-          </span>
-        </Link>
-
-        {/* Desktop Nav */}
-        <nav className="ml-8 hidden lg:flex gap-1 items-center">
-          {/* Product scroll links */}
-          {[
-            { label: 'Features', id: '#features' },
-            { label: 'Testimonials', id: '#testimonials' },
-            { label: 'Pricing', id: '#pricing' },
-            { label: 'FAQ', id: '#faq' },
-          ].map((item) => (
-            <a
-              key={item.label}
-              href={item.id}
-              onClick={(e) => { e.preventDefault(); document.querySelector(item.id)?.scrollIntoView({ behavior: 'smooth' }); }}
-              className="text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-colors px-3 py-2 rounded-lg hover:bg-slate-100 dark:hover:bg-white/5"
-            >
-              {item.label}
-            </a>
-          ))}
-          {/* Page links */}
-          {[
-            { label: 'About Us', to: '/about-us' },
-            { label: 'Blog', to: '/blog' },
-            { label: 'Careers', to: '/careers' },
-            { label: 'Contact', to: '/contact' },
-          ].map((item) => (
-            <Link
-              key={item.label}
-              to={item.to}
-              className="text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-colors px-3 py-2 rounded-lg hover:bg-slate-100 dark:hover:bg-white/5"
-            >
-              {item.label}
-            </Link>
-          ))}
-        </nav>
-
-        {/* CTA Buttons */}
-        <div className="ml-auto flex items-center gap-3">
-          <Link to="/login" className="hidden lg:block text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-colors px-3 py-2 rounded-lg hover:bg-slate-100 dark:hover:bg-white/5">
-            Log in
-          </Link>
-          <Button asChild className="hidden sm:flex rounded-full px-5 h-9 bg-slate-900 text-white hover:bg-slate-700 dark:bg-white dark:text-black dark:hover:bg-slate-200 shadow-md transition-all">
-            <Link to="/dashboard">Get Started</Link>
-          </Button>
-
-          {/* Mobile Menu */}
-          <div className="lg:hidden">
-            <Sheet>
-              <SheetTrigger asChild>
-                <Button variant="ghost" size="icon" className="text-slate-900 dark:text-white hover:bg-slate-200 dark:hover:bg-white/10">
-                  <Menu className="h-6 w-6" />
-                </Button>
-              </SheetTrigger>
-              <SheetContent side="right" className="bg-white dark:bg-[#0a0a0a] border-l border-slate-200 dark:border-white/10 p-0 w-[300px]">
-                <SheetTitle className="sr-only">Mobile Menu</SheetTitle>
-                <div className="flex flex-col h-full">
-                  {/* Mobile Header */}
-                  <div className="flex items-center gap-2 p-6 border-b border-slate-200 dark:border-white/10">
-                    <div className="h-8 w-8 rounded-lg bg-gradient-to-br from-[var(--brand-primary)] to-[var(--brand-secondary)] flex items-center justify-center">
-                      <GraduationCap className="h-5 w-5 text-white" />
-                    </div>
-                    <span className="font-bold text-lg text-slate-900 dark:text-white">EduNest</span>
-                  </div>
-
-                  <div className="flex-1 overflow-y-auto p-6 space-y-1">
-                    {/* Section label */}
-                    <p className="text-xs font-semibold uppercase tracking-wider text-slate-400 dark:text-slate-500 px-3 mb-2">On this page</p>
-                    {[
-                      { label: 'Features', id: '#features' },
-                      { label: 'Testimonials', id: '#testimonials' },
-                      { label: 'Pricing', id: '#pricing' },
-                      { label: 'FAQ', id: '#faq' },
-                    ].map((item) => (
-                      <SheetClose asChild key={item.label}>
-                        <a
-                          href={item.id}
-                          onClick={(e) => { e.preventDefault(); document.querySelector(item.id)?.scrollIntoView({ behavior: 'smooth' }); }}
-                          className="flex items-center gap-3 text-base font-medium text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/5 px-3 py-2.5 rounded-xl transition-colors"
-                        >
-                          {item.label}
-                        </a>
-                      </SheetClose>
-                    ))}
-
-                    <div className="pt-4">
-                      <p className="text-xs font-semibold uppercase tracking-wider text-slate-400 dark:text-slate-500 px-3 mb-2">Company</p>
-                      {[
-                        { label: 'About Us', to: '/about-us' },
-                        { label: 'Blog', to: '/blog' },
-                        { label: 'Careers', to: '/careers' },
-                        { label: 'Contact', to: '/contact' },
-                      ].map((item) => (
-                        <SheetClose asChild key={item.label}>
-                          <Link
-                            to={item.to}
-                            className="flex items-center gap-3 text-base font-medium text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/5 px-3 py-2.5 rounded-xl transition-colors"
-                          >
-                            {item.label}
-                          </Link>
-                        </SheetClose>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* Mobile CTA */}
-                  <div className="p-6 border-t border-slate-200 dark:border-white/10 space-y-3">
-                    <SheetClose asChild>
-                      <Link to="/login" className="flex items-center justify-center h-11 w-full rounded-xl border border-slate-200 dark:border-white/10 text-sm font-semibold text-slate-900 dark:text-white hover:bg-slate-100 dark:hover:bg-white/5 transition-colors">
-                        Log in
-                      </Link>
-                    </SheetClose>
-                    <SheetClose asChild>
-                      <Link to="/dashboard" className="flex items-center justify-center h-11 w-full rounded-xl bg-slate-900 dark:bg-white text-white dark:text-black text-sm font-semibold hover:bg-slate-700 dark:hover:bg-slate-200 transition-colors">
-                        Get Started
-                      </Link>
-                    </SheetClose>
-                  </div>
-                </div>
-              </SheetContent>
-            </Sheet>
-          </div>
-        </div>
-      </header>
 
       <main className="flex-1 pt-16 md:pt-24">
         {/* Hero Section */}
-        <section className="w-full py-14 md:py-24 lg:py-32 relative flex items-center justify-center overflow-hidden">
-          {/* Grid Background */}
-          <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)]"></div>
+        <section className="w-full min-h-[90vh] pt-24 pb-14 md:pt-32 md:pb-24 lg:py-32 relative flex items-center justify-center overflow-hidden bg-slate-50 dark:bg-[#030712]">
+          {/* Animated Background Gradients */}
+          <div className="absolute inset-0 overflow-hidden pointer-events-none">
+            <div className="absolute -top-[30%] -left-[10%] w-[70%] h-[70%] rounded-full bg-gradient-to-br from-[var(--brand-primary)]/30 to-purple-500/30 blur-[120px] mix-blend-multiply dark:mix-blend-screen animate-pulse"></div>
+            <div className="absolute top-[20%] -right-[10%] w-[60%] h-[60%] rounded-full bg-gradient-to-tl from-[var(--brand-secondary)]/30 to-blue-500/30 blur-[120px] mix-blend-multiply dark:mix-blend-screen animate-pulse" style={{ animationDelay: '2s' }}></div>
+            <div className="absolute -bottom-[20%] left-[20%] w-[50%] h-[50%] rounded-full bg-gradient-to-tr from-emerald-500/20 to-teal-400/20 blur-[120px] mix-blend-multiply dark:mix-blend-screen animate-pulse" style={{ animationDelay: '4s' }}></div>
+          </div>
           
-          {/* Ambient Glow */}
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[500px] bg-gradient-to-b from-[var(--brand-primary)]/20 via-[var(--brand-secondary)]/10 to-transparent blur-[100px] rounded-full -z-10 pointer-events-none"></div>
+          {/* Subtle Grid Background */}
+          <div className="absolute inset-0 bg-[linear-gradient(to_right,#8080801a_1px,transparent_1px),linear-gradient(to_bottom,#8080801a_1px,transparent_1px)] bg-[size:40px_40px] [mask-image:radial-gradient(ellipse_80%_50%_at_50%_0%,#000_70%,transparent_100%)] opacity-50 dark:opacity-30"></div>
           
           {/* Floating UI Elements (Desktop Only) */}
           <motion.div 
-            initial={{ opacity: 0, x: -100 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.8, duration: 1 }}
-            className="absolute left-10 lg:left-20 top-40 hidden lg:flex flex-col gap-3 p-4 bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 backdrop-blur-md rounded-2xl shadow-2xl z-0"
+            initial={{ opacity: 0, x: -100, y: 20 }} animate={{ opacity: 1, x: 0, y: 0 }} transition={{ delay: 0.8, duration: 1, type: "spring" }}
+            className="absolute left-4 lg:left-12 top-1/3 hidden lg:flex flex-col gap-3 p-4 bg-white/60 dark:bg-black/40 border border-white/40 dark:border-white/10 backdrop-blur-xl rounded-2xl shadow-2xl shadow-[var(--brand-primary)]/10 z-0 hover:scale-105 transition-transform"
           >
-            <div className="flex items-center gap-3 mb-2">
-              <div className="h-10 w-10 rounded-full bg-[var(--brand-primary)]/20 flex items-center justify-center border border-[var(--brand-primary)]/30">
-                <Users className="h-5 w-5 text-[var(--brand-primary)]" />
+            <div className="flex items-center gap-4 mb-2">
+              <div className="h-12 w-12 rounded-xl bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center shadow-lg">
+                <Users className="h-6 w-6 text-white" />
               </div>
               <div>
-                <p className="text-xs text-slate-500 dark:text-slate-400">Total Students</p>
-                <p className="text-lg font-bold text-slate-900 dark:text-white">2,842</p>
+                <p className="text-sm font-medium text-slate-500 dark:text-slate-400">Total Students</p>
+                <p className="text-2xl font-black text-slate-900 dark:text-white tracking-tight">4,921</p>
               </div>
             </div>
-            <div className="flex items-center gap-2 text-xs text-[#4ade80] bg-[#4ade80]/10 px-2 py-1 rounded-md w-fit">
-              <ArrowRight className="h-3 w-3 -rotate-45" /> +12% this month
+            <div className="flex items-center gap-2 text-sm font-semibold text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-500/10 px-3 py-1.5 rounded-lg w-fit border border-emerald-100 dark:border-emerald-500/20">
+              <ArrowRight className="h-4 w-4 -rotate-45" /> +24% growth
             </div>
           </motion.div>
 
           <motion.div 
-            initial={{ opacity: 0, x: 100 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 1, duration: 1 }}
-            className="absolute right-10 lg:right-20 bottom-40 hidden lg:flex flex-col gap-4 p-5 bg-white dark:bg-[#0a0a0a]/80 border border-slate-200 dark:border-white/10 backdrop-blur-xl rounded-2xl shadow-2xl shadow-[var(--brand-secondary)]/20 z-0 w-64"
+            initial={{ opacity: 0, x: 100, y: -20 }} animate={{ opacity: 1, x: 0, y: 0 }} transition={{ delay: 1, duration: 1, type: "spring" }}
+            className="absolute right-4 lg:right-12 bottom-1/3 hidden lg:flex flex-col gap-4 p-5 bg-white/60 dark:bg-black/40 border border-white/40 dark:border-white/10 backdrop-blur-xl rounded-2xl shadow-2xl shadow-[var(--brand-secondary)]/10 z-0 w-72 hover:scale-105 transition-transform"
           >
             <div className="flex justify-between items-center mb-2">
-              <p className="text-sm font-medium text-slate-900 dark:text-white">Fee Collection</p>
-              <div className="h-2 w-2 rounded-full bg-[var(--brand-secondary)] animate-pulse"></div>
+              <p className="text-sm font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                <span className="p-1.5 rounded-lg bg-amber-500/20 text-amber-600 dark:text-amber-400"><Zap className="h-4 w-4" /></span>
+                System Performance
+              </p>
+              <div className="h-2.5 w-2.5 rounded-full bg-emerald-500 animate-pulse shadow-[0_0_10px_rgba(16,185,129,0.8)]"></div>
             </div>
-            <div className="h-2 w-full bg-slate-200 dark:bg-white/10 rounded-full overflow-hidden">
-              <div className="h-full bg-gradient-to-r from-[var(--brand-primary)] to-[var(--brand-secondary)] w-[85%] rounded-full"></div>
-            </div>
-            <div className="flex justify-between text-xs text-slate-500 dark:text-slate-400">
-              <span>$85k collected</span>
-              <span>$100k target</span>
+            <div className="space-y-3">
+              <div>
+                <div className="flex justify-between text-xs font-medium mb-1">
+                  <span className="text-slate-600 dark:text-slate-300">Server Load</span>
+                  <span className="text-emerald-600 dark:text-emerald-400">Normal</span>
+                </div>
+                <div className="h-2 w-full bg-slate-200 dark:bg-white/10 rounded-full overflow-hidden">
+                  <div className="h-full bg-gradient-to-r from-emerald-400 to-emerald-600 w-[35%] rounded-full"></div>
+                </div>
+              </div>
+              <div>
+                <div className="flex justify-between text-xs font-medium mb-1">
+                  <span className="text-slate-600 dark:text-slate-300">Uptime</span>
+                  <span className="text-[var(--brand-primary)]">99.99%</span>
+                </div>
+                <div className="h-2 w-full bg-slate-200 dark:bg-white/10 rounded-full overflow-hidden">
+                  <div className="h-full bg-gradient-to-r from-[var(--brand-primary)] to-[var(--brand-secondary)] w-[100%] rounded-full"></div>
+                </div>
+              </div>
             </div>
           </motion.div>
 
-          <div className="container px-4 md:px-6 flex flex-col items-center text-center z-10">
-            <motion.div initial="initial" animate="animate" variants={staggerContainer} className="space-y-8 max-w-4xl relative">
+          <div className="container px-4 md:px-6 flex flex-col items-center text-center z-10 relative">
+            <motion.div initial="initial" animate="animate" variants={staggerContainer} className="space-y-10 max-w-5xl relative">
               
               {/* Top Badge */}
-              <motion.div variants={fadeIn} className="mx-auto inline-flex items-center rounded-full border border-[var(--brand-primary)]/30 px-5 py-2 text-sm font-medium bg-[var(--brand-primary)]/10 backdrop-blur-md mb-2 shadow-[0_0_20px_rgba(var(--brand-primary),0.3)] cursor-default">
-                <span className="flex h-2 w-2 rounded-full bg-[var(--brand-primary)] mr-3 animate-pulse shadow-[0_0_10px_var(--brand-primary)]"></span>
-                <span className="text-slate-900 dark:text-white/90 font-semibold tracking-wide">EduNest OS 2.0 is now live</span>
+              <motion.div variants={fadeIn} className="mx-auto inline-flex items-center gap-3 rounded-full border border-[var(--brand-primary)]/20 p-1.5 pr-5 bg-white/50 dark:bg-black/30 backdrop-blur-xl mb-4 shadow-[0_8px_16px_rgba(0,0,0,0.05)] dark:shadow-[0_8px_16px_rgba(0,0,0,0.4)] transition-all hover:scale-105 cursor-default">
+                <span className="flex items-center justify-center px-3 py-1 rounded-full bg-gradient-to-r from-[var(--brand-primary)] to-[var(--brand-secondary)] text-white text-xs font-bold uppercase tracking-wider">New</span>
+                <span className="text-slate-800 dark:text-white/90 text-sm font-semibold tracking-wide flex items-center gap-2">
+                  EduNest OS 2.0 is now available <ArrowRight className="h-4 w-4 text-[var(--brand-primary)]" />
+                </span>
               </motion.div>
               
               {/* Main Headline */}
-              <motion.h1 variants={fadeIn} className="text-4xl sm:text-5xl md:text-6xl lg:text-[5rem] font-bold tracking-tighter leading-[1.1] drop-shadow-2xl">
-                The Modern OS for <br className="hidden md:block" />
-                <span className="bg-clip-text text-transparent bg-gradient-to-r from-[var(--brand-primary)] via-slate-800 dark:via-white to-[var(--brand-secondary)] animate-gradient-x">
-                  Educational Excellence
-                </span>
-              </motion.h1>
+              <motion.div variants={fadeIn} className="space-y-4">
+                <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-[6rem] font-black tracking-tight leading-[1.05] drop-shadow-sm">
+                  The Modern OS for <br className="hidden md:block" />
+                  <span className="relative inline-block pb-2">
+                    <span className="absolute inset-0 bg-gradient-to-r from-[var(--brand-primary)] via-purple-500 to-[var(--brand-secondary)] blur-xl opacity-30 animate-pulse"></span>
+                    <span className="relative bg-clip-text text-transparent bg-gradient-to-r from-[var(--brand-primary)] via-purple-500 to-[var(--brand-secondary)] animate-gradient-x">
+                      Educational Excellence
+                    </span>
+                  </span>
+                </h1>
+              </motion.div>
               
               {/* Sub Headline */}
-              <motion.p variants={fadeIn} className="mx-auto max-w-[700px] text-slate-600 dark:text-slate-400 md:text-xl/relaxed lg:text-lg/relaxed xl:text-xl/relaxed mt-6">
-                Streamline operations, boost student engagement, and gain powerful insights with a premium platform designed exclusively for forward-thinking institutions.
+              <motion.p variants={fadeIn} className="mx-auto max-w-[800px] text-slate-600 dark:text-slate-300 md:text-xl lg:text-2xl leading-relaxed font-medium">
+                Streamline operations, boost student engagement, and gain powerful insights with a <span className="text-slate-900 dark:text-white font-bold">premium platform</span> designed exclusively for forward-thinking institutions.
               </motion.p>
               
               {/* CTA Buttons */}
-              <motion.div variants={fadeIn} className="flex flex-col sm:flex-row gap-5 justify-center pt-8">
-                <Button size="lg" className="rounded-full h-14 px-8 text-base font-semibold bg-slate-900 text-white hover:bg-slate-800 dark:bg-white dark:text-black dark:hover:bg-slate-200 shadow-xl dark:shadow-[0_0_30px_rgba(255,255,255,0.3)] transition-all hover:scale-105" asChild>
+              <motion.div variants={fadeIn} className="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center pt-6">
+                <Button size="lg" className="group rounded-full h-16 px-10 text-lg font-bold bg-gradient-to-r from-[var(--brand-primary)] to-[var(--brand-secondary)] text-white hover:opacity-90 shadow-xl shadow-[var(--brand-primary)]/30 transition-all hover:scale-105 border border-white/20" asChild>
                   <Link to="/dashboard">
-                    Start for free <ArrowRight className="ml-2 h-5 w-5" />
+                    Get Started Free 
+                    <div className="ml-3 h-8 w-8 rounded-full bg-white/20 flex items-center justify-center group-hover:bg-white/30 transition-colors">
+                      <ArrowRight className="h-5 w-5" />
+                    </div>
                   </Link>
                 </Button>
-                <Button size="lg" variant="outline" className="rounded-full h-14 px-8 text-base font-medium border-slate-300 dark:border-white/20 bg-slate-100 dark:bg-white/5 hover:bg-slate-200 dark:hover:bg-white/10 text-slate-900 dark:text-white backdrop-blur-md transition-all hover:border-slate-400 dark:hover:border-white/40">
-                  Book a Demo
+                <Button size="lg" variant="outline" className="rounded-full h-16 px-10 text-lg font-bold border-2 border-slate-200 dark:border-white/10 bg-white/50 dark:bg-white/5 hover:bg-white dark:hover:bg-white/10 text-slate-900 dark:text-white backdrop-blur-xl transition-all hover:scale-105 hover:border-slate-300 dark:hover:border-white/20 shadow-lg">
+                  <Video className="mr-3 h-5 w-5 text-slate-500 dark:text-slate-400" />
+                  Watch Demo
                 </Button>
               </motion.div>
               
-              <motion.div variants={fadeIn} className="pt-10 flex flex-wrap items-center justify-center gap-4 sm:gap-8 text-sm text-slate-500 font-medium">
-                <div className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4 text-[var(--brand-secondary)]" /> No credit card required</div>
-                <div className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4 text-[var(--brand-secondary)]" /> 14-day free trial</div>
-                <div className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4 text-[var(--brand-secondary)]" /> Cancel anytime</div>
+              {/* Trust Indicators */}
+              <motion.div variants={fadeIn} className="pt-12 flex flex-col sm:flex-row items-center justify-center gap-6 sm:gap-12">
+                <div className="flex -space-x-4">
+                  {[
+                    "https://i.pravatar.cc/100?img=1",
+                    "https://i.pravatar.cc/100?img=2",
+                    "https://i.pravatar.cc/100?img=3",
+                    "https://i.pravatar.cc/100?img=4",
+                    "https://i.pravatar.cc/100?img=5"
+                  ].map((img, i) => (
+                    <img key={i} src={img} alt="User avatar" className="w-10 h-10 rounded-full border-2 border-white dark:border-[#030712] shadow-sm" />
+                  ))}
+                  <div className="w-10 h-10 rounded-full border-2 border-white dark:border-[#030712] bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-xs font-bold text-slate-600 dark:text-slate-300 shadow-sm z-10">
+                    +2k
+                  </div>
+                </div>
+                <div className="flex flex-col text-left">
+                  <div className="flex items-center gap-1 mb-1">
+                    {[1, 2, 3, 4, 5].map((star) => (
+                      <Star key={star} className="h-4 w-4 fill-amber-400 text-amber-400" />
+                    ))}
+                  </div>
+                  <p className="text-sm font-medium text-slate-600 dark:text-slate-400">
+                    <span className="text-slate-900 dark:text-white font-bold">4.9/5</span> from over 2,000+ educators
+                  </p>
+                </div>
               </motion.div>
             </motion.div>
           </div>
+          
+          {/* Bottom Gradient Fade */}
+          <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-slate-50 dark:from-[#030712] to-transparent z-10 pointer-events-none"></div>
         </section>
 
         {/* Trusted By Section */}
@@ -298,13 +219,15 @@ export default function LandingPage() {
         </section>
 
         {/* Dashboard Showcase Section */}
-        <section className="py-16 md:py-20 bg-slate-50 dark:bg-[#030712] relative overflow-hidden">
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-5xl h-[500px] bg-gradient-to-r from-[var(--brand-primary)]/30 to-[var(--brand-secondary)]/30 blur-[120px] rounded-full -z-10 pointer-events-none"></div>
+        <section id="dashboard" className="py-12 md:py-16 bg-slate-50 dark:bg-[#030712] relative overflow-hidden">
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-6xl h-[600px] bg-gradient-to-r from-[var(--brand-primary)]/20 via-purple-500/20 to-[var(--brand-secondary)]/20 blur-[120px] rounded-full -z-10 pointer-events-none animate-pulse"></div>
           
           <div className="container px-4 mx-auto relative z-10">
-            <div className="text-center mb-16">
-              <h2 className="text-[var(--brand-primary)] font-semibold tracking-wide uppercase text-sm mb-3">Dashboard Overview</h2>
-              <h3 className="text-3xl md:text-5xl font-bold tracking-tight text-slate-900 dark:text-white mb-6">A bird's eye view of your entire school</h3>
+            <div className="text-center mb-16 md:mb-24">
+              <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[var(--brand-primary)]/10 text-[var(--brand-primary)] text-sm font-semibold tracking-wide uppercase mb-4 border border-[var(--brand-primary)]/20">
+                <LayoutDashboard className="h-4 w-4" /> Dashboard Overview
+              </motion.div>
+              <h3 className="text-4xl md:text-5xl lg:text-6xl font-black tracking-tight text-slate-900 dark:text-white mb-6">A bird's eye view of your <span className="text-transparent bg-clip-text bg-gradient-to-r from-[var(--brand-primary)] to-purple-500">entire school</span></h3>
             </div>
             
             <motion.div 
@@ -312,28 +235,31 @@ export default function LandingPage() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.7 }}
-              className="relative mx-auto max-w-6xl rounded-2xl md:rounded-[2rem] border border-slate-200/50 dark:border-white/10 bg-white/50 dark:bg-[#0a0a0a]/80 backdrop-blur-xl p-2 md:p-4 shadow-[0_0_50px_rgba(var(--brand-primary),0.15)] overflow-hidden"
+              className="relative mx-auto max-w-6xl rounded-2xl md:rounded-[2rem] border border-slate-200/50 dark:border-white/10 bg-white/40 dark:bg-white/[0.02] backdrop-blur-2xl p-2 md:p-4 shadow-[0_20px_60px_rgba(0,0,0,0.05)] dark:shadow-[0_20px_60px_rgba(0,0,0,0.4)] overflow-hidden group hover:border-[var(--brand-primary)]/30 transition-colors duration-500"
             >
               {/* Fake Browser Window */}
-              <div className="rounded-xl overflow-hidden border border-slate-200 dark:border-white/5 bg-slate-100 dark:bg-[#111] shadow-inner">
-                <div className="h-12 bg-white dark:bg-[#050505] flex items-center px-4 gap-4 border-b border-slate-200 dark:border-white/5">
+              <div className="rounded-xl overflow-hidden border border-slate-200/80 dark:border-white/10 bg-slate-50 dark:bg-[#0a0a0a] shadow-inner relative">
+                <div className="absolute inset-0 bg-gradient-to-br from-white/40 to-transparent dark:from-white/5 dark:to-transparent pointer-events-none"></div>
+                <div className="h-14 bg-white/80 dark:bg-[#111]/80 backdrop-blur-md flex items-center px-4 gap-4 border-b border-slate-200/80 dark:border-white/5 relative z-10">
                   <div className="flex gap-2">
-                    <div className="h-3 w-3 rounded-full bg-red-400"></div>
-                    <div className="h-3 w-3 rounded-full bg-amber-400"></div>
-                    <div className="h-3 w-3 rounded-full bg-emerald-400"></div>
+                    <div className="h-3.5 w-3.5 rounded-full bg-[#ff5f56] border border-[#e0443e]"></div>
+                    <div className="h-3.5 w-3.5 rounded-full bg-[#ffbd2e] border border-[#dea123]"></div>
+                    <div className="h-3.5 w-3.5 rounded-full bg-[#27c93f] border border-[#1aab29]"></div>
                   </div>
-                  <div className="mx-auto h-7 w-1/2 md:w-1/3 bg-slate-100 dark:bg-white/5 rounded-md flex items-center justify-center text-xs text-slate-400 font-medium">app.edunest.com/dashboard</div>
+                  <div className="mx-auto h-8 w-1/2 md:w-1/3 bg-slate-100/80 dark:bg-black/50 border border-slate-200 dark:border-white/5 rounded-md flex items-center justify-center text-xs text-slate-500 font-medium shadow-sm">
+                    <Lock className="h-3 w-3 mr-2 text-emerald-500" /> app.edunest.com/dashboard
+                  </div>
                 </div>
                 
                 {/* Mockup Body */}
-                <div className="p-4 md:p-8 flex flex-col md:flex-row gap-6 min-h-[400px]">
+                <div className="p-4 md:p-8 flex flex-col md:flex-row gap-6 min-h-[400px] relative z-10">
                   {/* Sidebar Mock */}
-                  <div className="hidden md:flex flex-col w-48 space-y-4 border-r border-slate-200 dark:border-white/5 pr-6">
+                  <div className="hidden md:flex flex-col w-56 space-y-4 border-r border-slate-200/80 dark:border-white/5 pr-6">
                     <div className="h-8 w-32 bg-slate-200 dark:bg-white/10 rounded-lg mb-8"></div>
-                    {[true, false, false, false, false].map((active, i) => (
-                      <div key={i} className={`h-10 rounded-xl ${active ? 'bg-[var(--brand-primary)]/10 border border-[var(--brand-primary)]/20' : 'bg-transparent'} flex items-center px-3 gap-3`}>
-                        <div className={`h-4 w-4 rounded ${active ? 'bg-[var(--brand-primary)]/60' : 'bg-slate-300 dark:bg-white/10'}`}></div>
-                        <div className={`h-2 ${active ? 'w-24 bg-[var(--brand-primary)]/60' : 'w-20 bg-slate-300 dark:bg-white/10'} rounded-full`}></div>
+                    {[true, false, false, false, false, false].map((active, i) => (
+                      <div key={i} className={`h-11 rounded-xl ${active ? 'bg-gradient-to-r from-[var(--brand-primary)]/10 to-transparent border-l-2 border-[var(--brand-primary)]' : 'bg-transparent hover:bg-slate-100 dark:hover:bg-white/5'} flex items-center px-3 gap-4 transition-colors`}>
+                        <div className={`h-5 w-5 rounded-md ${active ? 'bg-[var(--brand-primary)]/80 shadow-[0_0_10px_var(--brand-primary)]' : 'bg-slate-300 dark:bg-white/10'}`}></div>
+                        <div className={`h-2.5 ${active ? 'w-24 bg-[var(--brand-primary)]/80' : 'w-20 bg-slate-300 dark:bg-white/10'} rounded-full`}></div>
                       </div>
                     ))}
                   </div>
@@ -342,39 +268,58 @@ export default function LandingPage() {
                   <div className="flex-1 space-y-6">
                     <div className="flex justify-between items-center">
                       <div className="h-8 w-48 bg-slate-200 dark:bg-white/10 rounded-lg"></div>
-                      <div className="h-10 w-32 bg-gradient-to-r from-[var(--brand-primary)] to-[var(--brand-secondary)] rounded-full opacity-90"></div>
+                      <div className="h-10 w-32 bg-gradient-to-r from-[var(--brand-primary)] to-[var(--brand-secondary)] rounded-full opacity-90 shadow-lg shadow-[var(--brand-primary)]/20"></div>
                     </div>
                     
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                       {[
-                        { color: "from-blue-500/20 to-transparent" },
-                        { color: "from-emerald-500/20 to-transparent" },
-                        { color: "from-purple-500/20 to-transparent" },
-                        { color: "from-amber-500/20 to-transparent" }
+                        { color: "from-blue-500/20 to-transparent", border: "border-blue-500/20" },
+                        { color: "from-emerald-500/20 to-transparent", border: "border-emerald-500/20" },
+                        { color: "from-purple-500/20 to-transparent", border: "border-purple-500/20" },
+                        { color: "from-amber-500/20 to-transparent", border: "border-amber-500/20" }
                       ].map((stat, i) => (
-                        <div key={i} className={`h-28 bg-white dark:bg-[#151515] rounded-xl border border-slate-200 dark:border-white/5 p-4 flex flex-col justify-between relative overflow-hidden`}>
-                          <div className={`absolute top-0 right-0 w-16 h-16 bg-gradient-to-br ${stat.color} blur-xl rounded-full`}></div>
-                          <div className="h-3 w-16 bg-slate-200 dark:bg-white/10 rounded-full relative z-10"></div>
-                          <div className="h-6 w-24 bg-slate-300 dark:bg-white/20 rounded-lg relative z-10"></div>
+                         <div key={i} className={`h-32 bg-white/80 dark:bg-[#151515]/80 backdrop-blur-sm rounded-2xl border border-slate-200/50 dark:border-white/5 hover:${stat.border} p-5 flex flex-col justify-between relative overflow-hidden group-hover:scale-[1.02] transition-transform duration-300 delay-${i*100}`}>
+                          <div className={`absolute -top-10 -right-10 w-24 h-24 bg-gradient-to-br ${stat.color} blur-2xl rounded-full`}></div>
+                          <div className="h-10 w-10 bg-slate-100 dark:bg-white/5 rounded-xl mb-4 relative z-10 flex items-center justify-center">
+                            <div className="h-5 w-5 bg-slate-300 dark:bg-white/20 rounded-md"></div>
+                          </div>
+                          <div className="space-y-2 relative z-10">
+                            <div className="h-3 w-16 bg-slate-200 dark:bg-white/10 rounded-full"></div>
+                            <div className="h-6 w-24 bg-slate-800 dark:bg-white/80 rounded-lg"></div>
+                          </div>
                         </div>
                       ))}
                     </div>
                     
                     <div className="flex flex-col md:flex-row gap-6">
-                      <div className="flex-1 h-64 bg-white dark:bg-[#151515] rounded-xl border border-slate-200 dark:border-white/5 p-6 flex flex-col relative overflow-hidden">
-                        <div className="h-4 w-32 bg-slate-200 dark:bg-white/10 rounded-full mb-6"></div>
-                        <div className="flex-1 flex items-end gap-2 relative z-10">
-                           {[40, 70, 45, 90, 65, 80, 50, 85].map((h, i) => (
-                             <div key={i} className="flex-1 bg-[var(--brand-primary)]/40 rounded-t-sm hover:bg-[var(--brand-primary)] transition-colors cursor-pointer" style={{ height: `${h}%` }}></div>
+                      <div className="flex-1 h-72 bg-white/80 dark:bg-[#151515]/80 backdrop-blur-sm rounded-2xl border border-slate-200/80 dark:border-white/5 p-6 flex flex-col relative overflow-hidden">
+                        <div className="flex justify-between items-center mb-8">
+                          <div className="h-5 w-32 bg-slate-200 dark:bg-white/10 rounded-full"></div>
+                          <div className="flex gap-2">
+                            <div className="h-6 w-16 bg-slate-100 dark:bg-white/5 rounded-md"></div>
+                            <div className="h-6 w-16 bg-slate-100 dark:bg-white/5 rounded-md"></div>
+                          </div>
+                        </div>
+                        <div className="flex-1 flex items-end gap-3 relative z-10 border-b border-slate-100 dark:border-white/5 pb-2">
+                           {[40, 70, 45, 90, 65, 80, 50, 85, 60, 75].map((h, i) => (
+                             <div key={i} className="group/bar flex-1 relative flex justify-center">
+                               <div className="w-full bg-gradient-to-t from-[var(--brand-primary)]/40 to-[var(--brand-primary)]/80 rounded-t-md hover:from-[var(--brand-primary)] hover:to-purple-500 transition-all cursor-pointer" style={{ height: `${h}%` }}></div>
+                             </div>
                            ))}
                         </div>
                       </div>
-                      <div className="w-full md:w-1/3 h-64 bg-gradient-to-br from-[var(--brand-primary)] to-[var(--brand-secondary)] rounded-xl opacity-90 p-6 flex flex-col justify-between shadow-lg shadow-[var(--brand-primary)]/20">
-                         <div className="h-4 w-24 bg-white/30 rounded-full"></div>
-                         <div className="space-y-3">
-                           <div className="h-8 w-3/4 bg-white/20 rounded-lg"></div>
-                           <div className="h-3 w-full bg-white/10 rounded-full"></div>
-                           <div className="h-3 w-2/3 bg-white/10 rounded-full"></div>
+                      <div className="w-full md:w-1/3 h-72 bg-gradient-to-br from-[var(--brand-primary)] via-purple-600 to-[var(--brand-secondary)] rounded-2xl p-6 flex flex-col justify-between shadow-xl shadow-[var(--brand-primary)]/30 relative overflow-hidden">
+                         <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff1a_1px,transparent_1px),linear-gradient(to_bottom,#ffffff1a_1px,transparent_1px)] bg-[size:20px_20px] opacity-20"></div>
+                         <div className="relative z-10 flex justify-between items-center">
+                           <div className="h-10 w-10 bg-white/20 backdrop-blur-md rounded-xl"></div>
+                           <div className="h-6 w-20 bg-white/20 backdrop-blur-md rounded-full"></div>
+                         </div>
+                         <div className="space-y-4 relative z-10">
+                           <div className="h-10 w-3/4 bg-white rounded-lg opacity-90"></div>
+                           <div className="space-y-2">
+                             <div className="h-3 w-full bg-white/30 rounded-full"></div>
+                             <div className="h-3 w-2/3 bg-white/30 rounded-full"></div>
+                           </div>
                          </div>
                       </div>
                     </div>
@@ -386,41 +331,45 @@ export default function LandingPage() {
         </section>
 
         {/* Features Section */}
-        <section id="features" className="w-full py-16 md:py-24 bg-white dark:bg-[#050505] relative overflow-hidden">
-          <div className="absolute top-0 right-0 w-96 h-96 bg-[var(--brand-secondary)]/10 blur-[120px] rounded-full -z-10"></div>
-          <div className="absolute bottom-0 left-0 w-96 h-96 bg-[var(--brand-primary)]/10 blur-[120px] rounded-full -z-10"></div>
+        <section id="features" className="w-full py-12 md:py-16 bg-white dark:bg-[#050505] relative overflow-hidden">
+          <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-gradient-to-bl from-[var(--brand-secondary)]/10 to-transparent blur-[120px] rounded-full -z-10"></div>
+          <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-gradient-to-tr from-[var(--brand-primary)]/10 to-transparent blur-[120px] rounded-full -z-10"></div>
           <div className="container px-4 md:px-6 mx-auto relative z-10">
             <div className="text-center mb-20 max-w-3xl mx-auto">
-              <h2 className="text-[var(--brand-primary)] font-semibold tracking-wide uppercase text-sm mb-3">Core Features</h2>
-              <h3 className="text-3xl font-bold tracking-tight sm:text-5xl mb-6 text-slate-900 dark:text-white">Everything you need to <span className="text-slate-500 dark:text-slate-400">scale your institution</span></h3>
-              <p className="text-slate-500 dark:text-slate-400 text-lg">Powerful tools wrapped in a beautiful, intuitive interface designed for modern educators and administrators.</p>
+              <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[var(--brand-secondary)]/10 text-[var(--brand-secondary)] text-sm font-semibold tracking-wide uppercase mb-4 border border-[var(--brand-secondary)]/20">
+                <Star className="h-4 w-4" /> Core Features
+              </motion.div>
+              <h3 className="text-4xl sm:text-5xl md:text-6xl font-black tracking-tight mb-6 text-slate-900 dark:text-white">Everything you need to <span className="text-transparent bg-clip-text bg-gradient-to-r from-slate-400 to-slate-600 dark:from-slate-300 dark:to-slate-500">scale your institution</span></h3>
+              <p className="text-slate-600 dark:text-slate-400 text-lg md:text-xl font-medium">Powerful tools wrapped in a beautiful, intuitive interface designed for modern educators and administrators.</p>
             </div>
             
-            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            <div className="grid gap-6 md:gap-8 md:grid-cols-2 lg:grid-cols-3">
               {[
-                { icon: Users, title: "Student Management", desc: "Centralized database for student records, enrollment history, and academic progress.", color: "from-blue-500 to-cyan-500" },
-                { icon: Calendar, title: "Smart Attendance", desc: "Automated tracking with biometric integration and instant parent notifications.", color: "from-emerald-500 to-teal-500" },
-                { icon: BarChart, title: "Advanced Analytics", desc: "Customizable dashboards showing real-time metrics on performance and revenue.", color: "from-purple-500 to-pink-500" },
-                { icon: Zap, title: "Automated Workflows", desc: "Save hundreds of hours by automating fee reminders, report cards, and notices.", color: "from-amber-500 to-orange-500" },
-                { icon: ShieldCheck, title: "Bank-Grade Security", desc: "Role-based access control with end-to-end encryption for all sensitive data.", color: "from-red-500 to-rose-500" },
-                { icon: LayoutDashboard, title: "Parent Portal", desc: "Dedicated mobile-friendly portal for parents to track fees, grades, and events.", color: "from-indigo-500 to-blue-500" },
+                { icon: Users, title: "Student Management", desc: "Centralized database for student records, enrollment history, and academic progress.", color: "from-blue-500 to-cyan-400", shadow: "shadow-blue-500/20" },
+                { icon: Calendar, title: "Smart Attendance", desc: "Automated tracking with biometric integration and instant parent notifications.", color: "from-emerald-500 to-teal-400", shadow: "shadow-emerald-500/20" },
+                { icon: BarChart, title: "Advanced Analytics", desc: "Customizable dashboards showing real-time metrics on performance and revenue.", color: "from-purple-500 to-pink-400", shadow: "shadow-purple-500/20" },
+                { icon: Zap, title: "Automated Workflows", desc: "Save hundreds of hours by automating fee reminders, report cards, and notices.", color: "from-amber-500 to-orange-400", shadow: "shadow-amber-500/20" },
+                { icon: ShieldCheck, title: "Bank-Grade Security", desc: "Role-based access control with end-to-end encryption for all sensitive data.", color: "from-rose-500 to-red-400", shadow: "shadow-rose-500/20" },
+                { icon: LayoutDashboard, title: "Parent Portal", desc: "Dedicated mobile-friendly portal for parents to track fees, grades, and events.", color: "from-indigo-500 to-blue-400", shadow: "shadow-indigo-500/20" },
               ].map((feature, i) => (
                 <motion.div 
                   key={i}
-                  initial={{ opacity: 0, y: 20 }}
+                  initial={{ opacity: 0, y: 30 }}
                   whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: "-100px" }}
-                  transition={{ delay: i * 0.1, duration: 0.5 }}
-                  className="group relative p-8 rounded-3xl bg-slate-50 dark:bg-white/[0.02] border border-slate-200 dark:border-white/5 hover:bg-white dark:hover:bg-white/[0.04] transition-all duration-300 hover:shadow-xl dark:hover:shadow-none hover:-translate-y-1"
+                  viewport={{ once: true, margin: "-50px" }}
+                  transition={{ delay: i * 0.1, duration: 0.6, type: "spring" }}
+                  className="group relative p-8 rounded-[2rem] bg-white dark:bg-[#0a0a0a] border border-slate-200/80 dark:border-white/5 hover:border-transparent dark:hover:border-transparent transition-all duration-500 hover:-translate-y-2 z-10"
                 >
-                  <div className={`absolute inset-0 rounded-3xl bg-gradient-to-br ${feature.color} opacity-0 group-hover:opacity-5 transition-opacity duration-500`}></div>
-                  <div className={`h-14 w-14 rounded-2xl bg-gradient-to-br ${feature.color} p-[1px] mb-6 transform group-hover:scale-110 transition-transform duration-300 shadow-lg`}>
-                    <div className="h-full w-full rounded-2xl bg-white dark:bg-[#0a0a0a] flex items-center justify-center">
-                      <feature.icon className="h-6 w-6 text-slate-700 dark:text-white" />
+                  <div className={`absolute inset-0 rounded-[2rem] bg-gradient-to-br ${feature.color} opacity-0 group-hover:opacity-100 transition-opacity duration-500 -z-10 blur-xl ${feature.shadow}`}></div>
+                  <div className="absolute inset-[1px] rounded-[2rem] bg-white dark:bg-[#0a0a0a] -z-10"></div>
+                  
+                  <div className={`h-16 w-16 rounded-2xl bg-gradient-to-br ${feature.color} p-[1px] mb-8 transform group-hover:scale-110 transition-transform duration-500 shadow-lg ${feature.shadow}`}>
+                    <div className="h-full w-full rounded-2xl bg-white dark:bg-[#111] flex items-center justify-center">
+                      <feature.icon className="h-8 w-8 text-slate-800 dark:text-white" />
                     </div>
                   </div>
-                  <h4 className="text-xl font-semibold mb-3 text-slate-900 dark:text-white">{feature.title}</h4>
-                  <p className="text-slate-500 dark:text-slate-400 leading-relaxed text-sm">{feature.desc}</p>
+                  <h4 className={`text-2xl font-bold mb-4 text-slate-900 dark:text-white group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:${feature.color} transition-all duration-300`}>{feature.title}</h4>
+                  <p className="text-slate-600 dark:text-slate-400 leading-relaxed text-base">{feature.desc}</p>
                 </motion.div>
               ))}
             </div>
@@ -428,7 +377,7 @@ export default function LandingPage() {
         </section>
 
         {/* Comprehensive A-Z Modules Section */}
-        <section className="py-16 md:py-24 bg-slate-50 dark:bg-[#030712] relative overflow-hidden border-t border-slate-200 dark:border-white/5">
+        <section id="modules" className="py-12 md:py-16 bg-slate-50 dark:bg-[#030712] relative overflow-hidden border-t border-slate-200 dark:border-white/5">
           <div className="container px-4 md:px-6 mx-auto relative z-10">
             <div className="text-center mb-16 max-w-3xl mx-auto">
               <h2 className="text-[var(--brand-primary)] font-semibold tracking-wide uppercase text-sm mb-3">A-Z Capabilities</h2>
@@ -498,12 +447,23 @@ export default function LandingPage() {
                     className="grid gap-4 md:gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3"
                   >
                     {tab.features.map((feature, j) => (
-                      <div key={j} className="p-6 bg-white dark:bg-[#0a0a0a] border border-slate-200 dark:border-white/5 rounded-2xl hover:border-[var(--brand-primary)]/40 transition-colors shadow-sm">
-                        <div className="flex items-start gap-4">
-                          <div className="mt-1 flex-shrink-0 h-2 w-2 rounded-full bg-[var(--brand-primary)] shadow-[0_0_8px_var(--brand-primary)]"></div>
-                          <div>
-                            <h4 className="font-semibold text-slate-900 dark:text-white mb-1">{feature.name}</h4>
-                            <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">{feature.desc}</p>
+                      <div key={j} className="group relative p-[1px] rounded-[2rem] overflow-hidden cursor-pointer hover:shadow-2xl hover:shadow-[var(--brand-primary)]/20 transition-all duration-500 hover:-translate-y-2">
+                        {/* Animated Gradient Border Layer */}
+                        <div className="absolute inset-0 bg-slate-200/80 dark:bg-white/10 group-hover:bg-gradient-to-br group-hover:from-[var(--brand-primary)] group-hover:via-purple-500 group-hover:to-[var(--brand-secondary)] transition-all duration-700 opacity-70 group-hover:opacity-100"></div>
+                        
+                        {/* Card Content Layer */}
+                        <div className="relative h-full p-6 sm:p-7 bg-white dark:bg-[#0a0a0a] rounded-[calc(2rem-1px)] transition-all duration-500 group-hover:bg-slate-50/50 dark:group-hover:bg-[#111]/80 backdrop-blur-2xl overflow-hidden flex flex-col justify-center">
+                          {/* Hover Background Pattern */}
+                          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-[var(--brand-primary)]/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+                          
+                          <div className="relative z-20 flex items-start gap-5">
+                            <div className="mt-0.5 flex-shrink-0 h-12 w-12 rounded-2xl bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 flex items-center justify-center group-hover:scale-110 group-hover:bg-gradient-to-br group-hover:from-[var(--brand-primary)] group-hover:to-[var(--brand-secondary)] group-hover:border-transparent transition-all duration-500 shadow-sm group-hover:shadow-[0_0_20px_rgba(var(--brand-primary),0.5)]">
+                              <div className="h-3 w-3 rounded-full bg-slate-400 dark:bg-slate-500 group-hover:bg-white group-hover:shadow-[0_0_10px_white] transition-all duration-500"></div>
+                            </div>
+                            <div>
+                              <h4 className="font-bold text-lg text-slate-900 dark:text-white mb-1.5 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-[var(--brand-primary)] group-hover:to-purple-500 transition-all duration-500">{feature.name}</h4>
+                              <p className="text-sm text-slate-500 dark:text-slate-400 leading-relaxed group-hover:text-slate-700 dark:group-hover:text-slate-300 transition-colors duration-500">{feature.desc}</p>
+                            </div>
                           </div>
                         </div>
                       </div>
@@ -516,7 +476,7 @@ export default function LandingPage() {
         </section>
 
         {/* Integrations Section */}
-        <section className="py-16 md:py-24 border-t border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-[#030712] relative overflow-hidden">
+        <section id="integrations" className="py-12 md:py-16 border-t border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-[#030712] relative overflow-hidden">
           <div className="absolute left-0 top-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-to-r from-[var(--brand-primary)]/10 to-transparent blur-[100px] rounded-full -z-10 pointer-events-none"></div>
           <div className="container px-4 md:px-6 mx-auto relative z-10">
             <div className="flex flex-col md:flex-row items-center gap-12 lg:gap-20">
@@ -585,7 +545,7 @@ export default function LandingPage() {
         </section>
 
         {/* How It Works Section */}
-        <section className="py-24 md:py-32 bg-white dark:bg-black relative overflow-hidden">
+        <section id="how-it-works" className="py-24 md:py-32 bg-white dark:bg-black relative overflow-hidden">
           <div className="absolute left-1/2 top-0 -translate-x-1/2 w-full max-w-3xl h-full bg-[radial-gradient(ellipse_at_top,rgba(var(--brand-primary),0.08)_0%,transparent_70%)] pointer-events-none"></div>
           
           <div className="container px-4 md:px-6 mx-auto relative z-10">
@@ -630,7 +590,7 @@ export default function LandingPage() {
         </section>
 
         {/* Testimonials Section */}
-        <section id="testimonials" className="w-full py-16 md:py-24 bg-white dark:bg-[#0a0a0a] relative">
+        <section id="testimonials" className="w-full py-12 md:py-16 bg-white dark:bg-[#0a0a0a] relative">
           <div className="absolute left-0 top-0 w-1/2 h-full bg-gradient-to-r from-[#030712] to-transparent pointer-events-none z-10 hidden md:block"></div>
           <div className="absolute right-0 top-0 w-1/2 h-full bg-gradient-to-l from-[#030712] to-transparent pointer-events-none z-10 hidden md:block"></div>
           <div className="container px-4 md:px-6 mx-auto relative">
@@ -673,83 +633,95 @@ export default function LandingPage() {
         </section>
 
         {/* Pricing Section */}
-        <section id="pricing" className="w-full py-16 md:py-24 bg-slate-50 dark:bg-[#030712] relative overflow-hidden">
-          <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-[600px] bg-gradient-to-b from-[var(--brand-primary)]/5 to-[var(--brand-secondary)]/5 blur-[120px] rounded-full z-0"></div>
+        <section id="pricing" className="w-full py-12 md:py-16 bg-slate-50 dark:bg-[#030712] relative overflow-hidden">
+          <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-[600px] bg-gradient-to-b from-[var(--brand-primary)]/10 to-[var(--brand-secondary)]/10 blur-[120px] rounded-full z-0 pointer-events-none"></div>
           <div className="container px-4 md:px-6 mx-auto relative z-10">
-            <div className="text-center mb-16 max-w-3xl mx-auto">
-              <h2 className="text-[var(--brand-primary)] font-semibold tracking-wide uppercase text-sm mb-3">Simple Pricing</h2>
-              <h3 className="text-3xl font-bold tracking-tight sm:text-5xl mb-6">Pricing that scales with you</h3>
-              <p className="text-slate-500 dark:text-slate-400 text-lg">No hidden fees. No surprise charges. Choose the plan that perfectly fits your institution's size.</p>
+            <div className="text-center mb-20 max-w-3xl mx-auto">
+              <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[var(--brand-primary)]/10 text-[var(--brand-primary)] text-sm font-semibold tracking-wide uppercase mb-4 border border-[var(--brand-primary)]/20">
+                <CreditCard className="h-4 w-4" /> Simple Pricing
+              </motion.div>
+              <h3 className="text-4xl sm:text-5xl md:text-6xl font-black tracking-tight mb-6">Pricing that <span className="text-transparent bg-clip-text bg-gradient-to-r from-[var(--brand-primary)] to-[var(--brand-secondary)]">scales with you</span></h3>
+              <p className="text-slate-600 dark:text-slate-400 text-lg md:text-xl font-medium">No hidden fees. No surprise charges. Choose the plan that perfectly fits your institution's size.</p>
             </div>
 
-            <div className="grid gap-8 md:grid-cols-3 max-w-5xl mx-auto">
+            <div className="grid gap-8 md:grid-cols-3 max-w-6xl mx-auto items-center">
               {/* Starter Plan */}
-              <div className="bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-3xl p-8 flex flex-col relative overflow-hidden backdrop-blur-sm">
+              <motion.div initial={{ opacity: 0, x: -50 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} className="bg-white/80 dark:bg-white/[0.02] backdrop-blur-xl border border-slate-200 dark:border-white/10 rounded-[2.5rem] p-10 flex flex-col relative overflow-hidden hover:border-[var(--brand-primary)]/30 transition-colors">
                 <div className="mb-8">
-                  <h4 className="text-xl font-medium text-slate-900 dark:text-white mb-2">Starter</h4>
-                  <p className="text-slate-500 dark:text-slate-400 text-sm mb-6">Perfect for small preschools and academies.</p>
+                  <h4 className="text-2xl font-bold text-slate-900 dark:text-white mb-2">Starter</h4>
+                  <p className="text-slate-500 dark:text-slate-400 text-sm mb-6 h-10">Perfect for small preschools and academies.</p>
                   <div className="flex items-baseline gap-1">
-                    <span className="text-4xl font-bold text-slate-900 dark:text-white">$199</span>
-                    <span className="text-slate-500">/mo</span>
+                    <span className="text-5xl font-black text-slate-900 dark:text-white">$199</span>
+                    <span className="text-slate-500 font-medium">/mo</span>
                   </div>
                 </div>
-                <div className="space-y-4 mb-8 flex-1">
+                <div className="space-y-5 mb-10 flex-1">
                   {['Up to 500 Students', 'Basic Attendance', 'Standard Reporting', 'Email Support'].map((feature, i) => (
-                    <div key={i} className="flex items-center gap-3 text-sm text-slate-600 dark:text-slate-300">
-                      <CheckCircle2 className="h-5 w-5 text-[var(--brand-secondary)]" /> {feature}
+                    <div key={i} className="flex items-center gap-4 text-sm font-medium text-slate-700 dark:text-slate-300">
+                      <div className="h-6 w-6 rounded-full bg-slate-100 dark:bg-white/10 flex items-center justify-center">
+                        <CheckCircle2 className="h-4 w-4 text-[var(--brand-secondary)]" />
+                      </div>
+                      {feature}
                     </div>
                   ))}
                 </div>
-                <Button variant="outline" className="w-full rounded-full border-slate-300 dark:border-white/20 hover:bg-slate-200 dark:bg-white/10 text-slate-900 dark:text-white bg-transparent">Get Started</Button>
-              </div>
+                <Button variant="outline" className="w-full rounded-full h-14 border-2 border-slate-200 dark:border-white/20 hover:bg-slate-100 dark:hover:bg-white/10 text-slate-900 dark:text-white bg-transparent font-bold text-base">Get Started</Button>
+              </motion.div>
 
               {/* Professional Plan */}
-              <div className="bg-[#0f172a] border border-[var(--brand-primary)] rounded-3xl p-8 flex flex-col relative overflow-hidden shadow-2xl shadow-[var(--brand-primary)]/30 transform md:-translate-y-4">
-                <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[var(--brand-primary)] to-[var(--brand-secondary)]"></div>
-                <div className="absolute top-4 right-4 bg-[var(--brand-primary)]/30 text-slate-900 dark:text-white text-xs font-semibold px-3 py-1 rounded-full border border-[var(--brand-primary)]">Most Popular</div>
+              <motion.div initial={{ opacity: 0, y: 50 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="bg-[#0f172a] border-2 border-[var(--brand-primary)] rounded-[2.5rem] p-10 flex flex-col relative overflow-hidden shadow-2xl shadow-[var(--brand-primary)]/40 transform md:-translate-y-8 z-10">
+                <div className="absolute inset-0 bg-gradient-to-br from-[var(--brand-primary)]/10 to-[var(--brand-secondary)]/10"></div>
+                <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-[var(--brand-primary)] via-purple-500 to-[var(--brand-secondary)]"></div>
+                <div className="absolute top-6 right-6 bg-gradient-to-r from-[var(--brand-primary)] to-[var(--brand-secondary)] text-white text-xs font-bold px-4 py-1.5 rounded-full shadow-lg">Most Popular</div>
                 
-                <div className="mb-8 mt-2">
-                  <h4 className="text-xl font-medium text-slate-900 dark:text-white mb-2">Professional</h4>
-                  <p className="text-slate-500 dark:text-slate-400 text-sm mb-6">Ideal for growing K-12 schools.</p>
+                <div className="mb-8 mt-2 relative z-10">
+                  <h4 className="text-2xl font-bold text-white mb-2">Professional</h4>
+                  <p className="text-slate-400 text-sm mb-6 h-10">Ideal for growing K-12 schools.</p>
                   <div className="flex items-baseline gap-1">
-                    <span className="text-4xl font-bold text-slate-900 dark:text-white">$499</span>
-                    <span className="text-slate-500">/mo</span>
+                    <span className="text-5xl font-black text-white">$499</span>
+                    <span className="text-slate-400 font-medium">/mo</span>
                   </div>
                 </div>
-                <div className="space-y-4 mb-8 flex-1">
+                <div className="space-y-5 mb-10 flex-1 relative z-10">
                   {['Up to 2,000 Students', 'Biometric Attendance', 'Advanced Analytics', 'Parent Portal App', 'SMS Notifications', 'Priority Support'].map((feature, i) => (
-                    <div key={i} className="flex items-center gap-3 text-sm text-slate-600 dark:text-slate-300">
-                      <CheckCircle2 className="h-5 w-5 text-[var(--brand-primary)]" /> {feature}
+                    <div key={i} className="flex items-center gap-4 text-sm font-medium text-slate-200">
+                      <div className="h-6 w-6 rounded-full bg-[var(--brand-primary)]/20 flex items-center justify-center">
+                        <CheckCircle2 className="h-4 w-4 text-[var(--brand-primary)]" />
+                      </div>
+                      {feature}
                     </div>
                   ))}
                 </div>
-                <Button className="w-full rounded-full bg-gradient-to-r from-[var(--brand-primary)] to-[var(--brand-secondary)] hover:opacity-90 text-slate-900 dark:text-white border-0 shadow-lg shadow-[var(--brand-primary)]/20">Start 14-Day Trial</Button>
-              </div>
+                <Button className="w-full rounded-full h-14 bg-gradient-to-r from-[var(--brand-primary)] to-[var(--brand-secondary)] hover:opacity-90 text-white font-bold text-base border-0 shadow-lg shadow-[var(--brand-primary)]/30 relative z-10 hover:scale-105 transition-transform">Start 14-Day Trial</Button>
+              </motion.div>
 
               {/* Enterprise Plan */}
-              <div className="bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-3xl p-8 flex flex-col relative overflow-hidden backdrop-blur-sm">
+              <motion.div initial={{ opacity: 0, x: 50 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} className="bg-white/80 dark:bg-white/[0.02] backdrop-blur-xl border border-slate-200 dark:border-white/10 rounded-[2.5rem] p-10 flex flex-col relative overflow-hidden hover:border-[var(--brand-secondary)]/30 transition-colors">
                 <div className="mb-8">
-                  <h4 className="text-xl font-medium text-slate-900 dark:text-white mb-2">Enterprise</h4>
-                  <p className="text-slate-500 dark:text-slate-400 text-sm mb-6">For universities and multi-campus schools.</p>
+                  <h4 className="text-2xl font-bold text-slate-900 dark:text-white mb-2">Enterprise</h4>
+                  <p className="text-slate-500 dark:text-slate-400 text-sm mb-6 h-10">For universities and multi-campus schools.</p>
                   <div className="flex items-baseline gap-1">
-                    <span className="text-4xl font-bold text-slate-900 dark:text-white">Custom</span>
+                    <span className="text-5xl font-black text-slate-900 dark:text-white">Custom</span>
                   </div>
                 </div>
-                <div className="space-y-4 mb-8 flex-1">
+                <div className="space-y-5 mb-10 flex-1">
                   {['Unlimited Students', 'Multi-Branch Support', 'Custom Integrations', 'Dedicated Account Manager', 'White-labeling Options', 'On-premise deployment'].map((feature, i) => (
-                    <div key={i} className="flex items-center gap-3 text-sm text-slate-600 dark:text-slate-300">
-                      <CheckCircle2 className="h-5 w-5 text-[var(--brand-secondary)]" /> {feature}
+                    <div key={i} className="flex items-center gap-4 text-sm font-medium text-slate-700 dark:text-slate-300">
+                      <div className="h-6 w-6 rounded-full bg-slate-100 dark:bg-white/10 flex items-center justify-center">
+                        <CheckCircle2 className="h-4 w-4 text-[var(--brand-secondary)]" />
+                      </div>
+                      {feature}
                     </div>
                   ))}
                 </div>
-                <Button variant="outline" className="w-full rounded-full border-slate-300 dark:border-white/20 hover:bg-slate-200 dark:bg-white/10 text-slate-900 dark:text-white bg-transparent">Contact Sales</Button>
-              </div>
+                <Button variant="outline" className="w-full rounded-full h-14 border-2 border-slate-200 dark:border-white/20 hover:bg-slate-100 dark:hover:bg-white/10 text-slate-900 dark:text-white bg-transparent font-bold text-base">Contact Sales</Button>
+              </motion.div>
             </div>
           </div>
         </section>
 
         {/* FAQ Section */}
-        <section id="faq" className="w-full py-16 md:py-24 bg-white dark:bg-[#0a0a0a]">
+        <section id="faq" className="w-full py-12 md:py-16 bg-white dark:bg-[#0a0a0a]">
           <div className="container px-4 md:px-6 mx-auto max-w-4xl">
             <div className="text-center mb-12 max-w-4xl mx-auto">
               <h2 className="text-2xl sm:text-3xl font-bold tracking-tight sm:text-5xl mb-6 text-slate-900 dark:text-white">Frequently Asked Questions</h2>
@@ -775,124 +747,8 @@ export default function LandingPage() {
           </div>
         </section>
 
-        {/* CTA Section */}
-        <section className="py-24 md:py-32 relative flex items-center justify-center bg-slate-50 dark:bg-[#030712] overflow-hidden">
-          {/* Animated Background Mesh */}
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-5xl h-[600px] bg-[radial-gradient(ellipse_at_center,rgba(var(--brand-primary),0.15)_0%,transparent_70%)] blur-[100px] pointer-events-none"></div>
-          
-          <div className="container px-4 relative z-10">
-            <motion.div 
-              initial={{ opacity: 0, scale: 0.95 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} transition={{ duration: 0.5 }}
-              className="max-w-5xl mx-auto rounded-[2.5rem] p-[1px] md:p-[2px] relative group overflow-hidden shadow-2xl shadow-[var(--brand-primary)]/10"
-            >
-              {/* Spinning Gradient Border */}
-              <div className="absolute inset-[-100%] animate-[spin_4s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,var(--brand-primary)_0%,var(--brand-secondary)_50%,var(--brand-primary)_100%)] opacity-30 group-hover:opacity-100 transition-opacity duration-500"></div>
-              
-              <div className="relative bg-white dark:bg-[#050505] rounded-[2.5rem] p-10 md:p-20 text-center flex flex-col items-center backdrop-blur-3xl overflow-hidden h-full">
-                {/* Inner Glow */}
-                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-3/4 h-32 bg-[var(--brand-primary)]/20 blur-[60px] rounded-full pointer-events-none"></div>
-                
-                <h2 className="text-4xl md:text-6xl font-bold mb-6 text-slate-900 dark:text-white tracking-tight relative z-10">Ready to transform your school?</h2>
-                <p className="text-slate-500 dark:text-slate-400 text-xl mb-10 max-w-2xl mx-auto relative z-10">Join hundreds of institutions that have already upgraded to EduNest. Start your 14-day free trial today. No credit card required.</p>
-                <div className="flex flex-col sm:flex-row gap-4 relative z-10 w-full sm:w-auto">
-                  <Button size="lg" className="rounded-full h-14 px-10 text-base font-semibold bg-slate-900 text-white hover:bg-slate-800 dark:bg-white dark:text-black dark:hover:bg-slate-200 shadow-xl dark:shadow-[0_0_30px_rgba(255,255,255,0.3)] transition-all hover:scale-105 w-full sm:w-auto" asChild>
-                    <Link to="/dashboard">Get Started Now <ArrowRight className="ml-2 h-4 w-4" /></Link>
-                  </Button>
-                  <Button size="lg" variant="outline" className="rounded-full h-14 px-10 text-base font-semibold border-slate-300 dark:border-white/20 bg-slate-100 dark:bg-transparent hover:bg-slate-200 dark:hover:bg-white/5 text-slate-900 dark:text-white transition-all w-full sm:w-auto">
-                    Talk to Sales
-                  </Button>
-                </div>
-              </div>
-            </motion.div>
-          </div>
-        </section>
       </main>
 
-      <footer className="w-full py-16 bg-white dark:bg-[#050505] border-t border-slate-200 dark:border-white/10 relative overflow-hidden">
-        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-full h-1/2 bg-[radial-gradient(ellipse_at_bottom,rgba(var(--brand-primary),0.1)_0%,transparent_70%)] pointer-events-none"></div>
-        <div className="container px-4 md:px-6 mx-auto relative z-10">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-12 mb-16">
-            <div className="lg:col-span-2">
-              <Link to="/" className="flex items-center gap-3 mb-6 group">
-                <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-[var(--brand-primary)] to-[var(--brand-secondary)] flex items-center justify-center shadow-lg">
-                  <GraduationCap className="h-6 w-6 text-white" />
-                </div>
-                <span className="font-bold text-2xl tracking-tight text-slate-900 dark:text-white">EduNest</span>
-              </Link>
-              <p className="text-slate-500 dark:text-slate-400 text-sm max-w-sm mb-8 leading-relaxed">The modern operating system for educational institutions. Built with precision to automate, scale, and inspire.</p>
-              
-              <div className="space-y-4">
-                <h4 className="text-sm font-semibold text-slate-900 dark:text-white uppercase tracking-wider">Subscribe to our newsletter</h4>
-                <div className="flex items-center gap-2 max-w-sm">
-                  <input type="email" placeholder="Enter your email" className="h-11 w-full bg-slate-100 dark:bg-[#111] border border-slate-200 dark:border-white/10 rounded-full px-4 text-sm text-slate-900 dark:text-white focus:outline-none focus:border-[var(--brand-primary)] transition-colors" />
-                  <Button className="rounded-full h-11 px-6 bg-slate-900 text-white hover:bg-slate-800 dark:bg-white dark:text-black dark:hover:bg-slate-200">Subscribe</Button>
-                </div>
-              </div>
-            </div>
-            
-            <div className="lg:col-span-1">
-              <h4 className="font-semibold text-slate-900 dark:text-white mb-6">Product</h4>
-              <ul className="space-y-4 text-sm text-slate-500 dark:text-slate-400">
-                <li><a href="#features" onClick={(e) => { e.preventDefault(); document.querySelector('#features')?.scrollIntoView({ behavior: 'smooth' }); }} className="hover:text-[var(--brand-primary)] transition-colors cursor-pointer">Features</a></li>
-                <li><a href="#pricing" onClick={(e) => { e.preventDefault(); document.querySelector('#pricing')?.scrollIntoView({ behavior: 'smooth' }); }} className="hover:text-[var(--brand-primary)] transition-colors cursor-pointer">Pricing</a></li>
-                <li><Link to="#" className="hover:text-[var(--brand-primary)] transition-colors">Integrations</Link></li>
-                <li><Link to="#" className="hover:text-[var(--brand-primary)] transition-colors">Changelog</Link></li>
-                <li><Link to="#" className="hover:text-[var(--brand-primary)] transition-colors">Security</Link></li>
-              </ul>
-            </div>
-            
-            <div className="lg:col-span-1">
-              <h4 className="font-semibold text-slate-900 dark:text-white mb-6">Company</h4>
-              <ul className="space-y-4 text-sm text-slate-500 dark:text-slate-400">
-                <li><Link to="/about-us" className="hover:text-[var(--brand-primary)] transition-colors">About Us</Link></li>
-                <li><Link to="/careers" className="hover:text-[var(--brand-primary)] transition-colors">Careers</Link></li>
-                <li><Link to="/blog" className="hover:text-[var(--brand-primary)] transition-colors">Blog</Link></li>
-                <li><Link to="/contact" className="hover:text-[var(--brand-primary)] transition-colors">Contact</Link></li>
-                <li><Link to="#" className="hover:text-[var(--brand-primary)] transition-colors">Partners</Link></li>
-              </ul>
-            </div>
-            
-            <div className="lg:col-span-1">
-              <h4 className="font-semibold text-slate-900 dark:text-white mb-6">Legal</h4>
-              <ul className="space-y-4 text-sm text-slate-500 dark:text-slate-400">
-                <li><Link to="/privacy-policy" className="hover:text-[var(--brand-primary)] transition-colors">Privacy Policy</Link></li>
-                <li><Link to="/terms-of-service" className="hover:text-[var(--brand-primary)] transition-colors">Terms of Service</Link></li>
-                <li><Link to="/cookie-policy" className="hover:text-[var(--brand-primary)] transition-colors">Cookie Policy</Link></li>
-                <li><Link to="#" className="hover:text-[var(--brand-primary)] transition-colors">DPA</Link></li>
-              </ul>
-            </div>
-
-            <div className="lg:col-span-1">
-              <h4 className="font-semibold text-slate-900 dark:text-white mb-6">Social</h4>
-              <div className="flex flex-col gap-4">
-                <a href="#" className="flex items-center gap-3 text-sm text-slate-500 dark:text-slate-400 hover:text-[var(--brand-primary)] transition-colors">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"></path></svg>
-                  Twitter
-                </a>
-                <a href="#" className="flex items-center gap-3 text-sm text-slate-500 dark:text-slate-400 hover:text-[#0077b5] transition-colors">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
-                  LinkedIn
-                </a>
-                <a href="#" className="flex items-center gap-3 text-sm text-slate-500 dark:text-slate-400 hover:text-[#E1306C] transition-colors">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
-                  Instagram
-                </a>
-              </div>
-            </div>
-          </div>
-          
-          <div className="pt-8 border-t border-slate-200 dark:border-white/10 flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-slate-500">
-            <p>© 2026 EduNest Inc. All rights reserved.</p>
-            <div className="flex items-center gap-2">
-              <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
-              </span>
-              All systems operational
-            </div>
-          </div>
-        </div>
-      </footer>
     </div>
   );
 }
