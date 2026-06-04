@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { 
+  GraduationCap, 
   ArrowRight, 
   BarChart, 
   Users, 
@@ -11,6 +12,8 @@ import {
   Zap,
   LayoutDashboard,
   Quote,
+  ChevronDown,
+  Menu,
   CreditCard,
   Mail,
   Video,
@@ -31,6 +34,13 @@ import {
   TabsList,
   TabsTrigger,
 } from "@/components/ui/tabs";
+import {
+  Sheet,
+  SheetContent,
+  SheetTrigger,
+  SheetTitle,
+  SheetClose
+} from "@/components/ui/sheet";
 
 const fadeIn = {
   initial: { opacity: 0, y: 20 },
@@ -48,8 +58,146 @@ const staggerContainer = {
 
 export default function LandingPage() {
   return (
-    <div className="-mt-20 md:-mt-28">
-      
+    <div className="flex flex-col min-h-screen bg-slate-50 dark:bg-[#030712] text-slate-900 dark:text-slate-50 selection:bg-[var(--brand-primary)]/50 overflow-x-hidden">
+      {/* Navigation */}
+      <header className="px-6 lg:px-8 h-16 md:h-20 flex items-center border border-slate-200/50 dark:border-white/10 backdrop-blur-xl fixed top-0 md:top-4 left-0 right-0 md:left-4 md:right-4 lg:left-1/2 lg:-translate-x-1/2 lg:w-[95%] max-w-7xl z-50 bg-white/70 dark:bg-[#030712]/60 md:rounded-2xl shadow-lg shadow-slate-200/20 dark:shadow-black/40 transition-all">
+        <Link to="/" className="flex items-center justify-center gap-2 group flex-shrink-0">
+          <img src="/logo.png" alt="EduNest Logo" className="h-10 w-auto bg-white p-1 rounded-lg" onError={(e) => {
+            e.target.style.display = 'none';
+            e.target.nextSibling.style.display = 'flex';
+          }} />
+          <div className="hidden h-10 w-10 rounded-xl bg-gradient-to-br from-[var(--brand-primary)] to-[var(--brand-secondary)] items-center justify-center shadow-lg group-hover:shadow-[var(--brand-primary)]/40 transition-all duration-300">
+            <GraduationCap className="h-6 w-6 text-white" />
+          </div>
+          <span className="font-bold text-2xl tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-slate-900 to-slate-600 dark:from-white dark:to-white/70">
+            EduNest
+          </span>
+        </Link>
+
+        {/* Desktop Nav */}
+        <nav className="ml-8 hidden lg:flex gap-1 items-center">
+          {/* Product scroll links */}
+          {[
+            { label: 'Features', id: '#features' },
+            { label: 'Testimonials', id: '#testimonials' },
+            { label: 'Pricing', id: '#pricing' },
+            { label: 'FAQ', id: '#faq' },
+          ].map((item) => (
+            <a
+              key={item.label}
+              href={item.id}
+              onClick={(e) => { e.preventDefault(); document.querySelector(item.id)?.scrollIntoView({ behavior: 'smooth' }); }}
+              className="text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-colors px-3 py-2 rounded-lg hover:bg-slate-100 dark:hover:bg-white/5"
+            >
+              {item.label}
+            </a>
+          ))}
+          {/* Page links */}
+          {[
+            { label: 'About Us', to: '/about-us' },
+            { label: 'Blog', to: '/blog' },
+            { label: 'Careers', to: '/careers' },
+            { label: 'Contact', to: '/contact' },
+          ].map((item) => (
+            <Link
+              key={item.label}
+              to={item.to}
+              className="text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-colors px-3 py-2 rounded-lg hover:bg-slate-100 dark:hover:bg-white/5"
+            >
+              {item.label}
+            </Link>
+          ))}
+        </nav>
+
+        {/* CTA Buttons */}
+        <div className="ml-auto flex items-center gap-3">
+          <Link to="/login" className="hidden lg:block text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-colors px-3 py-2 rounded-lg hover:bg-slate-100 dark:hover:bg-white/5">
+            Log in
+          </Link>
+          <Button asChild className="hidden sm:flex rounded-full px-5 h-9 bg-slate-900 text-white hover:bg-slate-700 dark:bg-white dark:text-black dark:hover:bg-slate-200 shadow-md transition-all">
+            <Link to="/dashboard">Get Started</Link>
+          </Button>
+
+          {/* Mobile Menu */}
+          <div className="lg:hidden">
+            <Sheet>
+              <SheetTrigger asChild>
+                <Button variant="ghost" size="icon" className="text-slate-900 dark:text-white hover:bg-slate-200 dark:hover:bg-white/10">
+                  <Menu className="h-6 w-6" />
+                </Button>
+              </SheetTrigger>
+              <SheetContent side="right" className="bg-white dark:bg-[#0a0a0a] border-l border-slate-200 dark:border-white/10 p-0 w-[300px]">
+                <SheetTitle className="sr-only">Mobile Menu</SheetTitle>
+                <div className="flex flex-col h-full">
+                  {/* Mobile Header */}
+                  <div className="flex items-center gap-2 p-6 border-b border-slate-200 dark:border-white/10">
+                    <div className="h-8 w-8 rounded-lg bg-gradient-to-br from-[var(--brand-primary)] to-[var(--brand-secondary)] flex items-center justify-center">
+                      <GraduationCap className="h-5 w-5 text-white" />
+                    </div>
+                    <span className="font-bold text-lg text-slate-900 dark:text-white">EduNest</span>
+                  </div>
+
+                  <div className="flex-1 overflow-y-auto p-6 space-y-1">
+                    {/* Section label */}
+                    <p className="text-xs font-semibold uppercase tracking-wider text-slate-400 dark:text-slate-500 px-3 mb-2">On this page</p>
+                    {[
+                      { label: 'Features', id: '#features' },
+                      { label: 'Testimonials', id: '#testimonials' },
+                      { label: 'Pricing', id: '#pricing' },
+                      { label: 'FAQ', id: '#faq' },
+                    ].map((item) => (
+                      <SheetClose asChild key={item.label}>
+                        <a
+                          href={item.id}
+                          onClick={(e) => { e.preventDefault(); document.querySelector(item.id)?.scrollIntoView({ behavior: 'smooth' }); }}
+                          className="flex items-center gap-3 text-base font-medium text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/5 px-3 py-2.5 rounded-xl transition-colors"
+                        >
+                          {item.label}
+                        </a>
+                      </SheetClose>
+                    ))}
+
+                    <div className="pt-4">
+                      <p className="text-xs font-semibold uppercase tracking-wider text-slate-400 dark:text-slate-500 px-3 mb-2">Company</p>
+                      {[
+                        { label: 'About Us', to: '/about-us' },
+                        { label: 'Blog', to: '/blog' },
+                        { label: 'Careers', to: '/careers' },
+                        { label: 'Contact', to: '/contact' },
+                      ].map((item) => (
+                        <SheetClose asChild key={item.label}>
+                          <Link
+                            to={item.to}
+                            className="flex items-center gap-3 text-base font-medium text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/5 px-3 py-2.5 rounded-xl transition-colors"
+                          >
+                            {item.label}
+                          </Link>
+                        </SheetClose>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Mobile CTA */}
+                  <div className="p-6 border-t border-slate-200 dark:border-white/10 space-y-3">
+                    <SheetClose asChild>
+                      <Link to="/login" className="flex items-center justify-center h-11 w-full rounded-xl border border-slate-200 dark:border-white/10 text-sm font-semibold text-slate-900 dark:text-white hover:bg-slate-100 dark:hover:bg-white/5 transition-colors">
+                        Log in
+                      </Link>
+                    </SheetClose>
+                    <SheetClose asChild>
+                      <Link to="/dashboard" className="flex items-center justify-center h-11 w-full rounded-xl bg-slate-900 dark:bg-white text-white dark:text-black text-sm font-semibold hover:bg-slate-700 dark:hover:bg-slate-200 transition-colors">
+                        Get Started
+                      </Link>
+                    </SheetClose>
+                  </div>
+                </div>
+              </SheetContent>
+            </Sheet>
+          </div>
+        </div>
+      </header>
+
+      <main className="flex-1 pt-16 md:pt-24">
         {/* Hero Section */}
         <section className="w-full py-14 md:py-24 lg:py-32 relative flex items-center justify-center overflow-hidden">
           {/* Grid Background */}
@@ -150,7 +298,7 @@ export default function LandingPage() {
         </section>
 
         {/* Dashboard Showcase Section */}
-        <section id="dashboard" className="py-16 md:py-20 bg-slate-50 dark:bg-[#030712] relative overflow-hidden">
+        <section className="py-16 md:py-20 bg-slate-50 dark:bg-[#030712] relative overflow-hidden">
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-5xl h-[500px] bg-gradient-to-r from-[var(--brand-primary)]/30 to-[var(--brand-secondary)]/30 blur-[120px] rounded-full -z-10 pointer-events-none"></div>
           
           <div className="container px-4 mx-auto relative z-10">
@@ -280,7 +428,7 @@ export default function LandingPage() {
         </section>
 
         {/* Comprehensive A-Z Modules Section */}
-        <section id="modules" className="py-16 md:py-24 bg-slate-50 dark:bg-[#030712] relative overflow-hidden border-t border-slate-200 dark:border-white/5">
+        <section className="py-16 md:py-24 bg-slate-50 dark:bg-[#030712] relative overflow-hidden border-t border-slate-200 dark:border-white/5">
           <div className="container px-4 md:px-6 mx-auto relative z-10">
             <div className="text-center mb-16 max-w-3xl mx-auto">
               <h2 className="text-[var(--brand-primary)] font-semibold tracking-wide uppercase text-sm mb-3">A-Z Capabilities</h2>
@@ -368,7 +516,7 @@ export default function LandingPage() {
         </section>
 
         {/* Integrations Section */}
-        <section id="integrations" className="py-16 md:py-24 border-t border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-[#030712] relative overflow-hidden">
+        <section className="py-16 md:py-24 border-t border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-[#030712] relative overflow-hidden">
           <div className="absolute left-0 top-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-to-r from-[var(--brand-primary)]/10 to-transparent blur-[100px] rounded-full -z-10 pointer-events-none"></div>
           <div className="container px-4 md:px-6 mx-auto relative z-10">
             <div className="flex flex-col md:flex-row items-center gap-12 lg:gap-20">
@@ -437,7 +585,7 @@ export default function LandingPage() {
         </section>
 
         {/* How It Works Section */}
-        <section id="how-it-works" className="py-24 md:py-32 bg-white dark:bg-black relative overflow-hidden">
+        <section className="py-24 md:py-32 bg-white dark:bg-black relative overflow-hidden">
           <div className="absolute left-1/2 top-0 -translate-x-1/2 w-full max-w-3xl h-full bg-[radial-gradient(ellipse_at_top,rgba(var(--brand-primary),0.08)_0%,transparent_70%)] pointer-events-none"></div>
           
           <div className="container px-4 md:px-6 mx-auto relative z-10">
@@ -627,8 +775,124 @@ export default function LandingPage() {
           </div>
         </section>
 
-        
-      
+        {/* CTA Section */}
+        <section className="py-24 md:py-32 relative flex items-center justify-center bg-slate-50 dark:bg-[#030712] overflow-hidden">
+          {/* Animated Background Mesh */}
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-5xl h-[600px] bg-[radial-gradient(ellipse_at_center,rgba(var(--brand-primary),0.15)_0%,transparent_70%)] blur-[100px] pointer-events-none"></div>
+          
+          <div className="container px-4 relative z-10">
+            <motion.div 
+              initial={{ opacity: 0, scale: 0.95 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} transition={{ duration: 0.5 }}
+              className="max-w-5xl mx-auto rounded-[2.5rem] p-[1px] md:p-[2px] relative group overflow-hidden shadow-2xl shadow-[var(--brand-primary)]/10"
+            >
+              {/* Spinning Gradient Border */}
+              <div className="absolute inset-[-100%] animate-[spin_4s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,var(--brand-primary)_0%,var(--brand-secondary)_50%,var(--brand-primary)_100%)] opacity-30 group-hover:opacity-100 transition-opacity duration-500"></div>
+              
+              <div className="relative bg-white dark:bg-[#050505] rounded-[2.5rem] p-10 md:p-20 text-center flex flex-col items-center backdrop-blur-3xl overflow-hidden h-full">
+                {/* Inner Glow */}
+                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-3/4 h-32 bg-[var(--brand-primary)]/20 blur-[60px] rounded-full pointer-events-none"></div>
+                
+                <h2 className="text-4xl md:text-6xl font-bold mb-6 text-slate-900 dark:text-white tracking-tight relative z-10">Ready to transform your school?</h2>
+                <p className="text-slate-500 dark:text-slate-400 text-xl mb-10 max-w-2xl mx-auto relative z-10">Join hundreds of institutions that have already upgraded to EduNest. Start your 14-day free trial today. No credit card required.</p>
+                <div className="flex flex-col sm:flex-row gap-4 relative z-10 w-full sm:w-auto">
+                  <Button size="lg" className="rounded-full h-14 px-10 text-base font-semibold bg-slate-900 text-white hover:bg-slate-800 dark:bg-white dark:text-black dark:hover:bg-slate-200 shadow-xl dark:shadow-[0_0_30px_rgba(255,255,255,0.3)] transition-all hover:scale-105 w-full sm:w-auto" asChild>
+                    <Link to="/dashboard">Get Started Now <ArrowRight className="ml-2 h-4 w-4" /></Link>
+                  </Button>
+                  <Button size="lg" variant="outline" className="rounded-full h-14 px-10 text-base font-semibold border-slate-300 dark:border-white/20 bg-slate-100 dark:bg-transparent hover:bg-slate-200 dark:hover:bg-white/5 text-slate-900 dark:text-white transition-all w-full sm:w-auto">
+                    Talk to Sales
+                  </Button>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+        </section>
+      </main>
+
+      <footer className="w-full py-16 bg-white dark:bg-[#050505] border-t border-slate-200 dark:border-white/10 relative overflow-hidden">
+        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-full h-1/2 bg-[radial-gradient(ellipse_at_bottom,rgba(var(--brand-primary),0.1)_0%,transparent_70%)] pointer-events-none"></div>
+        <div className="container px-4 md:px-6 mx-auto relative z-10">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-12 mb-16">
+            <div className="lg:col-span-2">
+              <Link to="/" className="flex items-center gap-3 mb-6 group">
+                <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-[var(--brand-primary)] to-[var(--brand-secondary)] flex items-center justify-center shadow-lg">
+                  <GraduationCap className="h-6 w-6 text-white" />
+                </div>
+                <span className="font-bold text-2xl tracking-tight text-slate-900 dark:text-white">EduNest</span>
+              </Link>
+              <p className="text-slate-500 dark:text-slate-400 text-sm max-w-sm mb-8 leading-relaxed">The modern operating system for educational institutions. Built with precision to automate, scale, and inspire.</p>
+              
+              <div className="space-y-4">
+                <h4 className="text-sm font-semibold text-slate-900 dark:text-white uppercase tracking-wider">Subscribe to our newsletter</h4>
+                <div className="flex items-center gap-2 max-w-sm">
+                  <input type="email" placeholder="Enter your email" className="h-11 w-full bg-slate-100 dark:bg-[#111] border border-slate-200 dark:border-white/10 rounded-full px-4 text-sm text-slate-900 dark:text-white focus:outline-none focus:border-[var(--brand-primary)] transition-colors" />
+                  <Button className="rounded-full h-11 px-6 bg-slate-900 text-white hover:bg-slate-800 dark:bg-white dark:text-black dark:hover:bg-slate-200">Subscribe</Button>
+                </div>
+              </div>
+            </div>
+            
+            <div className="lg:col-span-1">
+              <h4 className="font-semibold text-slate-900 dark:text-white mb-6">Product</h4>
+              <ul className="space-y-4 text-sm text-slate-500 dark:text-slate-400">
+                <li><a href="#features" onClick={(e) => { e.preventDefault(); document.querySelector('#features')?.scrollIntoView({ behavior: 'smooth' }); }} className="hover:text-[var(--brand-primary)] transition-colors cursor-pointer">Features</a></li>
+                <li><a href="#pricing" onClick={(e) => { e.preventDefault(); document.querySelector('#pricing')?.scrollIntoView({ behavior: 'smooth' }); }} className="hover:text-[var(--brand-primary)] transition-colors cursor-pointer">Pricing</a></li>
+                <li><Link to="#" className="hover:text-[var(--brand-primary)] transition-colors">Integrations</Link></li>
+                <li><Link to="#" className="hover:text-[var(--brand-primary)] transition-colors">Changelog</Link></li>
+                <li><Link to="#" className="hover:text-[var(--brand-primary)] transition-colors">Security</Link></li>
+              </ul>
+            </div>
+            
+            <div className="lg:col-span-1">
+              <h4 className="font-semibold text-slate-900 dark:text-white mb-6">Company</h4>
+              <ul className="space-y-4 text-sm text-slate-500 dark:text-slate-400">
+                <li><Link to="/about-us" className="hover:text-[var(--brand-primary)] transition-colors">About Us</Link></li>
+                <li><Link to="/careers" className="hover:text-[var(--brand-primary)] transition-colors">Careers</Link></li>
+                <li><Link to="/blog" className="hover:text-[var(--brand-primary)] transition-colors">Blog</Link></li>
+                <li><Link to="/contact" className="hover:text-[var(--brand-primary)] transition-colors">Contact</Link></li>
+                <li><Link to="#" className="hover:text-[var(--brand-primary)] transition-colors">Partners</Link></li>
+              </ul>
+            </div>
+            
+            <div className="lg:col-span-1">
+              <h4 className="font-semibold text-slate-900 dark:text-white mb-6">Legal</h4>
+              <ul className="space-y-4 text-sm text-slate-500 dark:text-slate-400">
+                <li><Link to="/privacy-policy" className="hover:text-[var(--brand-primary)] transition-colors">Privacy Policy</Link></li>
+                <li><Link to="/terms-of-service" className="hover:text-[var(--brand-primary)] transition-colors">Terms of Service</Link></li>
+                <li><Link to="/cookie-policy" className="hover:text-[var(--brand-primary)] transition-colors">Cookie Policy</Link></li>
+                <li><Link to="#" className="hover:text-[var(--brand-primary)] transition-colors">DPA</Link></li>
+              </ul>
+            </div>
+
+            <div className="lg:col-span-1">
+              <h4 className="font-semibold text-slate-900 dark:text-white mb-6">Social</h4>
+              <div className="flex flex-col gap-4">
+                <a href="#" className="flex items-center gap-3 text-sm text-slate-500 dark:text-slate-400 hover:text-[var(--brand-primary)] transition-colors">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"></path></svg>
+                  Twitter
+                </a>
+                <a href="#" className="flex items-center gap-3 text-sm text-slate-500 dark:text-slate-400 hover:text-[#0077b5] transition-colors">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+                  LinkedIn
+                </a>
+                <a href="#" className="flex items-center gap-3 text-sm text-slate-500 dark:text-slate-400 hover:text-[#E1306C] transition-colors">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+                  Instagram
+                </a>
+              </div>
+            </div>
+          </div>
+          
+          <div className="pt-8 border-t border-slate-200 dark:border-white/10 flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-slate-500">
+            <p>© 2026 EduNest Inc. All rights reserved.</p>
+            <div className="flex items-center gap-2">
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+              </span>
+              All systems operational
+            </div>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 }

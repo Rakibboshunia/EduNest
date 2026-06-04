@@ -6,6 +6,7 @@ import { ProtectedRoute } from './routes/ProtectedRoute';
 import { Toaster } from 'react-hot-toast';
 
 // Pages
+import { PublicLayout } from './layouts/PublicLayout';
 import LandingPage from './pages/LandingPage';
 import Dashboard from './pages/Dashboard';
 import Login from './pages/auth/Login';
@@ -39,18 +40,22 @@ function App() {
           <DataProvider>
           <Routes>
           {/* Public Routes */}
-          <Route path="/" element={<LandingPage />} />
+          <Route element={<PublicLayout />}>
+            <Route path="/" element={<LandingPage />} />
+            <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+            <Route path="/terms-of-service" element={<TermsOfService />} />
+            <Route path="/cookie-policy" element={<CookiePolicy />} />
+            <Route path="/about-us" element={<AboutUs />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/careers" element={<Careers />} />
+            <Route path="/blog" element={<Blog />} />
+          </Route>
+          
+          {/* Auth Routes */}
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/reset-password" element={<ResetPassword />} />
-          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-          <Route path="/terms-of-service" element={<TermsOfService />} />
-          <Route path="/cookie-policy" element={<CookiePolicy />} />
-          <Route path="/about-us" element={<AboutUs />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="/careers" element={<Careers />} />
-          <Route path="/blog" element={<Blog />} />
           
           {/* Protected Dashboard Routes */}
           <Route 

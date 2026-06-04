@@ -1,115 +1,77 @@
 const fs = require('fs');
+const path = require('path');
 
-const content = fs.readFileSync('src/pages/LandingPage.jsx', 'utf8');
-const lines = content.split('\n');
+const pages = [
+  'LandingPage.jsx',
+  'AboutUs.jsx',
+  'Contact.jsx',
+  'Careers.jsx',
+  'Blog.jsx',
+  'PrivacyPolicy.jsx',
+  'TermsOfService.jsx',
+  'CookiePolicy.jsx'
+];
 
-const hStart = lines.findIndex(l => l.includes('{/* Navigation */}'));
-const hEnd = lines.findIndex(l => l.includes('</header>'));
-const headerCode = lines.slice(hStart, hEnd + 1).join('\n');
-
-fs.writeFileSync('src/components/layout/Header.jsx', `import { Link, useLocation } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { GraduationCap, ChevronDown, Menu } from "lucide-react";
-import { Sheet, SheetContent, SheetTrigger, SheetTitle, SheetClose } from "@/components/ui/sheet";
-
-export function Header() {
-  const location = useLocation();
-  const isHome = location.pathname === "/";
+pages.forEach(page => {
+  const filePath = path.join('src', 'pages', page);
+  if (!fs.existsSync(filePath)) return;
   
-  // Update section links to handle cross-page navigation properly
-  const handleScroll = (e, id) => {
-    if (!isHome) return; // Let default anchor behavior handle navigation to home page with hash
-    e.preventDefault();
-    const element = document.querySelector(id);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
-
-  return (
-    <>
-${headerCode.replace(/href="#/g, 'href="/#')}
-    </>
-  );
-}`);
-
-const cStart = lines.findIndex(l => l.includes('{/* CTA Section */}'));
-const cEnd = lines.findIndex((l, i) => i > cStart && l.includes('</section>'));
-const ctaCode = lines.slice(cStart, cEnd + 1).join('\n');
-
-fs.writeFileSync('src/components/layout/Cta.jsx', `import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { ArrowRight } from "lucide-react";
-import { motion } from "framer-motion";
-
-// Re-defining fadeIn since it's used in CTA
-const fadeIn = {
-  initial: { opacity: 0, y: 20 },
-  animate: { opacity: 1, y: 0 },
-  transition: { duration: 0.5 }
-};
-
-export function Cta() {
-  return (
-    <>
-${ctaCode}
-    </>
-  );
-}`);
-
-const fStart = lines.findIndex(l => l.includes('<footer'));
-const fEnd = lines.findIndex(l => l.includes('</footer>'));
-const footerCode = lines.slice(fStart, fEnd + 1).join('\n');
-
-fs.writeFileSync('src/components/layout/Footer.jsx', `import { Link } from "react-router-dom";
-import { GraduationCap, Mail } from "lucide-react";
-
-export function Footer() {
-  return (
-    <>
-${footerCode}
-    </>
-  );
-}`);
-
-fs.writeFileSync('src/layouts/PublicLayout.jsx', `import { Outlet, useLocation } from "react-router-dom";
-import { Header } from "@/components/layout/Header";
-import { Footer } from "@/components/layout/Footer";
-import { Cta } from "@/components/layout/Cta";
-import { useEffect } from "react";
-
-export function PublicLayout() {
-  const { pathname, hash } = useLocation();
+  let content = fs.readFileSync(filePath, 'utf8');
   
-  useEffect(() => {
-    if (hash) {
-      setTimeout(() => {
-        const element = document.querySelector(hash);
-        if (element) element.scrollIntoView({ behavior: "smooth" });
-      }, 100);
-    } else {
-      window.scrollTo(0, 0);
-    }
-  }, [pathname, hash]);
+  // Remove header
+  content = content.replace(/<header[\s\S]*?<\/header>/, '');
   
-  return (
-    <div className="flex flex-col min-h-screen bg-slate-50 dark:bg-[#030712] text-slate-900 dark:text-slate-50 selection:bg-[var(--brand-primary)]/50 overflow-x-hidden">
-      <Header />
-      <main className="flex-1">
-        <Outlet />
-      </main>
-      {pathname !== "/login" && pathname !== "/register" && <Cta />}
-      <Footer />
-    </div>
-  );
-}`);
+  // Remove footer
+  content = content.replace(/<footer[\s\S]*?<\/footer>/, '');
+  
+  // If LandingPage, remove Cta
+  if (page === 'LandingPage.jsx') {
+     content = content.replace(/<section className="py-24 md:py-32 relative flex items-center justify-center[\s\S]*?<\/section>/, '');
+  }
 
-// Remove Header, Footer, CTA from LandingPage
-lines.splice(fStart, fEnd - fStart + 1);
-lines.splice(cStart, cEnd - cStart + 1);
-lines.splice(hStart, hEnd - hStart + 1);
+  // Remove wrapper divs that were just for the min-h-screen
+  if (page !== 'LandingPage.jsx') {
+     content = content.replace(/<div className="min-h-screen[^>]*>/, '<div className="w-full">');
+  }
 
-// We must also remove the outer wrapper div from LandingPage since PublicLayout has it.
-// The wrapper is <div className="flex flex-col min-h-screen..."> on line 63 and </div> at the end.
-// Let's just write the modified content back.
-fs.writeFileSync('src/pages/LandingPage.jsx', lines.join('\n'));
+  fs.writeFileSync(filePath, content);
+  console.log(`Updated ${page}`);
+});
+
+// Update App.jsx
+let appContent = fs.readFileSync('src/App.jsx', 'utf8');
+const importStr = "import { PublicLayout } from './layouts/PublicLayout';\n";
+if (!appContent.includes('PublicLayout')) {
+  appContent = appContent.replace("import LandingPage from", importStr + "import LandingPage from");
+}
+
+const regex = /\{\/\* Public Routes \*\/\}\s*<Route path="\/" element=\{<LandingPage \/>\} \/>\s*<Route path="\/login" element=\{<Login \/>\} \/>\s*<Route path="\/register" element=\{<Register \/>\} \/>\s*<Route path="\/forgot-password" element=\{<ForgotPassword \/>\} \/>\s*<Route path="\/reset-password" element=\{<ResetPassword \/>\} \/>\s*<Route path="\/privacy-policy" element=\{<PrivacyPolicy \/>\} \/>\s*<Route path="\/terms-of-service" element=\{<TermsOfService \/>\} \/>\s*<Route path="\/cookie-policy" element=\{<CookiePolicy \/>\} \/>\s*<Route path="\/about-us" element=\{<AboutUs \/>\} \/>\s*<Route path="\/contact" element=\{<Contact \/>\} \/>\s*<Route path="\/careers" element=\{<Careers \/>\} \/>\s*<Route path="\/blog" element=\{<Blog \/>\} \/>/;
+
+appContent = appContent.replace(regex, 
+`{/* Public Routes */}
+          <Route element={<PublicLayout />}>
+            <Route path="/" element={<LandingPage />} />
+            <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+            <Route path="/terms-of-service" element={<TermsOfService />} />
+            <Route path="/cookie-policy" element={<CookiePolicy />} />
+            <Route path="/about-us" element={<AboutUs />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/careers" element={<Careers />} />
+            <Route path="/blog" element={<Blog />} />
+          </Route>
+          
+          {/* Auth Routes */}
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/reset-password" element={<ResetPassword />} />`);
+
+fs.writeFileSync('src/App.jsx', appContent);
+console.log('Updated App.jsx');
+
+// Fix Footer.jsx
+let footerContent = fs.readFileSync('src/components/layout/Footer.jsx', 'utf8');
+if (!footerContent.includes('Globe')) {
+    footerContent = footerContent.replace('import { GraduationCap, Mail } from "lucide-react";', 'import { GraduationCap, Mail, Globe } from "lucide-react";');
+    fs.writeFileSync('src/components/layout/Footer.jsx', footerContent);
+}

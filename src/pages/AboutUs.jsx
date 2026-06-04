@@ -1,28 +1,11 @@
-import React from 'react';
 import { Link } from 'react-router-dom';
-import { ChevronLeft, GraduationCap, Users, Target, Heart } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { Users, Target, Heart } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 export default function AboutUs() {
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-[#030712] text-slate-900 dark:text-slate-50 selection:bg-[var(--brand-primary)]/50">
-      {/* Header */}
-      <header className="px-6 lg:px-8 h-16 md:h-20 flex items-center border-b border-slate-200 dark:border-white/10 bg-white/70 dark:bg-[#030712]/60 backdrop-blur-xl sticky top-0 z-50">
-        <Link to="/" className="flex items-center justify-center gap-2 group">
-          <div className="h-8 w-8 rounded-lg bg-gradient-to-br from-[var(--brand-primary)] to-[var(--brand-secondary)] flex items-center justify-center shadow-lg">
-            <GraduationCap className="h-5 w-5 text-white" />
-          </div>
-          <span className="font-bold text-xl tracking-tight text-slate-900 dark:text-white">EduNest</span>
-        </Link>
-        <div className="ml-auto">
-          <Button variant="ghost" asChild className="hover:bg-slate-200 dark:hover:bg-white/10">
-            <Link to="/"><ChevronLeft className="mr-2 h-4 w-4" /> Back to Home</Link>
-          </Button>
-        </div>
-      </header>
-
-      {/* Hero Section */}
+    <div className="w-full">
+{/* Hero Section */}
       <section className="py-24 relative overflow-hidden bg-white dark:bg-black border-b border-slate-200 dark:border-white/5">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-[var(--brand-primary)]/10 blur-[100px] rounded-full pointer-events-none"></div>
         <div className="container px-4 mx-auto text-center relative z-10 max-w-4xl">
@@ -56,11 +39,6 @@ export default function AboutUs() {
           </div>
         </div>
       </section>
-
-      {/* Simple Footer */}
-      <footer className="border-t border-slate-200 dark:border-white/10 py-8 text-center text-slate-500 dark:text-slate-400 text-sm">
-        <p>© 2026 EduNest Inc. All rights reserved.</p>
-      </footer>
-    </div>
+</div>
   );
 }
