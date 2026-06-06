@@ -9,7 +9,8 @@ import { Input } from "@/components/ui/input";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useAuth } from "@/context/AuthContext";
 import { useTheme } from "@/context/ThemeContext";
-import { useState } from "react";
+import { useLanguage } from "@/context/LanguageContext";
+import { useState, useEffect } from "react";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -31,26 +32,35 @@ const securitySchema = z.object({
   path: ["confirmPassword"],
 });
 
-const tabs = [
-  { id: "profile", label: "Profile", icon: User },
-  { id: "notifications", label: "Notifications", icon: Bell },
-  { id: "security", label: "Security", icon: Shield },
-  { id: "appearance", label: "Appearance", icon: Palette },
-  { id: "language", label: "Language & Region", icon: Globe },
+const getTabs = (t) => [
+  { id: "profile", label: t("profileSettings"), icon: User },
+  { id: "notifications", label: t("notificationSettings"), icon: Bell },
+  { id: "security", label: t("securitySettings"), icon: Shield },
+  { id: "appearance", label: t("appearanceSettings"), icon: Palette },
+  { id: "language", label: t("languageSettings"), icon: Globe },
 ];
 
-const notifSettings = [
-  { label: "New Student Enrollment", desc: "Get notified when a new student registers.", enabled: true },
-  { label: "Fee Overdue Alerts", desc: "Alerts for students with overdue payments.", enabled: true },
-  { label: "Exam Results Published", desc: "Notify when exam results are available.", enabled: false },
-  { label: "Weekly Summary Report", desc: "Receive a weekly performance digest.", enabled: true },
+const getNotifSettings = (t) => [
+  { id: "newStudent", label: t("notifNewStudent"), desc: t("notifNewStudentDesc"), enabled: true },
+  { id: "feeOverdue", label: t("notifFeeOverdue"), desc: t("notifFeeOverdueDesc"), enabled: true },
+  { id: "examResults", label: t("notifExamResults"), desc: t("notifExamResultsDesc"), enabled: false },
+  { id: "weeklySummary", label: t("notifWeeklySummary"), desc: t("notifWeeklySummaryDesc"), enabled: true },
 ];
 
 export default function Settings() {
   const { user, updateUser, logout } = useAuth();
   const { isDark, toggleTheme, colorTheme, setColorTheme } = useTheme();
+  const { language, setLanguage, t } = useLanguage();
   const [activeTab, setActiveTab] = useState("profile");
-  const [notifs, setNotifs] = useState(notifSettings);
+  const [notifs, setNotifs] = useState(getNotifSettings(t));
+  const tabs = getTabs(t);
+
+  useEffect(() => {
+    setNotifs(prev => prev.map(p => {
+      const updated = getNotifSettings(t).find(x => x.id === p.id);
+      return { ...p, label: updated.label, desc: updated.desc };
+    }));
+  }, [t]);
 
   const profileForm = useForm({
     resolver: zodResolver(profileSchema),
@@ -64,12 +74,12 @@ export default function Settings() {
 
   const onProfileSubmit = (values) => {
     updateUser(values);
-    toast.success("Profile updated successfully!");
+    toast.success(t("profileUpdated"));
   };
 
   const onSecuritySubmit = () => {
     securityForm.reset();
-    toast.success("Password updated successfully!");
+    toast.success(t("passwordUpdated"));
   };
 
   return (
@@ -98,7 +108,7 @@ export default function Settings() {
             <h1 className="text-xl md:text-2xl font-bold text-white tracking-tight">{user?.name || "Admin User"}</h1>
             <p className="text-white/60 text-sm mt-0.5">{user?.email}</p>
             <span className="inline-flex items-center gap-1 mt-2 text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-white/15 text-white/80">
-              <CheckCircle2 className="h-3 w-3 text-emerald-400" /> {user?.role || "Administrator"}
+              <CheckCircle2 className="h-3 w-3 text-emerald-400" /> {t("role")}: {user?.role || "Administrator"}
             </span>
           </div>
         </div>
@@ -129,7 +139,7 @@ export default function Settings() {
                   onClick={logout}
                   className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-red-500 hover:bg-red-50 dark:hover:bg-red-500/10 transition-all"
                 >
-                  <LogOut className="h-4 w-4" /> Sign Out
+                  <LogOut className="h-4 w-4" /> {t("logout")}
                 </button>
               </div>
             </div>
@@ -141,8 +151,8 @@ export default function Settings() {
           {activeTab === "profile" && (
             <Card className="border-none shadow-lg dark:bg-[#1e293b] dark:border dark:border-white/5">
               <CardHeader className="border-b border-slate-100 dark:border-white/5 pb-5">
-                <CardTitle className="text-lg text-slate-800 dark:text-white">Profile Information</CardTitle>
-                <CardDescription>Update your account's profile information and email address.</CardDescription>
+                <CardTitle className="text-lg text-slate-800 dark:text-white">{t("profileSettings")}</CardTitle>
+                <CardDescription>{t("profileSettings")}</CardDescription>
               </CardHeader>
               <CardContent className="pt-6 space-y-6">
                 <Form {...profileForm}>
@@ -150,20 +160,20 @@ export default function Settings() {
                     <div className="grid gap-4 md:grid-cols-2">
                       <FormField control={profileForm.control} name="name" render={({ field }) => (
                         <FormItem>
-                          <FormLabel className="text-sm font-semibold text-slate-700 dark:text-slate-300">Full Name</FormLabel>
+                          <FormLabel className="text-sm font-semibold text-slate-700 dark:text-slate-300">{t("fullName")}</FormLabel>
                           <FormControl><Input placeholder="John Doe" {...field} className="dark:bg-[#0f172a] border-slate-200 dark:border-white/10 rounded-xl h-10" /></FormControl>
                           <FormMessage className="text-red-400 text-xs" />
                         </FormItem>
                       )} />
                       <FormField control={profileForm.control} name="email" render={({ field }) => (
                         <FormItem>
-                          <FormLabel className="text-sm font-semibold text-slate-700 dark:text-slate-300">Email Address</FormLabel>
+                          <FormLabel className="text-sm font-semibold text-slate-700 dark:text-slate-300">{t("email")}</FormLabel>
                           <FormControl><Input placeholder="john@edunest.com" {...field} className="dark:bg-[#0f172a] border-slate-200 dark:border-white/10 rounded-xl h-10" /></FormControl>
                           <FormMessage className="text-red-400 text-xs" />
                         </FormItem>
                       )} />
                       <div className="space-y-2">
-                        <label className="text-sm font-semibold text-slate-700 dark:text-slate-300">Role</label>
+                        <label className="text-sm font-semibold text-slate-700 dark:text-slate-300">{t("role")}</label>
                         <div className="flex items-center gap-2 h-10 px-3 rounded-xl border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-black/20">
                           <CheckCircle2 className="h-4 w-4 text-[var(--brand-secondary)]" />
                           <span className="text-sm text-slate-500 capitalize">{user?.role || "Administrator"}</span>
@@ -171,14 +181,14 @@ export default function Settings() {
                       </div>
                       <FormField control={profileForm.control} name="phone" render={({ field }) => (
                         <FormItem>
-                          <FormLabel className="text-sm font-semibold text-slate-700 dark:text-slate-300">Phone Number</FormLabel>
+                          <FormLabel className="text-sm font-semibold text-slate-700 dark:text-slate-300">{t("phone")}</FormLabel>
                           <FormControl><Input placeholder="+1 (555) 000-0000" {...field} className="dark:bg-[#0f172a] border-slate-200 dark:border-white/10 rounded-xl h-10" /></FormControl>
                           <FormMessage className="text-red-400 text-xs" />
                         </FormItem>
                       )} />
                     </div>
                     <Button type="submit" className="bg-gradient-to-r from-[var(--brand-primary)] to-[var(--brand-secondary)] text-white rounded-xl shadow-md font-semibold">
-                      <Save className="mr-2 h-4 w-4" /> Save Changes
+                      <Save className="mr-2 h-4 w-4" /> {t("save")}
                     </Button>
                   </form>
                 </Form>
@@ -189,8 +199,8 @@ export default function Settings() {
           {activeTab === "notifications" && (
             <Card className="border-none shadow-lg dark:bg-[#1e293b] dark:border dark:border-white/5">
               <CardHeader className="border-b border-slate-100 dark:border-white/5 pb-5">
-                <CardTitle className="text-lg text-slate-800 dark:text-white">Notification Preferences</CardTitle>
-                <CardDescription>Choose which alerts and updates you want to receive.</CardDescription>
+                <CardTitle className="text-lg text-slate-800 dark:text-white">{t("notificationSettings")}</CardTitle>
+                <CardDescription>{t("notificationSettings")}</CardDescription>
               </CardHeader>
               <CardContent className="pt-6 divide-y divide-slate-100 dark:divide-white/5">
                 {notifs.map((n, i) => (
@@ -220,17 +230,17 @@ export default function Settings() {
             <Card className="border-none shadow-lg dark:bg-[#1e293b] dark:border dark:border-white/5">
               <CardHeader className="border-b border-slate-100 dark:border-white/5 pb-5">
                 <CardTitle className="text-lg text-slate-800 dark:text-white flex items-center gap-2">
-                  <Key className="h-5 w-5 text-[var(--brand-primary)]" /> Security Settings
+                  <Key className="h-5 w-5 text-[var(--brand-primary)]" /> {t("securitySettings")}
                 </CardTitle>
-                <CardDescription>Update your password to keep your account secure.</CardDescription>
+                <CardDescription>{t("securityDesc")}</CardDescription>
               </CardHeader>
               <CardContent className="pt-6">
                 <Form {...securityForm}>
                   <form onSubmit={securityForm.handleSubmit(onSecuritySubmit)} className="space-y-4 max-w-md">
                     {[
-                      { name: "currentPassword", label: "Current Password" },
-                      { name: "newPassword", label: "New Password" },
-                      { name: "confirmPassword", label: "Confirm New Password" },
+                      { name: "currentPassword", label: t("currentPassword") },
+                      { name: "newPassword", label: t("newPassword") },
+                      { name: "confirmPassword", label: t("confirmPassword") },
                     ].map(f => (
                       <FormField key={f.name} control={securityForm.control} name={f.name} render={({ field }) => (
                         <FormItem>
@@ -241,7 +251,7 @@ export default function Settings() {
                       )} />
                     ))}
                     <Button type="submit" className="bg-gradient-to-r from-[var(--brand-primary)] to-[#1a5296] text-white rounded-xl shadow-md font-semibold mt-2">
-                      <Shield className="mr-2 h-4 w-4" /> Update Password
+                      <Shield className="mr-2 h-4 w-4" /> {t("updatePassword")}
                     </Button>
                   </form>
                 </Form>
@@ -252,17 +262,17 @@ export default function Settings() {
           {activeTab === "appearance" && (
             <Card className="border-none shadow-lg dark:bg-[#1e293b] dark:border dark:border-white/5">
               <CardHeader className="border-b border-slate-100 dark:border-white/5 pb-5">
-                <CardTitle className="text-lg text-slate-800 dark:text-white">Appearance</CardTitle>
-                <CardDescription>Customize how EduNest looks on your device.</CardDescription>
+                <CardTitle className="text-lg text-slate-800 dark:text-white">{t("appearanceSettings")}</CardTitle>
+                <CardDescription>{t("appearanceSettings")}</CardDescription>
               </CardHeader>
               <CardContent className="pt-6 space-y-6">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="font-semibold text-sm text-slate-800 dark:text-slate-200">Dark Mode</p>
-                    <p className="text-xs text-slate-400 mt-0.5">Switch between light and dark theme.</p>
+                    <p className="font-semibold text-sm text-slate-800 dark:text-slate-200">{t("darkMode")}</p>
+                    <p className="text-xs text-slate-400 mt-0.5">{t("darkMode")}</p>
                   </div>
                   <button
-                    onClick={() => { toggleTheme(); toast.success(`Switched to ${!isDark ? "dark" : "light"} mode`); }}
+                    onClick={() => { toggleTheme(); toast.success(`${!isDark ? (language === 'bn' ? 'ডার্ক' : 'dark') : (language === 'bn' ? 'লাইট' : 'light')} ${language === 'bn' ? 'মোডে পরিবর্তিত হয়েছে' : 'mode activated'}`); }}
                     className={`relative inline-flex h-6 w-11 rounded-full border-2 border-transparent transition-colors ${isDark ? "bg-[var(--brand-primary)]" : "bg-slate-200 dark:bg-white/10"}`}
                   >
                     <span className={`pointer-events-none inline-block h-5 w-5 rounded-full bg-white shadow-md transform transition-transform ${isDark ? "translate-x-5" : "translate-x-0"}`} />
@@ -297,30 +307,64 @@ export default function Settings() {
             <Card className="border-none shadow-lg dark:bg-[#1e293b] dark:border dark:border-white/5">
               <CardHeader className="border-b border-slate-100 dark:border-white/5 pb-5">
                 <CardTitle className="text-lg text-slate-800 dark:text-white flex items-center gap-2">
-                  <Languages className="h-5 w-5 text-[var(--brand-primary)]" /> Language & Region
+                  <Languages className="h-5 w-5 text-[var(--brand-primary)]" /> {t("languageSettings")}
                 </CardTitle>
-                <CardDescription>Set your preferred language and regional settings.</CardDescription>
+                <CardDescription>{t("languageSettings")}</CardDescription>
               </CardHeader>
               <CardContent className="pt-6 space-y-4">
                 {[
-                  { label: "Display Language", options: ["English (US)", "Bengali", "Arabic", "Spanish", "French"] },
-                  { label: "Timezone", options: ["UTC+6:00 Dhaka", "UTC+0:00 London", "UTC-5:00 New York", "UTC+5:30 Mumbai"] },
-                  { label: "Date Format", options: ["DD/MM/YYYY", "MM/DD/YYYY", "YYYY-MM-DD"] },
-                ].map((setting, i) => (
-                  <div key={i} className="flex items-center justify-between gap-4">
+                  {
+                    label: t("displayLanguage"),
+                    key: "lang",
+                    options: [
+                      { value: "en", label: "English (US)" },
+                      { value: "bn", label: "বাংলা (Bengali)" },
+                    ],
+                    value: language,
+                    onChange: (val) => {
+                      setLanguage(val);
+                      toast.success(val === "bn" ? "ভাষা বাংলায় পরিবর্তিত হয়েছে! 🇧🇩" : "Language switched to English! 🇺🇸");
+                    },
+                  },
+                  {
+                    label: t("timezone"),
+                    key: "tz",
+                    options: [
+                      { value: "utc6", label: "UTC+6:00 Dhaka" },
+                      { value: "utc0", label: "UTC+0:00 London" },
+                      { value: "utc-5", label: "UTC-5:00 New York" },
+                      { value: "utc530", label: "UTC+5:30 Mumbai" },
+                    ],
+                    value: "",
+                    onChange: () => toast.success(t("timezone") + " updated!"),
+                  },
+                  {
+                    label: t("dateFormat"),
+                    key: "df",
+                    options: [
+                      { value: "dmy", label: "DD/MM/YYYY" },
+                      { value: "mdy", label: "MM/DD/YYYY" },
+                      { value: "ymd", label: "YYYY-MM-DD" },
+                    ],
+                    value: "",
+                    onChange: () => toast.success(t("dateFormat") + " updated!"),
+                  },
+                ].map((setting) => (
+                  <div key={setting.key} className="flex items-center justify-between gap-4">
                     <div>
                       <p className="font-semibold text-sm text-slate-800 dark:text-slate-200">{setting.label}</p>
                     </div>
                     <select
-                      onChange={() => toast.success(`${setting.label} updated!`)}
+                      value={setting.value}
+                      onChange={(e) => setting.onChange(e.target.value)}
                       className="h-9 px-3 rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-[#0f172a] text-sm text-slate-700 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-[var(--brand-primary)]/30"
                     >
-                      {setting.options.map(o => <option key={o}>{o}</option>)}
+                      {setting.options.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
                     </select>
                   </div>
                 ))}
-                <Button onClick={() => toast.success("Regional settings saved!")} className="mt-4 bg-gradient-to-r from-[var(--brand-primary)] to-[var(--brand-secondary)] text-white rounded-xl shadow-md font-semibold">
-                  <Save className="mr-2 h-4 w-4" /> Save Preferences
+                <Button onClick={() => toast.success(language === 'bn' ? 'আঞ্চলিক সেটিংস সংরক্ষিত হয়েছে!' : 'Regional settings saved!')} className="mt-4 bg-gradient-to-r from-[var(--brand-primary)] to-[var(--brand-secondary)] text-white rounded-xl shadow-md font-semibold">
+                  <Save className="mr-2 h-4 w-4" /> {t("savePreferences")}
                 </Button>
               </CardContent>
             </Card>

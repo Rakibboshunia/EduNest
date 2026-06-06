@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Card, CardContent } from "@/components/ui/card";
 import { useData } from "@/context/DataContext";
+import { useLanguage } from "@/context/LanguageContext";
 import toast from "react-hot-toast";
 import {
   Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger,
@@ -28,6 +29,7 @@ const cardVariant = { hidden: { opacity: 0, y: 16, scale: 0.98 }, show: { opacit
 
 export default function Teachers() {
   const { teachers, addTeacher, removeTeacher } = useData();
+  const { t } = useLanguage();
   const [open, setOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
 
@@ -63,21 +65,21 @@ export default function Teachers() {
           <div>
             <div className="flex items-center gap-2 mb-1">
               <Users className="h-5 w-5 text-white/70" />
-              <span className="text-white/70 text-sm font-medium">Staff Management</span>
+              <span className="text-white/70 text-sm font-medium">{t("teacherManagement")}</span>
             </div>
-            <h1 className="text-2xl md:text-3xl font-bold text-white tracking-tight">Teachers Directory</h1>
-            <p className="text-white/60 mt-1 text-sm">Manage teaching staff, assignments and schedules.</p>
+            <h1 className="text-2xl md:text-3xl font-bold text-white tracking-tight">{t("teacherList")}</h1>
+            <p className="text-white/60 mt-1 text-sm">{t("teacherManagement")}</p>
           </div>
           <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
               <Button size="sm" className="bg-white text-[var(--brand-secondary)] hover:bg-white/90 font-semibold rounded-xl shadow-lg shrink-0">
-                <Plus className="mr-2 h-3.5 w-3.5" /> Add Teacher
+                <Plus className="mr-2 h-3.5 w-3.5" /> {t("addTeacherBtn")}
               </Button>
             </DialogTrigger>
             <DialogContent className="sm:max-w-[440px] dark:bg-[#1e293b] border-none shadow-2xl rounded-2xl p-0 overflow-hidden">
               <div className="bg-gradient-to-r from-[var(--brand-secondary)] to-[#2d7a34] p-6">
-                <DialogTitle className="text-white text-xl font-bold">Add New Teacher</DialogTitle>
-                <DialogDescription className="text-white/60 text-sm mt-1">Enter the staff member's details.</DialogDescription>
+                <DialogTitle className="text-white text-xl font-bold">{t("addTeacherBtn")}</DialogTitle>
+                <DialogDescription className="text-white/60 text-sm mt-1">{t("teacherManagement")}</DialogDescription>
               </div>
               <div className="p-6">
                 <Form {...form}>
@@ -97,8 +99,8 @@ export default function Teachers() {
                       )} />
                     ))}
                     <div className="flex justify-end gap-2 pt-2">
-                      <Button type="button" variant="outline" onClick={() => setOpen(false)} className="rounded-xl">Cancel</Button>
-                      <Button type="submit" className="bg-gradient-to-r from-[var(--brand-secondary)] to-[var(--brand-primary)] text-white rounded-xl font-semibold shadow-md">Save Teacher</Button>
+                      <Button type="button" variant="outline" onClick={() => setOpen(false)} className="rounded-xl">{t("cancel")}</Button>
+                      <Button type="submit" className="bg-gradient-to-r from-[var(--brand-secondary)] to-[var(--brand-primary)] text-white rounded-xl font-semibold shadow-md">{t("save")}</Button>
                     </div>
                   </form>
                 </Form>
@@ -109,9 +111,9 @@ export default function Teachers() {
         {/* Quick stats */}
         <div className="relative mt-6 flex flex-wrap gap-3">
           {[
-            { label: "Total Staff", value: teachers.length },
-            { label: "Departments", value: [...new Set(teachers.map(t => t.subject?.split(' ')[0]))].length },
-            { label: "Active Classes", value: teachers.reduce((a, t) => a + (t.classes || 0), 0) },
+            { label: t("totalTeachers"), value: teachers.length },
+            { label: t("department"), value: [...new Set(teachers.map(t2 => t2.subject?.split(' ')[0]))].length },
+            { label: t("attendance"), value: teachers.reduce((a, t2) => a + (t2.classes || 0), 0) },
           ].map((s, i) => (
             <div key={i} className="bg-white/10 backdrop-blur-sm rounded-xl px-4 py-2.5 border border-white/10">
               <p className="text-white/60 text-[10px] leading-none mb-0.5">{s.label}</p>
@@ -195,7 +197,7 @@ export default function Teachers() {
                   </div>
                   <Link to={`/teachers/${teacher.id}`}>
                     <Button variant="outline" size="sm" className="border-[var(--brand-primary)]/20 text-[var(--brand-primary)] dark:text-[#60a5fa] hover:bg-[var(--brand-primary)]/5 rounded-full px-4 text-xs font-semibold h-8">
-                      View Profile
+                      {t("teacherProfile")}
                     </Button>
                   </Link>
                 </div>

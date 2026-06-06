@@ -25,11 +25,27 @@ const initialNotices = [
   { id: 2, title: "Mid-Term Examination Schedule", date: "Oct 10, 2026", target: "High School", type: "Academic", priority: "High" },
 ];
 
+const initialExams = [
+  { id: "EXM-01", title: "Mid-Term Mathematics", grade: "Grade 10", date: "Oct 28, 2026", time: "09:00 AM - 11:30 AM", type: "Written" },
+  { id: "EXM-02", title: "Physics Practical", grade: "Grade 11", date: "Nov 02, 2026", time: "10:00 AM - 12:00 PM", type: "Lab" },
+  { id: "EXM-03", title: "Literature Final", grade: "Grade 12", date: "Nov 05, 2026", time: "01:00 PM - 04:00 PM", type: "Written" },
+];
+
+const initialAttendance = [
+  { id: "STU-001", name: "Olivia Martin", grade: "Grade 10", status: "Present", timeIn: "07:45 AM" },
+  { id: "STU-002", name: "Jackson Lee", grade: "Grade 9", status: "Late", timeIn: "08:15 AM" },
+  { id: "STU-003", name: "Isabella Nguyen", grade: "Grade 11", status: "Present", timeIn: "07:50 AM" },
+  { id: "STU-004", name: "William Kim", grade: "Grade 11", status: "Absent", timeIn: "-" },
+  { id: "STU-005", name: "Sofia Davis", grade: "Grade 8", status: "Present", timeIn: "07:42 AM" },
+];
+
 export const DataProvider = ({ children }) => {
   const [students, setStudents] = useState(initialStudents);
   const [teachers, setTeachers] = useState(initialTeachers);
   const [fees, setFees] = useState(initialFees);
   const [notices, setNotices] = useState(initialNotices);
+  const [exams, setExams] = useState(initialExams);
+  const [attendance, setAttendance] = useState(initialAttendance);
 
   // Student Actions
   const addStudent = (student) => {
@@ -63,12 +79,27 @@ export const DataProvider = ({ children }) => {
     setNotices(notices.filter(n => n.id !== id));
   };
 
+  // Exam Actions
+  const addExam = (exam) => {
+    setExams([{ id: `EXM-0${exams.length + 1}`, ...exam }, ...exams]);
+  };
+  const removeExam = (id) => {
+    setExams(exams.filter(e => e.id !== id));
+  };
+
+  // Attendance Actions
+  const updateAttendance = (id, newStatus) => {
+    setAttendance(attendance.map(a => a.id === id ? { ...a, status: newStatus, timeIn: newStatus === 'Absent' ? '-' : new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) } : a));
+  };
+
   return (
     <DataContext.Provider value={{
       students,
       teachers,
       fees,
       notices,
+      exams,
+      attendance,
       addStudent,
       removeStudent,
       addTeacher,
@@ -76,6 +107,9 @@ export const DataProvider = ({ children }) => {
       addFee,
       addNotice,
       removeNotice,
+      addExam,
+      removeExam,
+      updateAttendance,
     }}>
       {children}
     </DataContext.Provider>

@@ -6,14 +6,9 @@ import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import toast from "react-hot-toast";
+import { useLanguage } from "@/context/LanguageContext";
 
-const attendanceData = [
-  { id: "STU-001", name: "Olivia Martin", grade: "Grade 10", status: "Present", timeIn: "07:45 AM" },
-  { id: "STU-002", name: "Jackson Lee", grade: "Grade 9", status: "Late", timeIn: "08:15 AM" },
-  { id: "STU-003", name: "Isabella Nguyen", grade: "Grade 11", status: "Present", timeIn: "07:50 AM" },
-  { id: "STU-004", name: "William Kim", grade: "Grade 11", status: "Absent", timeIn: "-" },
-  { id: "STU-005", name: "Sofia Davis", grade: "Grade 8", status: "Present", timeIn: "07:42 AM" },
-];
+import { useData } from "@/context/DataContext";
 
 const statusStyles = {
   Present: { pill: "bg-emerald-100 text-emerald-700 dark:bg-emerald-500/15 dark:text-emerald-400", icon: CheckCircle2, row: "" },
@@ -22,14 +17,16 @@ const statusStyles = {
 };
 
 export default function Attendance() {
+  const { t } = useLanguage();
+  const { attendance, updateAttendance } = useData();
   const [date, setDate] = useState(new Date().toISOString().split("T")[0]);
   const [search, setSearch] = useState("");
 
-  const presentCount = attendanceData.filter(s => s.status === "Present").length;
-  const lateCount = attendanceData.filter(s => s.status === "Late").length;
-  const absentCount = attendanceData.filter(s => s.status === "Absent").length;
+  const presentCount = attendance.filter(s => s.status === "Present").length;
+  const lateCount = attendance.filter(s => s.status === "Late").length;
+  const absentCount = attendance.filter(s => s.status === "Absent").length;
 
-  const filtered = attendanceData.filter(s =>
+  const filtered = attendance.filter(s =>
     s.name.toLowerCase().includes(search.toLowerCase()) || s.id.includes(search)
   );
 
@@ -47,10 +44,10 @@ export default function Attendance() {
           <div>
             <div className="flex items-center gap-2 mb-1">
               <CalendarCheck className="h-5 w-5 text-white/70" />
-              <span className="text-white/70 text-sm font-medium">Daily Tracking</span>
+              <span className="text-white/70 text-sm font-medium">{t("attendanceManagement")}</span>
             </div>
-            <h1 className="text-2xl md:text-3xl font-bold text-white tracking-tight">Attendance</h1>
-            <p className="text-white/60 mt-1 text-sm">Track daily student attendance and punctuality.</p>
+            <h1 className="text-2xl md:text-3xl font-bold text-white tracking-tight">{t("attendance")}</h1>
+            <p className="text-white/60 mt-1 text-sm">{t("attendanceManagement")}</p>
           </div>
           <div className="flex items-center gap-2.5 shrink-0">
             <Input
@@ -64,17 +61,17 @@ export default function Attendance() {
               onClick={() => toast.promise(new Promise(r => setTimeout(r, 1000)), { loading: "Exporting...", success: "Exported!", error: "Error" })}
               className="bg-white text-[var(--brand-primary)] hover:bg-white/90 font-semibold rounded-xl shadow-md"
             >
-              <Download className="mr-2 h-3.5 w-3.5" /> Export
+              <Download className="mr-2 h-3.5 w-3.5" /> {t("export")}
             </Button>
           </div>
         </div>
         {/* Stats bar */}
         <div className="relative mt-6 grid grid-cols-2 md:grid-cols-4 gap-3">
           {[
-            { label: "Total", value: attendanceData.length, color: "text-white" },
-            { label: "Present", value: presentCount, color: "text-emerald-300" },
-            { label: "Late", value: lateCount, color: "text-amber-300" },
-            { label: "Absent", value: absentCount, color: "text-red-300" },
+            { label: t("total"), value: attendance.length, color: "text-white" },
+            { label: t("present"), value: presentCount, color: "text-emerald-300" },
+            { label: t("late"), value: lateCount, color: "text-amber-300" },
+            { label: t("absent"), value: absentCount, color: "text-red-300" },
           ].map((s, i) => (
             <div key={i} className="bg-white/10 backdrop-blur-sm rounded-xl px-4 py-3 border border-white/10">
               <p className="text-white/60 text-xs mb-1">{s.label}</p>
@@ -104,14 +101,14 @@ export default function Attendance() {
               onClick={() => toast("Filter panel coming soon.")}
               className="rounded-xl border-slate-200 dark:border-white/10 text-slate-600 dark:text-slate-300 h-9"
             >
-              <Filter className="mr-2 h-3.5 w-3.5" /> Filter
+              <Filter className="mr-2 h-3.5 w-3.5" /> {t("filter")}
             </Button>
             <Button
               size="sm"
               onClick={() => toast.success("Attendance marked!")}
               className="bg-gradient-to-r from-[var(--brand-primary)] to-[var(--brand-secondary)] text-white rounded-xl shadow-md h-9 font-semibold"
             >
-              <CheckCircle2 className="mr-2 h-3.5 w-3.5" /> Mark Attendance
+              <CheckCircle2 className="mr-2 h-3.5 w-3.5" /> {t("markAttendanceBtn")}
             </Button>
           </div>
         </div>
@@ -121,12 +118,12 @@ export default function Attendance() {
           <table className="w-full text-sm">
             <thead>
               <tr className="text-[11px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 border-b border-slate-100 dark:border-white/5">
-                <th className="px-6 py-3.5 text-left">Student</th>
-                <th className="px-6 py-3.5 text-left">ID</th>
-                <th className="px-6 py-3.5 text-left">Grade</th>
-                <th className="px-6 py-3.5 text-left">Time In</th>
-                <th className="px-6 py-3.5 text-left">Status</th>
-                <th className="px-6 py-3.5 text-right">Update</th>
+                <th className="px-6 py-3.5 text-left">{t("name")}</th>
+                <th className="px-6 py-3.5 text-left">{t("studentId")}</th>
+                <th className="px-6 py-3.5 text-left">{t("grade")}</th>
+                <th className="px-6 py-3.5 text-left">{t("date")}</th>
+                <th className="px-6 py-3.5 text-left">{t("status")}</th>
+                <th className="px-6 py-3.5 text-right">{t("actions")}</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-50 dark:divide-white/5">
@@ -156,9 +153,9 @@ export default function Attendance() {
                     </td>
                     <td className="px-6 py-3.5 text-right">
                       <div className="flex justify-end gap-1">
-                        <Button onClick={() => toast.success(`${student.name} → Present`)} variant="ghost" size="icon" className="h-8 w-8 text-emerald-500 hover:bg-emerald-50 dark:hover:bg-emerald-500/10 rounded-full"><CheckCircle2 className="h-4 w-4" /></Button>
-                        <Button onClick={() => toast(`${student.name} → Late`, { icon: "⏱️" })} variant="ghost" size="icon" className="h-8 w-8 text-amber-500 hover:bg-amber-50 dark:hover:bg-amber-500/10 rounded-full"><Clock className="h-4 w-4" /></Button>
-                        <Button onClick={() => toast.error(`${student.name} → Absent`)} variant="ghost" size="icon" className="h-8 w-8 text-red-400 hover:bg-red-50 dark:hover:bg-red-500/10 rounded-full"><XCircle className="h-4 w-4" /></Button>
+                        <Button onClick={() => { updateAttendance(student.id, "Present"); toast.success(`${student.name} → Present`); }} variant="ghost" size="icon" className="h-8 w-8 text-emerald-500 hover:bg-emerald-50 dark:hover:bg-emerald-500/10 rounded-full"><CheckCircle2 className="h-4 w-4" /></Button>
+                        <Button onClick={() => { updateAttendance(student.id, "Late"); toast(`${student.name} → Late`, { icon: "⏱️" }); }} variant="ghost" size="icon" className="h-8 w-8 text-amber-500 hover:bg-amber-50 dark:hover:bg-amber-500/10 rounded-full"><Clock className="h-4 w-4" /></Button>
+                        <Button onClick={() => { updateAttendance(student.id, "Absent"); toast.error(`${student.name} → Absent`); }} variant="ghost" size="icon" className="h-8 w-8 text-red-400 hover:bg-red-50 dark:hover:bg-red-500/10 rounded-full"><XCircle className="h-4 w-4" /></Button>
                       </div>
                     </td>
                   </tr>

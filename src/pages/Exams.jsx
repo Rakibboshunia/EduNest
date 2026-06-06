@@ -19,14 +19,13 @@ import {
   DialogContent,
 } from "@/components/ui/dialog";
 import toast from "react-hot-toast";
+import { useLanguage } from "@/context/LanguageContext";
 
-const upcomingExams = [
-  { title: "Mid-Term Mathematics", grade: "Grade 10", date: "Oct 28, 2026", time: "09:00 AM - 11:30 AM", type: "Written" },
-  { title: "Physics Practical", grade: "Grade 11", date: "Nov 02, 2026", time: "10:00 AM - 12:00 PM", type: "Lab" },
-  { title: "Literature Final", grade: "Grade 12", date: "Nov 05, 2026", time: "01:00 PM - 04:00 PM", type: "Written" },
-];
+import { useData } from "@/context/DataContext";
 
 export default function Exams() {
+  const { t } = useLanguage();
+  const { exams } = useData();
   const [showPreview, setShowPreview] = useState(false);
 
   return (
@@ -38,12 +37,12 @@ export default function Exams() {
     >
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-white dark:bg-[#0f172a] p-6 rounded-2xl border shadow-sm">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight text-[var(--brand-primary)] dark:text-white">Exams & Results</h1>
-          <p className="text-muted-foreground mt-1">Schedule examinations and publish student results.</p>
+          <h1 className="text-3xl font-bold tracking-tight text-[var(--brand-primary)] dark:text-white">{t("examManagement")}</h1>
+          <p className="text-muted-foreground mt-1">{t("examSchedule")}</p>
         </div>
         <div className="flex gap-3">
           <Button onClick={() => toast.success("Exam scheduled successfully!")} className="bg-gradient-to-r from-[var(--brand-primary)] to-[var(--brand-secondary)] hover:opacity-90 text-white border-0 shadow-md shadow-[var(--brand-primary)]/20">
-            <Plus className="mr-2 h-4 w-4" /> Schedule Exam
+            <Plus className="mr-2 h-4 w-4" /> {t("addExam")}
           </Button>
         </div>
       </div>
@@ -51,7 +50,7 @@ export default function Exams() {
       <div className="grid gap-6 md:grid-cols-3">
         <div className="md:col-span-2 space-y-6">
           <div className="flex justify-between items-center">
-            <h2 className="text-xl font-bold text-[var(--brand-primary)] dark:text-white">Upcoming Examinations</h2>
+            <h2 className="text-xl font-bold text-[var(--brand-primary)] dark:text-white">{t("examSchedule")}</h2>
             <div className="relative w-64">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
               <Input placeholder="Search exams..." className="pl-9 dark:bg-[#1e293b] border-white/10" />
@@ -59,7 +58,7 @@ export default function Exams() {
           </div>
           
           <div className="grid gap-4">
-            {upcomingExams.map((exam, i) => (
+            {exams.map((exam, i) => (
               <Card key={i} className="border shadow-sm dark:bg-[#1e293b] group hover:shadow-md transition-shadow">
                 <CardContent className="p-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                   <div className="flex items-center gap-4">
@@ -90,7 +89,7 @@ export default function Exams() {
         </div>
 
         <div className="space-y-6">
-          <h2 className="text-xl font-bold text-[var(--brand-primary)] dark:text-white">Quick Actions</h2>
+          <h2 className="text-xl font-bold text-[var(--brand-primary)] dark:text-white">{t("quickActions")}</h2>
           <Card className="border shadow-sm dark:bg-[#1e293b]">
             <CardContent className="p-4 flex flex-col gap-2">
               <Button onClick={() => toast.promise(new Promise(r => setTimeout(r, 1000)), { loading: 'Publishing...', success: 'Results Published!', error: 'Error' })} variant="outline" className="justify-start border-white/10 dark:text-white dark:bg-[#0f172a]">Publish Results</Button>
@@ -106,7 +105,7 @@ export default function Exams() {
           <div className="p-4 bg-slate-50 dark:bg-black/20 border-b border-slate-100 dark:border-white/5 flex justify-between items-center shrink-0">
             <h2 className="text-lg font-bold text-[var(--brand-primary)] dark:text-white">Report Card Preview</h2>
             <div className="flex gap-2">
-              <Button variant="outline" size="sm" onClick={() => setShowPreview(false)}>Cancel</Button>
+              <Button variant="outline" size="sm" onClick={() => setShowPreview(false)}>{t("cancel")}</Button>
               <Button size="sm" onClick={() => { setShowPreview(false); toast.success("Batch print started!"); }} className="bg-[var(--brand-primary)] hover:bg-[var(--brand-primary-light)] text-white">
                 <Printer className="mr-2 h-4 w-4" /> Print All (124)
               </Button>

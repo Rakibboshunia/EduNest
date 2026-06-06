@@ -81,7 +81,7 @@ export function Header() {
           Log in
         </Link>
         <Button asChild className="hidden sm:flex rounded-full px-5 h-9 bg-slate-900 text-white hover:bg-slate-700 dark:bg-white dark:text-black dark:hover:bg-slate-200 shadow-md transition-all">
-          <Link to="/dashboard">Get Started</Link>
+          <Link to="/dashboard">Dashboard</Link>
         </Button>
 
         {/* Mobile Menu */}
@@ -152,7 +152,7 @@ export function Header() {
                   </SheetClose>
                   <SheetClose asChild>
                     <Link to="/dashboard" className="flex items-center justify-center h-11 w-full rounded-xl bg-slate-900 dark:bg-white text-white dark:text-black text-sm font-semibold hover:bg-slate-700 dark:hover:bg-slate-200 transition-colors">
-                      Get Started
+                      Dashboard
                     </Link>
                   </SheetClose>
                 </div>

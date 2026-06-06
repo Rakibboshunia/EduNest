@@ -10,8 +10,10 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Search } from "lucide-react";
+import { useLanguage } from "@/context/LanguageContext";
 
 export function DataTable({ columns, data, searchKey = "name", searchPlaceholder = "Search..." }) {
+  const { t } = useLanguage();
   const [sorting, setSorting] = useState([]);
   const [columnFilters, setColumnFilters] = useState([]);
 
@@ -81,7 +83,7 @@ export function DataTable({ columns, data, searchKey = "name", searchPlaceholder
             ) : (
               <tr>
                 <td colSpan={columns.length} className="h-24 text-center text-muted-foreground">
-                  No results found.
+                  {t("noResultsFound") || "No results found."}
                 </td>
               </tr>
             )}
@@ -91,7 +93,7 @@ export function DataTable({ columns, data, searchKey = "name", searchPlaceholder
 
       <div className="p-4 border-t border-white/5 flex items-center justify-between text-sm text-muted-foreground bg-slate-50 dark:bg-transparent">
         <p>
-          Showing {table.getRowModel().rows.length} of {data.length} results
+          {t("showing") || "Showing"} {table.getRowModel().rows.length} {t("of") || "of"} {data.length} {t("results") || "results"}
         </p>
         <div className="flex gap-2">
           <Button
@@ -101,7 +103,7 @@ export function DataTable({ columns, data, searchKey = "name", searchPlaceholder
             disabled={!table.getCanPreviousPage()}
             className="border-white/10 dark:text-white dark:bg-[#0f172a]"
           >
-            Previous
+            {t("previous") || "Previous"}
           </Button>
           <Button
             variant="outline"
@@ -110,7 +112,7 @@ export function DataTable({ columns, data, searchKey = "name", searchPlaceholder
             disabled={!table.getCanNextPage()}
             className="border-white/10 dark:text-white dark:bg-[#0f172a]"
           >
-            Next
+            {t("next") || "Next"}
           </Button>
         </div>
       </div>

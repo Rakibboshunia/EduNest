@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { DataTable } from "@/components/tables/DataTable";
 import { useData } from "@/context/DataContext";
+import { useLanguage } from "@/context/LanguageContext";
 import toast from "react-hot-toast";
 import {
   Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger,
@@ -24,6 +25,7 @@ const formSchema = z.object({
 
 export default function Fees() {
   const { fees, addFee } = useData();
+  const { t } = useLanguage();
   const [open, setOpen] = useState(false);
   const [selectedInvoice, setSelectedInvoice] = useState(null);
 
@@ -42,12 +44,12 @@ export default function Fees() {
   const columns = [
     {
       accessorKey: "id",
-      header: "Invoice ID",
+      header: t("receiptNo"),
       cell: ({ row }) => <span className="font-mono text-xs font-semibold text-[var(--brand-primary)] dark:text-[#60a5fa] bg-[var(--brand-primary)]/10 dark:bg-[#60a5fa]/10 px-2 py-1 rounded-md">{row.getValue("id")}</span>
     },
     {
       accessorKey: "student",
-      header: "Student",
+      header: t("students"),
       cell: ({ row }) => (
         <div className="flex items-center gap-3">
           <Avatar className="h-8 w-8 ring-1 ring-slate-200 dark:ring-white/10">
@@ -62,17 +64,17 @@ export default function Fees() {
     },
     {
       accessorKey: "date",
-      header: "Date",
+      header: t("date"),
       cell: ({ row }) => <span className="text-sm font-medium text-slate-500 dark:text-slate-400">{row.getValue("date")}</span>
     },
     {
       accessorKey: "amount",
-      header: "Amount",
+      header: t("amount"),
       cell: ({ row }) => <span className="font-bold text-slate-800 dark:text-slate-200">{row.getValue("amount")}</span>
     },
     {
       accessorKey: "status",
-      header: "Status",
+      header: t("status"),
       cell: ({ row }) => {
         const status = row.getValue("status");
         return (
@@ -92,7 +94,7 @@ export default function Fees() {
     },
     {
       id: "actions",
-      header: () => <div className="text-right">Action</div>,
+      header: () => <div className="text-right">{t("actions")}</div>,
       cell: ({ row }) => (
         <div className="text-right">
           <Button onClick={() => setSelectedInvoice(row.original)} variant="outline" size="sm" className="border-[var(--brand-primary)]/20 text-[var(--brand-primary)] hover:bg-[var(--brand-primary)]/5 dark:text-[#60a5fa] dark:hover:bg-[var(--brand-primary)]/20 rounded-full px-4 text-xs font-semibold h-8">
@@ -118,10 +120,10 @@ export default function Fees() {
           <div>
             <div className="flex items-center gap-2 mb-1">
               <DollarSign className="h-5 w-5 text-white/70" />
-              <span className="text-white/70 text-sm font-medium">Financial Operations</span>
+              <span className="text-white/70 text-sm font-medium">{t("feeManagement")}</span>
             </div>
-            <h1 className="text-2xl md:text-3xl font-bold text-white tracking-tight">Fee Management</h1>
-            <p className="text-white/60 mt-1 text-sm">Track revenue, collect payments, and manage invoices.</p>
+            <h1 className="text-2xl md:text-3xl font-bold text-white tracking-tight">{t("feeManagement")}</h1>
+            <p className="text-white/60 mt-1 text-sm">{t("feeReport")}</p>
           </div>
           <div className="flex flex-wrap gap-2.5 shrink-0">
             <Button
@@ -135,13 +137,13 @@ export default function Fees() {
             <Dialog open={open} onOpenChange={setOpen}>
               <DialogTrigger asChild>
                 <Button size="sm" className="bg-white text-[var(--brand-primary)] hover:bg-white/90 font-semibold rounded-xl shadow-lg">
-                  <Plus className="mr-2 h-3.5 w-3.5" /> Collect Fee
+                  <Plus className="mr-2 h-3.5 w-3.5" /> {t("collectFeeBtn")}
                 </Button>
               </DialogTrigger>
               <DialogContent className="sm:max-w-[440px] dark:bg-[#1e293b] border-none shadow-2xl rounded-2xl p-0 overflow-hidden">
                 <div className="bg-gradient-to-r from-[var(--brand-primary)] to-[#1a5296] p-6">
-                  <DialogTitle className="text-white text-xl font-bold">Collect Payment</DialogTitle>
-                  <DialogDescription className="text-white/60 text-sm mt-1">Record a new fee payment.</DialogDescription>
+                  <DialogTitle className="text-white text-xl font-bold">{t("collectFeeBtn")}</DialogTitle>
+                  <DialogDescription className="text-white/60 text-sm mt-1">{t("feeManagement")}</DialogDescription>
                 </div>
                 <div className="p-6">
                   <Form {...form}>
@@ -175,8 +177,8 @@ export default function Fees() {
                         </FormItem>
                       )} />
                       <div className="flex justify-end gap-2 pt-2">
-                        <Button type="button" variant="outline" onClick={() => setOpen(false)} className="rounded-xl">Cancel</Button>
-                        <Button type="submit" className="bg-gradient-to-r from-[var(--brand-primary)] to-[var(--brand-secondary)] text-white rounded-xl shadow-md font-semibold">Record Payment</Button>
+                        <Button type="button" variant="outline" onClick={() => setOpen(false)} className="rounded-xl">{t("cancel")}</Button>
+                        <Button type="submit" className="bg-gradient-to-r from-[var(--brand-primary)] to-[var(--brand-secondary)] text-white rounded-xl shadow-md font-semibold">{t("collectFeeBtn")}</Button>
                       </div>
                     </form>
                   </Form>
@@ -189,9 +191,9 @@ export default function Fees() {
         {/* Quick stats */}
         <div className="relative mt-6 grid grid-cols-1 sm:grid-cols-3 gap-3">
           {[
-            { label: "Total Revenue (YTD)", value: "$452,310", sub: "+12% growth", icon: TrendingUp },
-            { label: "Expected This Month", value: "$85,400", sub: "On track", icon: DollarSign },
-            { label: "Overdue Payments", value: "$12,500", sub: "Requires action", icon: AlertCircle, alert: true },
+            { label: t("feeCollection") + " (YTD)", value: "$452,310", sub: "+12%", icon: TrendingUp },
+            { label: t("thisMonth"), value: "$85,400", sub: t("active"), icon: DollarSign },
+            { label: t("due"), value: "$12,500", sub: t("feeOverdue"), icon: AlertCircle, alert: true },
           ].map((s, i) => (
             <div key={i} className={`backdrop-blur-sm rounded-xl px-4 py-3 border ${s.alert ? 'bg-red-500/10 border-red-500/20' : 'bg-white/10 border-white/10'}`}>
               <div className="flex items-center justify-between mb-1">
@@ -208,7 +210,7 @@ export default function Fees() {
       {/* ── Table ── */}
       <div className="bg-white dark:bg-[#1e293b] rounded-2xl shadow-lg border border-slate-100 dark:border-white/5 overflow-hidden">
         <div className="p-5 border-b border-slate-100 dark:border-white/5">
-          <h2 className="text-lg font-bold text-[var(--brand-primary)] dark:text-white">Recent Transactions</h2>
+          <h2 className="text-lg font-bold text-[var(--brand-primary)] dark:text-white">{t("feeHistory")}</h2>
         </div>
         <DataTable
           columns={columns}
@@ -291,9 +293,9 @@ export default function Fees() {
             </div>
 
             <div className="flex justify-end gap-3 pt-2">
-              <Button variant="outline" className="rounded-xl border-slate-200 dark:border-white/10 dark:text-white hover:bg-slate-50 dark:hover:bg-white/5 font-semibold" onClick={() => setSelectedInvoice(null)}>Close</Button>
+              <Button variant="outline" className="rounded-xl border-slate-200 dark:border-white/10 dark:text-white hover:bg-slate-50 dark:hover:bg-white/5 font-semibold" onClick={() => setSelectedInvoice(null)}>{t("close")}</Button>
               <Button onClick={() => toast.promise(new Promise(r => setTimeout(r, 1000)), { loading: 'Printing...', success: 'Sent to Printer!', error: 'Error' })} className="rounded-xl bg-gradient-to-r from-[var(--brand-primary)] to-[#1a5296] hover:opacity-90 text-white font-semibold shadow-md">
-                <Printer className="mr-2 h-4 w-4" /> Print Invoice
+                <Printer className="mr-2 h-4 w-4" /> {t("feeReport")}
               </Button>
             </div>
           </div>

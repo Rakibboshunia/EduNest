@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -117,5 +119,24 @@
   .card-hover:hover {
     transform: translateY(-2px);
     box-shadow: 0 20px 40px -12px rgba(15, 59, 115, 0.15);
+  }
+
+  /* Bengali language font override */
+  html.lang-bn,
+  html.lang-bn body,
+  html.lang-bn * {
+    font-family: 'Hind Siliguri', 'SolaimanLipi', sans-serif !important;
+    line-height: 1.75;
+    letter-spacing: 0;
+  }
+
+  /* Gradient text animation */
+  @keyframes gradient-x {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+  }
+  .animate-gradient-x {
+    background-size: 200% 200%;
+    animation: gradient-x 4s ease infinite;
   }
 }

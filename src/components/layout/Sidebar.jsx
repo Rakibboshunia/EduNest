@@ -1,6 +1,7 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { cn } from "@/lib/utils";
 import { useAuth } from "@/context/AuthContext";
+import { useLanguage } from "@/context/LanguageContext";
 import { 
   LayoutDashboard, 
   Users, 
@@ -16,39 +17,39 @@ import {
 } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
-const navGroups = [
+const getNavGroups = (t) => [
   {
-    label: "Overview",
+    label: t("dashboard"),
     items: [
-      { title: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
+      { title: t("dashboard"), href: "/dashboard", icon: LayoutDashboard },
     ]
   },
   {
-    label: "People",
+    label: t("students") + " & " + t("teachers"),
     items: [
-      { title: "Students", href: "/students", icon: GraduationCap },
-      { title: "Teachers", href: "/teachers", icon: Users },
+      { title: t("students"), href: "/students", icon: GraduationCap },
+      { title: t("teachers"), href: "/teachers", icon: Users },
     ]
   },
   {
-    label: "Academics",
+    label: t("attendance") + " & " + t("exams"),
     items: [
-      { title: "Attendance", href: "/attendance", icon: CalendarCheck },
-      { title: "Exams & Results", href: "/exams", icon: FileText },
+      { title: t("attendance"), href: "/attendance", icon: CalendarCheck },
+      { title: t("exams"), href: "/exams", icon: FileText },
     ]
   },
   {
-    label: "Administration",
+    label: t("fees") + " & " + t("notices"),
     items: [
-      { title: "Fees", href: "/fees", icon: CreditCard },
-      { title: "Notices", href: "/notices", icon: Bell },
-      { title: "Analytics", href: "/analytics", icon: BarChart },
+      { title: t("fees"), href: "/fees", icon: CreditCard },
+      { title: t("notices"), href: "/notices", icon: Bell },
+      { title: t("analytics"), href: "/analytics", icon: BarChart },
     ]
   },
   {
-    label: "System",
+    label: t("settings"),
     items: [
-      { title: "Settings", href: "/settings", icon: Settings },
+      { title: t("settings"), href: "/settings", icon: Settings },
     ]
   }
 ];
@@ -57,6 +58,8 @@ export function Sidebar({ className, onClose }) {
   const location = useLocation();
   const navigate = useNavigate();
   const { user, logout } = useAuth();
+  const { t } = useLanguage();
+  const navGroups = getNavGroups(t);
 
   const isActive = (href) => 
     location.pathname === href || location.pathname.startsWith(`${href}/`);

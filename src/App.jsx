@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 import { DataProvider } from './context/DataContext';
 import { ThemeProvider } from './context/ThemeContext';
+import { LanguageProvider } from './context/LanguageContext';
 import { ProtectedRoute } from './routes/ProtectedRoute';
 import { Toaster } from 'react-hot-toast';
 
@@ -36,6 +37,7 @@ function App() {
   return (
     <BrowserRouter>
       <ThemeProvider>
+        <LanguageProvider>
         <AuthProvider>
           <DataProvider>
           <Routes>
@@ -84,6 +86,7 @@ function App() {
           </Routes>
         </DataProvider>
       </AuthProvider>
+        </LanguageProvider>
       </ThemeProvider>
       <Toaster position="top-right" />
     </BrowserRouter>
