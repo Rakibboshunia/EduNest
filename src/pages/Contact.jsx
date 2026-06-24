@@ -1,3 +1,4 @@
+
 import { Link } from 'react-router-dom';
 import { MapPin, Mail, Phone } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -5,7 +6,7 @@ import { Button } from '@/components/ui/button';
 export default function Contact() {
   return (
     <div className="w-full">
-{/* Main Content */}
+    
       <main className="container mx-auto px-4 py-16 md:py-24 max-w-6xl">
         <div className="grid md:grid-cols-2 gap-16 items-center">
           <div>
