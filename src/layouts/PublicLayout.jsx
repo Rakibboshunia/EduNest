@@ -44,6 +44,7 @@ export function PublicLayout() {
   };
 
   return (
+<<<<<<< HEAD
     <div className="edunest-landing">
       <Header 
         isMobileMenuOpen={isMobileMenuOpen} 
@@ -52,6 +53,11 @@ export function PublicLayout() {
         closeMobile={closeMobile} 
       />
       <main>
+=======
+    <div className="flex flex-col min-h-screen bg-slate-50 dark:bg-[#030712] text-slate-900 dark:text-slate-50 selection:bg-[var(--brand-primary)]/50 overflow-x-hidden">
+      <Header />
+      <main className={`flex-1 ${pathname === '/' ? '' : 'pt-20 md:pt-28'}`}>
+>>>>>>> 1fff430974318f37260db10adf0917f936e7202d
         <Outlet />
       </main>
       {pathname !== "/login" && pathname !== "/register" && <Cta />}

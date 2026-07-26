@@ -31,6 +31,7 @@ import {
 } from "recharts";
 import { StatCard } from "@/components/charts/StatCard";
 import { useAuth } from "@/context/AuthContext";
+import { useLanguage } from "@/context/LanguageContext";
 import toast from "react-hot-toast";
 
 const performanceData = [
@@ -52,13 +53,7 @@ const revenueData = [
   { name: "Sun", amount: 400 },
 ];
 
-const recentStudents = [
-  { name: "Olivia Martin", email: "olivia.martin@email.com", amount: "+$1,999.00", grade: "Grade 10", status: "Paid" },
-  { name: "Jackson Lee", email: "jackson.lee@email.com", amount: "+$1,999.00", grade: "Grade 9", status: "Pending" },
-  { name: "Isabella Nguyen", email: "isabella.nguyen@email.com", amount: "+$2,299.00", grade: "Grade 11", status: "Paid" },
-  { name: "William Kim", email: "will@email.com", amount: "+$2,299.00", grade: "Grade 11", status: "Paid" },
-  { name: "Sofia Davis", email: "sofia.davis@email.com", amount: "+$1,599.00", grade: "Grade 8", status: "Overdue" },
-];
+import { useData } from "@/context/DataContext";
 
 const container = {
   hidden: { opacity: 0 },
@@ -70,8 +65,13 @@ const item = {
   show: { opacity: 1, y: 0, transition: { duration: 0.4, ease: "easeOut" } }
 };
 
-function getGreeting() {
+function getGreeting(lang) {
   const h = new Date().getHours();
+  if (lang === 'bn') {
+    if (h < 12) return "শুভ সকাল";
+    if (h < 17) return "শুভ বিকেল";
+    return "শুভ সন্ধ্যা";
+  }
   if (h < 12) return "Good morning";
   if (h < 17) return "Good afternoon";
   return "Good evening";
@@ -80,6 +80,20 @@ function getGreeting() {
 export default function Dashboard() {
   const navigate = useNavigate();
   const { user } = useAuth();
+  const { t, language } = useLanguage();
+  const { students, teachers, fees, exams, attendance } = useData();
+
+  const pendingFeesCount = fees.filter(f => f.status === 'Pending' || f.status === 'Overdue').length;
+  const recentStudentsList = students.slice(0, 5).map(s => {
+    const studentFee = fees.find(f => f.student === s.name);
+    return {
+      name: s.name,
+      email: s.email,
+      grade: s.grade,
+      amount: studentFee ? studentFee.amount : "$0.00",
+      status: studentFee ? studentFee.status : "Paid"
+    };
+  });
 
   return (
     <motion.div 
@@ -99,10 +113,10 @@ export default function Dashboard() {
             <div>
               <div className="flex items-center gap-2 mb-2">
                 <Sparkles className="h-4 w-4 text-amber-400" />
-                <span className="text-white/70 text-sm font-medium">{getGreeting()}, {user?.name?.split(' ')[0] || "Admin"}!</span>
+                <span className="text-white/70 text-sm font-medium">{getGreeting(language)}, {user?.name?.split(' ')[0] || "Admin"}!</span>
               </div>
-              <h1 className="text-2xl md:text-3xl font-bold text-white tracking-tight">Dashboard Overview</h1>
-              <p className="text-white/60 mt-1 text-sm">Here's what's happening at EduNest today.</p>
+              <h1 className="text-2xl md:text-3xl font-bold text-white tracking-tight">{t("dashboard")}</h1>
+              <p className="text-white/60 mt-1 text-sm">{t("overviewTitle")}</p>
             </div>
             <div className="flex gap-2.5 shrink-0">
               <Button 
@@ -125,10 +139,10 @@ export default function Dashboard() {
           {/* Quick stats bar */}
           <div className="relative mt-6 grid grid-cols-2 md:grid-cols-4 gap-4">
             {[
-              { label: "Pending Fees", value: "12", color: "text-amber-300" },
-              { label: "Today's Attendance", value: "96.2%", color: "text-emerald-300" },
-              { label: "New Enrollments", value: "8", color: "text-blue-300" },
-              { label: "Upcoming Exams", value: "3", color: "text-purple-300" },
+              { label: t("fees") + " " + t("due"), value: pendingFeesCount, color: "text-amber-300" },
+              { label: t("todayAttendance"), value: attendance.filter(a=>a.status==='Present').length + "/" + attendance.length, color: "text-emerald-300" },
+              { label: t("newEnrollment"), value: students.filter(s=>s.status==='Active').length, color: "text-blue-300" },
+              { label: t("examScheduled"), value: exams.length, color: "text-purple-300" },
             ].map((s, i) => (
               <div key={i} className="bg-white/10 backdrop-blur-sm rounded-xl px-4 py-3 border border-white/10">
                 <p className="text-white/60 text-xs mb-1">{s.label}</p>
@@ -142,10 +156,10 @@ export default function Dashboard() {
       {/* ── Stat Cards ── */}
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
         {[
-          { title: "Total Students", value: "2,543", icon: GraduationCap, trend: "+12.5%", positive: true, color: "from-[var(--brand-primary)] to-[var(--brand-primary-light)]", trendText: "vs last month" },
-          { title: "Active Teachers", value: "145", icon: Users, trend: "+2.1%", positive: true, color: "from-[var(--brand-secondary)] to-[#4ade80]", trendText: "vs last month" },
-          { title: "Monthly Revenue", value: "$45,231", icon: CreditCard, trend: "+15.3%", positive: true, color: "from-purple-600 to-indigo-500", trendText: "vs last month" },
-          { title: "Avg Attendance", value: "94.2%", icon: TrendingUp, trend: "-1.2%", positive: false, color: "from-amber-500 to-orange-500", trendText: "vs last month" },
+          { title: t("totalStudents"), value: students.length, icon: GraduationCap, trend: "+12.5%", positive: true, color: "from-[var(--brand-primary)] to-[var(--brand-primary-light)]", trendText: t("thisMonth") },
+          { title: t("totalTeachers"), value: teachers.length, icon: Users, trend: "+2.1%", positive: true, color: "from-[var(--brand-secondary)] to-[#4ade80]", trendText: t("thisMonth") },
+          { title: t("feeCollection"), value: "$" + fees.filter(f=>f.status==='Paid').reduce((acc, f)=>acc+parseFloat(f.amount.replace(/[^0-9.-]+/g,"")), 0).toLocaleString(), icon: CreditCard, trend: "+15.3%", positive: true, color: "from-purple-600 to-indigo-500", trendText: t("thisMonth") },
+          { title: t("attendanceRate"), value: Math.round((attendance.filter(a=>a.status==='Present').length / (attendance.length||1))*100) + "%", icon: TrendingUp, trend: "+1.2%", positive: true, color: "from-amber-500 to-orange-500", trendText: t("thisMonth") },
         ].map((stat, i) => (
           <motion.div key={i} variants={item}>
             <StatCard {...stat} />
@@ -160,8 +174,8 @@ export default function Dashboard() {
           <Card className="h-full border-none shadow-lg dark:bg-[#1e293b] dark:border dark:border-white/5">
             <CardHeader className="flex flex-row items-center justify-between pb-4">
               <div>
-                <CardTitle className="text-base font-semibold text-slate-800 dark:text-white">Performance & Attendance</CardTitle>
-                <CardDescription className="text-xs mt-0.5">Student metrics over the last 6 months.</CardDescription>
+                <CardTitle className="text-base font-semibold text-slate-800 dark:text-white">{t("attendanceRate")} & {t("performanceReport")}</CardTitle>
+                <CardDescription className="text-xs mt-0.5">{t("thisMonth")}</CardDescription>
               </div>
               <div className="flex items-center gap-4 text-xs text-slate-500">
                 <span className="flex items-center gap-1.5"><span className="h-2.5 w-2.5 rounded-full bg-[var(--brand-primary)] inline-block" />Attendance</span>
@@ -202,8 +216,8 @@ export default function Dashboard() {
           <Card className="h-full border-none shadow-lg dark:bg-[#1e293b] dark:border dark:border-white/5">
             <CardHeader className="flex flex-row items-center justify-between pb-2">
               <div>
-                <CardTitle className="text-base font-semibold text-slate-800 dark:text-white">Recent Enrollments</CardTitle>
-                <CardDescription className="text-xs mt-0.5">Latest students joined this week.</CardDescription>
+                <CardTitle className="text-base font-semibold text-slate-800 dark:text-white">{t("newEnrollment")}</CardTitle>
+                <CardDescription className="text-xs mt-0.5">{t("thisMonth")}</CardDescription>
               </div>
               <Button variant="ghost" size="icon" className="h-8 w-8 text-slate-400 hover:text-slate-600">
                 <MoreHorizontal className="h-4 w-4" />
@@ -211,7 +225,7 @@ export default function Dashboard() {
             </CardHeader>
             <CardContent className="px-4 pb-4">
               <div className="space-y-1 mt-2">
-                {recentStudents.map((student, i) => (
+                {recentStudentsList.map((student, i) => (
                   <div key={i} className="flex items-center gap-3 p-2.5 -mx-1 rounded-xl hover:bg-slate-50 dark:hover:bg-white/5 transition-colors cursor-pointer group">
                     <Avatar className="h-9 w-9 ring-1 ring-slate-200 dark:ring-white/10 shrink-0">
                       <AvatarImage src={`https://i.pravatar.cc/150?u=${student.name}`} />
@@ -235,7 +249,7 @@ export default function Dashboard() {
                 ))}
               </div>
               <Button onClick={() => navigate("/students")} variant="outline" className="w-full mt-4 text-[var(--brand-primary)] border-[var(--brand-primary)]/20 hover:bg-[var(--brand-primary)]/5 dark:text-white dark:border-white/10 rounded-xl text-xs font-semibold">
-                View All Students <ArrowRight className="ml-2 h-3.5 w-3.5" />
+                {t("viewAll")} {t("students")} <ArrowRight className="ml-2 h-3.5 w-3.5" />
               </Button>
             </CardContent>
           </Card>
@@ -249,8 +263,8 @@ export default function Dashboard() {
           <Card className="border-none shadow-lg dark:bg-[#1e293b] dark:border dark:border-white/5">
             <CardHeader className="flex flex-row items-center justify-between pb-2">
               <div>
-                <CardTitle className="text-base font-semibold text-slate-800 dark:text-white">Fee Collection</CardTitle>
-                <CardDescription className="text-xs mt-0.5">Daily revenue collected this week.</CardDescription>
+                <CardTitle className="text-base font-semibold text-slate-800 dark:text-white">{t("feeCollection")}</CardTitle>
+                <CardDescription className="text-xs mt-0.5">{t("thisMonth")}</CardDescription>
               </div>
               <Badge variant="outline" className="text-xs border-[var(--brand-secondary)]/30 text-[var(--brand-secondary)] dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-500/10">This Week</Badge>
             </CardHeader>
@@ -281,14 +295,14 @@ export default function Dashboard() {
         <motion.div variants={item} className="col-span-1 flex flex-col gap-5">
           <Card className="border-none shadow-lg dark:bg-[#1e293b] dark:border dark:border-white/5">
             <CardHeader className="pb-3">
-              <CardTitle className="text-base font-semibold text-slate-800 dark:text-white">Quick Actions</CardTitle>
+              <CardTitle className="text-base font-semibold text-slate-800 dark:text-white">{t("quickActions")}</CardTitle>
             </CardHeader>
             <CardContent className="grid grid-cols-2 gap-3 pb-4">
               {[
-                { icon: Users, label: "Add Student", color: "text-[var(--brand-primary)]", bg: "bg-[var(--brand-primary)]/10 group-hover:bg-[var(--brand-primary)]/20", link: "/students" },
-                { icon: BookOpen, label: "New Exam", color: "text-[var(--brand-secondary)]", bg: "bg-[var(--brand-secondary)]/10 group-hover:bg-[var(--brand-secondary)]/20", link: "/exams" },
-                { icon: CreditCard, label: "Collect Fee", color: "text-purple-600", bg: "bg-purple-600/10 group-hover:bg-purple-600/20", link: "/fees" },
-                { icon: Bell, label: "Notice", color: "text-orange-600", bg: "bg-orange-600/10 group-hover:bg-orange-600/20", link: "/notices" },
+                { icon: Users, label: t("addStudent"), color: "text-[var(--brand-primary)]", bg: "bg-[var(--brand-primary)]/10 group-hover:bg-[var(--brand-primary)]/20", link: "/students" },
+                { icon: BookOpen, label: t("exams"), color: "text-[var(--brand-secondary)]", bg: "bg-[var(--brand-secondary)]/10 group-hover:bg-[var(--brand-secondary)]/20", link: "/exams" },
+                { icon: CreditCard, label: t("collectFee"), color: "text-purple-600", bg: "bg-purple-600/10 group-hover:bg-purple-600/20", link: "/fees" },
+                { icon: Bell, label: t("notices"), color: "text-orange-600", bg: "bg-orange-600/10 group-hover:bg-orange-600/20", link: "/notices" },
               ].map((action, i) => (
                 <div
                   key={i}
@@ -307,7 +321,7 @@ export default function Dashboard() {
           {/* Activity Feed */}
           <Card className="border-none shadow-lg dark:bg-[#1e293b] dark:border dark:border-white/5 flex-1">
             <CardHeader className="pb-3">
-              <CardTitle className="text-base font-semibold text-slate-800 dark:text-white">Recent Activity</CardTitle>
+              <CardTitle className="text-base font-semibold text-slate-800 dark:text-white">{t("recentActivity")}</CardTitle>
             </CardHeader>
             <CardContent className="pb-4">
               <div className="space-y-3">

@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { DataTable } from "@/components/tables/DataTable";
 import { useData } from "@/context/DataContext";
+import { useLanguage } from "@/context/LanguageContext";
 import toast from "react-hot-toast";
 import {
   Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger,
@@ -24,6 +25,7 @@ const formSchema = z.object({
 
 export default function Students() {
   const { students, addStudent, removeStudent } = useData();
+  const { t } = useLanguage();
   const [open, setOpen] = useState(false);
 
   const form = useForm({
@@ -35,7 +37,7 @@ export default function Students() {
     addStudent(values);
     form.reset();
     setOpen(false);
-    toast.success(`${values.name} enrolled successfully!`);
+    toast.success(`${values.name} ${t("enrollStudent")}!`);
   };
 
   const activeCount = students.filter(s => s.status === "Active").length;
@@ -43,7 +45,7 @@ export default function Students() {
   const columns = [
     {
       accessorKey: "name",
-      header: "Student Info",
+      header: t("name"),
       cell: ({ row }) => (
         <div className="flex items-center gap-3">
           <Avatar className="h-10 w-10 ring-2 ring-slate-100 dark:ring-white/10 shadow-sm">
@@ -63,7 +65,7 @@ export default function Students() {
     },
     {
       accessorKey: "id",
-      header: "Student ID",
+      header: t("studentId"),
       cell: ({ row }) => (
         <span className="font-mono text-xs font-semibold text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-white/5 px-2 py-1 rounded-md">
           {row.getValue("id")}
@@ -72,7 +74,7 @@ export default function Students() {
     },
     {
       accessorKey: "grade",
-      header: "Grade",
+      header: t("grade"),
       cell: ({ row }) => (
         <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-[var(--brand-primary)]/10 text-[var(--brand-primary)] dark:bg-[var(--brand-primary)]/25 dark:text-[#60a5fa] border border-[var(--brand-primary)]/15">
           {row.getValue("grade")}
@@ -81,7 +83,7 @@ export default function Students() {
     },
     {
       accessorKey: "status",
-      header: "Status",
+      header: t("status"),
       cell: ({ row }) => {
         const status = row.getValue("status");
         return (
@@ -98,12 +100,12 @@ export default function Students() {
     },
     {
       id: "actions",
-      header: () => <div className="text-right">Actions</div>,
+      header: () => <div className="text-right">{t("actions")}</div>,
       cell: ({ row }) => (
         <div className="flex items-center justify-end gap-2">
           <Link to={`/students/${row.original.id}`}>
             <Button variant="outline" size="sm" className="border-[var(--brand-primary)]/20 text-[var(--brand-primary)] dark:text-[#60a5fa] hover:bg-[var(--brand-primary)]/5 dark:hover:bg-[var(--brand-primary)]/10 rounded-full px-4 text-xs font-semibold h-8">
-              View Profile
+              {t("studentProfile")}
             </Button>
           </Link>
           <Button
@@ -133,10 +135,10 @@ export default function Students() {
           <div>
             <div className="flex items-center gap-2 mb-1">
               <GraduationCap className="h-5 w-5 text-white/70" />
-              <span className="text-white/70 text-sm font-medium">Student Management</span>
+              <span className="text-white/70 text-sm font-medium">{t("studentManagement")}</span>
             </div>
-            <h1 className="text-2xl md:text-3xl font-bold text-white tracking-tight">Students Directory</h1>
-            <p className="text-white/60 mt-1 text-sm">Manage all enrolled students and their records.</p>
+            <h1 className="text-2xl md:text-3xl font-bold text-white tracking-tight">{t("studentList")}</h1>
+            <p className="text-white/60 mt-1 text-sm">{t("studentManagement")}</p>
           </div>
           <div className="flex gap-2.5 shrink-0">
             <Button
@@ -145,18 +147,18 @@ export default function Students() {
               variant="outline"
               className="bg-white/10 border-white/20 text-white hover:bg-white/20 backdrop-blur-sm rounded-xl"
             >
-              <Download className="mr-2 h-3.5 w-3.5" /> Export
+              <Download className="mr-2 h-3.5 w-3.5" /> {t("export")}
             </Button>
             <Dialog open={open} onOpenChange={setOpen}>
               <DialogTrigger asChild>
                 <Button size="sm" className="bg-white text-[var(--brand-primary)] hover:bg-white/90 font-semibold rounded-xl shadow-lg">
-                  <Plus className="mr-2 h-3.5 w-3.5" /> Add Student
+                  <Plus className="mr-2 h-3.5 w-3.5" /> {t("enrollStudent")}
                 </Button>
               </DialogTrigger>
               <DialogContent className="sm:max-w-[440px] dark:bg-[#1e293b] border-none shadow-2xl rounded-2xl p-0 overflow-hidden">
                 <div className="bg-gradient-to-r from-[var(--brand-primary)] to-[#1a5296] p-6">
-                  <DialogTitle className="text-white text-xl font-bold">Enroll New Student</DialogTitle>
-                  <DialogDescription className="text-white/60 text-sm mt-1">Fill in the student's details below.</DialogDescription>
+                  <DialogTitle className="text-white text-xl font-bold">{t("enrollStudent")}</DialogTitle>
+                  <DialogDescription className="text-white/60 text-sm mt-1">{t("enrollStudent")}</DialogDescription>
                 </div>
                 <div className="p-6">
                   <Form {...form}>
@@ -183,8 +185,8 @@ export default function Students() {
                         </FormItem>
                       )} />
                       <div className="flex justify-end gap-2 pt-2">
-                        <Button type="button" variant="outline" onClick={() => setOpen(false)} className="rounded-xl">Cancel</Button>
-                        <Button type="submit" className="bg-gradient-to-r from-[var(--brand-primary)] to-[var(--brand-secondary)] text-white rounded-xl font-semibold shadow-md">Enroll Student</Button>
+                        <Button type="button" variant="outline" onClick={() => setOpen(false)} className="rounded-xl">{t("cancel")}</Button>
+                        <Button type="submit" className="bg-gradient-to-r from-[var(--brand-primary)] to-[var(--brand-secondary)] text-white rounded-xl font-semibold shadow-md">{t("enrollStudent")}</Button>
                       </div>
                     </form>
                   </Form>
@@ -196,9 +198,9 @@ export default function Students() {
         {/* Quick stats */}
         <div className="relative mt-6 flex flex-wrap gap-3">
           {[
-            { label: "Total Students", value: students.length, icon: Users },
-            { label: "Active", value: activeCount, icon: TrendingUp },
-            { label: "Inactive", value: students.length - activeCount, icon: GraduationCap },
+            { label: t("totalStudents"), value: students.length, icon: Users },
+            { label: t("active"), value: activeCount, icon: TrendingUp },
+            { label: t("inactive"), value: students.length - activeCount, icon: GraduationCap },
           ].map((s, i) => (
             <div key={i} className="bg-white/10 backdrop-blur-sm rounded-xl px-4 py-2.5 border border-white/10 flex items-center gap-2.5">
               <s.icon className="h-4 w-4 text-white/60" />

@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 import { DataProvider } from './context/DataContext';
 import { ThemeProvider } from './context/ThemeContext';
+import { LanguageProvider } from './context/LanguageContext';
 import { ProtectedRoute } from './routes/ProtectedRoute';
 import { Toaster } from 'react-hot-toast';
 
@@ -54,8 +55,10 @@ function App() {
   return (
     <BrowserRouter>
       <ThemeProvider>
+        <LanguageProvider>
         <AuthProvider>
           <DataProvider>
+<<<<<<< HEAD
             <Routes>
               {/* ── Public Routes (with new landing layout) ── */}
               <Route element={<PublicLayout />}>
@@ -148,6 +151,55 @@ function App() {
             </Routes>
           </DataProvider>
         </AuthProvider>
+=======
+          <Routes>
+          {/* Public Routes */}
+          <Route element={<PublicLayout />}>
+            <Route path="/" element={<LandingPage />} />
+            <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+            <Route path="/terms-of-service" element={<TermsOfService />} />
+            <Route path="/cookie-policy" element={<CookiePolicy />} />
+            <Route path="/about-us" element={<AboutUs />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/careers" element={<Careers />} />
+            <Route path="/blog" element={<Blog />} />
+          </Route>
+          
+          {/* Auth Routes */}
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/reset-password" element={<ResetPassword />} />
+          
+          {/* Protected Dashboard Routes */}
+          <Route 
+            path="/" 
+            element={
+              <ProtectedRoute allowedRoles={["admin", "teacher", "student", "parent"]}>
+                <DashboardLayout />
+              </ProtectedRoute>
+            }
+          >
+            <Route path="dashboard" element={<Dashboard />} />
+            <Route path="students" element={<Students />} />
+            <Route path="students/:id" element={<StudentProfile />} />
+            <Route path="teachers" element={<Teachers />} />
+            <Route path="teachers/:id" element={<TeacherProfile />} />
+            <Route path="fees" element={<Fees />} />
+            <Route path="settings" element={<Settings />} />
+            <Route path="attendance" element={<Attendance />} />
+            <Route path="exams" element={<Exams />} />
+            <Route path="notices" element={<Notices />} />
+            <Route path="analytics" element={<Analytics />} />
+          </Route>
+          
+          {/* Fallback */}
+          <Route path="*" element={<Navigate to="/" replace />} />
+          </Routes>
+        </DataProvider>
+      </AuthProvider>
+        </LanguageProvider>
+>>>>>>> 1fff430974318f37260db10adf0917f936e7202d
       </ThemeProvider>
       <Toaster position="top-right" />
     </BrowserRouter>

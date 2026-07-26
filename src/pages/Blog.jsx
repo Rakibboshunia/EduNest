@@ -1,5 +1,12 @@
+<<<<<<< HEAD
 import React, { useEffect } from 'react';
 import { useData } from '../context/DataContext';
+=======
+
+import { Link } from 'react-router-dom';
+import { ArrowRight } from 'lucide-react';
+import { motion } from 'framer-motion';
+>>>>>>> 1fff430974318f37260db10adf0917f936e7202d
 
 export default function Blog() {
   const { notices } = useData();

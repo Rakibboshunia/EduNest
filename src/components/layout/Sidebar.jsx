@@ -1,6 +1,7 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { cn } from "@/lib/utils";
 import { useAuth } from "@/context/AuthContext";
+import { useLanguage } from "@/context/LanguageContext";
 import { 
   LayoutDashboard, 
   Users, 
@@ -16,41 +17,69 @@ import {
 } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
+<<<<<<< HEAD
 // Nav groups with role-based visibility
 // roles: admin | teacher | student | parent
 const allNavGroups = [
+=======
+const getNavGroups = (t) => [
+>>>>>>> 1fff430974318f37260db10adf0917f936e7202d
   {
-    label: "Overview",
+    label: t("dashboard"),
     items: [
+<<<<<<< HEAD
       { title: "Dashboard", href: "/dashboard", icon: LayoutDashboard, roles: ["admin","teacher","student","parent"] },
+=======
+      { title: t("dashboard"), href: "/dashboard", icon: LayoutDashboard },
+>>>>>>> 1fff430974318f37260db10adf0917f936e7202d
     ]
   },
   {
-    label: "People",
+    label: t("students") + " & " + t("teachers"),
     items: [
+<<<<<<< HEAD
       { title: "Students", href: "/students", icon: GraduationCap, roles: ["admin","teacher"] },
       { title: "Teachers", href: "/teachers", icon: Users, roles: ["admin"] },
+=======
+      { title: t("students"), href: "/students", icon: GraduationCap },
+      { title: t("teachers"), href: "/teachers", icon: Users },
+>>>>>>> 1fff430974318f37260db10adf0917f936e7202d
     ]
   },
   {
-    label: "Academics",
+    label: t("attendance") + " & " + t("exams"),
     items: [
+<<<<<<< HEAD
       { title: "Attendance", href: "/attendance", icon: CalendarCheck, roles: ["admin","teacher","student","parent"] },
       { title: "Exams & Results", href: "/exams", icon: FileText, roles: ["admin","teacher","student","parent"] },
+=======
+      { title: t("attendance"), href: "/attendance", icon: CalendarCheck },
+      { title: t("exams"), href: "/exams", icon: FileText },
+>>>>>>> 1fff430974318f37260db10adf0917f936e7202d
     ]
   },
   {
-    label: "Administration",
+    label: t("fees") + " & " + t("notices"),
     items: [
+<<<<<<< HEAD
       { title: "Fees", href: "/fees", icon: CreditCard, roles: ["admin","parent"] },
       { title: "Notices", href: "/notices", icon: Bell, roles: ["admin","teacher","student","parent"] },
       { title: "Analytics", href: "/analytics", icon: BarChart, roles: ["admin"] },
+=======
+      { title: t("fees"), href: "/fees", icon: CreditCard },
+      { title: t("notices"), href: "/notices", icon: Bell },
+      { title: t("analytics"), href: "/analytics", icon: BarChart },
+>>>>>>> 1fff430974318f37260db10adf0917f936e7202d
     ]
   },
   {
-    label: "System",
+    label: t("settings"),
     items: [
+<<<<<<< HEAD
       { title: "Settings", href: "/settings", icon: Settings, roles: ["admin","teacher","student","parent"] },
+=======
+      { title: t("settings"), href: "/settings", icon: Settings },
+>>>>>>> 1fff430974318f37260db10adf0917f936e7202d
     ]
   }
 ];
@@ -59,6 +88,8 @@ export function Sidebar({ className, onClose }) {
   const location = useLocation();
   const navigate = useNavigate();
   const { user, logout } = useAuth();
+  const { t } = useLanguage();
+  const navGroups = getNavGroups(t);
 
   const role = user?.role || "student";
 

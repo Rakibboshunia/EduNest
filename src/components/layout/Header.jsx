@@ -13,6 +13,7 @@ export function Header({ isMobileMenuOpen, isScrolled, openMobile, closeMobile }
           </div>
           <button className="mobile-close" onClick={closeMobile}><i className="fas fa-times"></i></button>
         </div>
+<<<<<<< HEAD
         <div className="mobile-nav-links">
           <Link to="/programs/undergraduate" onClick={closeMobile}>Programs</Link>
           <Link to="/about/history" onClick={closeMobile}>About</Link>
@@ -27,6 +28,110 @@ export function Header({ isMobileMenuOpen, isScrolled, openMobile, closeMobile }
         <div style={{ marginTop: '32px', display: 'flex', flexDirection: 'column', gap: '12px' }}>
           <Link to="/login" className="btn btn-outline" style={{ justifyContent: 'center' }} onClick={closeMobile}>Apply Now</Link>
           <Link to="/login" className="btn btn-primary" style={{ justifyContent: 'center' }}>Login</Link>
+=======
+
+        {/* Page links */}
+        {[
+          { label: 'About Us', to: '/about-us' },
+          { label: 'Blog', to: '/blog' },
+          { label: 'Careers', to: '/careers' },
+          { label: 'Contact', to: '/contact' },
+        ].map((item) => (
+          <Link
+            key={item.label}
+            to={item.to}
+            className="text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-colors px-3 py-2 rounded-lg hover:bg-slate-100 dark:hover:bg-white/5"
+          >
+            {item.label}
+          </Link>
+        ))}
+      </nav>
+
+      {/* CTA Buttons */}
+      <div className="ml-auto flex items-center gap-3">
+        <Link to="/login" className="hidden lg:block text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-colors px-3 py-2 rounded-lg hover:bg-slate-100 dark:hover:bg-white/5">
+          Log in
+        </Link>
+        <Button asChild className="hidden sm:flex rounded-full px-5 h-9 bg-slate-900 text-white hover:bg-slate-700 dark:bg-white dark:text-black dark:hover:bg-slate-200 shadow-md transition-all">
+          <Link to="/dashboard">Dashboard</Link>
+        </Button>
+
+        {/* Mobile Menu */}
+        <div className="lg:hidden">
+          <Sheet>
+            <SheetTrigger asChild>
+              <Button variant="ghost" size="icon" className="text-slate-900 dark:text-white hover:bg-slate-200 dark:hover:bg-white/10">
+                <Menu className="h-6 w-6" />
+              </Button>
+            </SheetTrigger>
+            <SheetContent side="right" className="bg-white dark:bg-[#0a0a0a] border-l border-slate-200 dark:border-white/10 p-0 w-[300px]">
+              <SheetTitle className="sr-only">Mobile Menu</SheetTitle>
+              <div className="flex flex-col h-full">
+                {/* Mobile Header */}
+                <div className="flex items-center gap-2 p-6 border-b border-slate-200 dark:border-white/10">
+                  <div className="h-8 w-8 rounded-lg bg-gradient-to-br from-[var(--brand-primary)] to-[var(--brand-secondary)] flex items-center justify-center">
+                    <GraduationCap className="h-5 w-5 text-white" />
+                  </div>
+                  <span className="font-bold text-lg text-slate-900 dark:text-white">EduNest</span>
+                </div>
+
+                <div className="flex-1 overflow-y-auto p-6 space-y-1">
+                  {/* Section label */}
+                  <p className="text-xs font-semibold uppercase tracking-wider text-slate-400 dark:text-slate-500 px-3 mb-2">Home</p>
+                  {[
+                    { label: 'Features', id: '#features' },
+                    { label: 'Testimonials', id: '#testimonials' },
+                    { label: 'Pricing', id: '#pricing' },
+                    { label: 'FAQ', id: '#faq' },
+                  ].map((item) => (
+                    <SheetClose asChild key={item.label}>
+                      <a
+                        href={isHome ? item.id : `/${item.id}`}
+                        onClick={(e) => handleScroll(e, item.id)}
+                        className="flex items-center gap-3 text-base font-medium text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/5 px-3 py-2.5 rounded-xl transition-colors"
+                      >
+                        {item.label}
+                      </a>
+                    </SheetClose>
+                  ))}
+
+                  <div className="pt-4">
+                    <p className="text-xs font-semibold uppercase tracking-wider text-slate-400 dark:text-slate-500 px-3 mb-2">Company</p>
+                    {[
+                      { label: 'About Us', to: '/about-us' },
+                      { label: 'Blog', to: '/blog' },
+                      { label: 'Careers', to: '/careers' },
+                      { label: 'Contact', to: '/contact' },
+                    ].map((item) => (
+                      <SheetClose asChild key={item.label}>
+                        <Link
+                          to={item.to}
+                          className="flex items-center gap-3 text-base font-medium text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/5 px-3 py-2.5 rounded-xl transition-colors"
+                        >
+                          {item.label}
+                        </Link>
+                      </SheetClose>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Mobile CTA */}
+                <div className="p-6 border-t border-slate-200 dark:border-white/10 space-y-3">
+                  <SheetClose asChild>
+                    <Link to="/login" className="flex items-center justify-center h-11 w-full rounded-xl border border-slate-200 dark:border-white/10 text-sm font-semibold text-slate-900 dark:text-white hover:bg-slate-100 dark:hover:bg-white/5 transition-colors">
+                      Log in
+                    </Link>
+                  </SheetClose>
+                  <SheetClose asChild>
+                    <Link to="/dashboard" className="flex items-center justify-center h-11 w-full rounded-xl bg-slate-900 dark:bg-white text-white dark:text-black text-sm font-semibold hover:bg-slate-700 dark:hover:bg-slate-200 transition-colors">
+                      Dashboard
+                    </Link>
+                  </SheetClose>
+                </div>
+              </div>
+            </SheetContent>
+          </Sheet>
+>>>>>>> 1fff430974318f37260db10adf0917f936e7202d
         </div>
       </div>
 

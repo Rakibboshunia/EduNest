@@ -1,4 +1,11 @@
+<<<<<<< HEAD
 import React, { useEffect } from 'react';
+=======
+
+import { Link } from 'react-router-dom';
+import { MapPin, Mail, Phone } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+>>>>>>> 1fff430974318f37260db10adf0917f936e7202d
 
 export default function Contact() {
   useEffect(() => {
@@ -16,6 +23,7 @@ export default function Contact() {
   }, []);
 
   return (
+<<<<<<< HEAD
     <>
       <section className="hero" style={{ height: '40vh', minHeight: '300px' }}>
         <div className="hero-bg" style={{ backgroundPosition: 'center 40%' }}></div>
@@ -33,6 +41,17 @@ export default function Contact() {
       <section className="section-py">
         <div className="container">
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '60px' }}>
+=======
+    <div className="w-full">
+    
+      <main className="container mx-auto px-4 py-16 md:py-24 max-w-6xl">
+        <div className="grid md:grid-cols-2 gap-16 items-center">
+          <div>
+            <h1 className="text-4xl md:text-5xl font-bold mb-6 tracking-tight text-slate-900 dark:text-white">Get in touch</h1>
+            <p className="text-lg text-slate-500 dark:text-slate-400 mb-12">
+              Have questions about pricing, features, or integration? Our team is ready to help you transform your institution.
+            </p>
+>>>>>>> 1fff430974318f37260db10adf0917f936e7202d
             
             {/* Contact Info */}
             <div className="reveal">

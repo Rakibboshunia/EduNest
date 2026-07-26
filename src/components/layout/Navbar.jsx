@@ -6,6 +6,7 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Sidebar } from "./Sidebar";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useAuth } from "@/context/AuthContext";
+import { useLanguage } from "@/context/LanguageContext";
 import { Link, useNavigate } from "react-router-dom";
 import {
   DropdownMenu,
@@ -24,6 +25,7 @@ const mockNotifications = [
 
 export function Navbar() {
   const { user, logout } = useAuth();
+  const { t } = useLanguage();
   const navigate = useNavigate();
   const [notifOpen, setNotifOpen] = useState(false);
   const [sheetOpen, setSheetOpen] = useState(false);
@@ -54,7 +56,7 @@ export function Navbar() {
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
           <Input
             type="search"
-            placeholder="Search students, teachers, fees..."
+            placeholder={t("search")}  
             className="w-full pl-9 h-9 bg-slate-50 dark:bg-white/5 border-slate-200 dark:border-white/10 rounded-full text-sm placeholder:text-slate-400 focus-visible:ring-[var(--brand-primary)]/30 focus-visible:border-[var(--brand-primary)]/50 transition-all"
           />
           <kbd className="absolute right-3 top-1/2 -translate-y-1/2 hidden sm:flex h-5 items-center gap-1 rounded border border-slate-200 dark:border-white/10 bg-slate-100 dark:bg-white/5 px-1.5 text-[10px] font-medium text-slate-400">
@@ -85,7 +87,7 @@ export function Navbar() {
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="w-80 p-0 rounded-2xl shadow-2xl border border-slate-100 dark:border-white/10 dark:bg-[#1e293b] overflow-hidden">
             <div className="flex items-center justify-between px-4 py-3 border-b border-slate-100 dark:border-white/10">
-              <p className="text-sm font-semibold text-slate-800 dark:text-white">Notifications</p>
+              <p className="text-sm font-semibold text-slate-800 dark:text-white">{t("notices")}</p>
               <span className="text-xs text-[var(--brand-primary)] dark:text-[#60a5fa] font-medium cursor-pointer hover:underline">Mark all read</span>
             </div>
             <div className="divide-y divide-slate-50 dark:divide-white/5">
@@ -143,11 +145,11 @@ export function Navbar() {
               <User className="h-4 w-4 text-slate-400" /> My Profile
             </DropdownMenuItem>
             <DropdownMenuItem onClick={() => navigate("/settings")} className="rounded-xl gap-2 px-3 py-2 cursor-pointer">
-              <Settings className="h-4 w-4 text-slate-400" /> Settings
+              <Settings className="h-4 w-4 text-slate-400" /> {t("settings")}
             </DropdownMenuItem>
             <DropdownMenuSeparator className="my-1 bg-slate-100 dark:bg-white/5" />
             <DropdownMenuItem onClick={logout} className="rounded-xl gap-2 px-3 py-2 text-red-500 focus:text-red-500 focus:bg-red-50 dark:focus:bg-red-500/10 cursor-pointer">
-              <LogOut className="h-4 w-4" /> Sign Out
+              <LogOut className="h-4 w-4" /> {t("logout")}
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
